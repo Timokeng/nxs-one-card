@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>学生管理</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/dtree/dtree.css">
+  <link rel="stylesheet" href="../../layuiadmin/style/dtree/font/dtreefont.css">
+  <link rel="stylesheet" href="../../layuiadmin/style/admin.css">
+  <link rel="stylesheet" href="../../layuiadmin/style/student.css">
+  <link rel="stylesheet" href="../../layuiadmin/style/formBox.css">
+</head>
+
+<body>
+
+  <div class="main-article">
+    <div class="left">
+      <div class="header">机构选择</div>
+      <div class="tree-box">
+        <ul id="demoTree" class="dtree" data-id="0"></ul>
+      </div>
+    </div>
+    <div class="right">
+      <div class="func-box">
+        <div class="header">操作</div>
+        <div class="article">
+          <button id="addStBt" class="layui-btn"><i class="layui-icon layui-icon-add-circle"></i>添加学生信息</button>
+          <button id="deleteStBt" class="layui-btn"><i class="layui-icon layui-icon-delete"></i>删除学生信息</button>
+          <button id="changeStBt" class="layui-btn"><i class="layui-icon layui-icon-edit"></i>修改学生信息</button>
+          <button id="searchBt" class="layui-btn"><i class="layui-icon layui-icon-search"></i>查找学生信息</button>
+          <button id="uploadStBt" class="layui-btn"><i class="layui-icon layui-icon-upload-drag"></i>导入学生信息</button>
+          <button class="layui-btn"><i class="layui-icon layui-icon-form"></i>下载学生信息导入模板</button>
+          <button class="layui-btn"><i class="layui-icon layui-icon-export"></i>导出学生信息</button>
+        </div>
+      </div>
+      <div class="condition-box layui-anim layui-anim-scale" id="condition">
+        <div class="header">
+          <div>筛选条件</div>
+          <div onclick="cdb.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
+        </div>
+        <div class="form-box layui-form" lay-filter="conditionForm">
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-block">
+              <input type="text" name="name" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-block">
+              <input type="checkbox" name="sex[man]" title="男">
+              <input type="checkbox" name="sex[womam]" title="女">
+            </div>
+          </div>
+          <!-- <div class="layui-form-item input-box">
+            <label class="layui-form-label">学校</label>
+            <div class="layui-input-block">
+              <input type="text" name="school" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">年级</label>
+            <div class="layui-input-block">
+              <input type="text" name="grade" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">班级</label>
+            <div class="layui-input-block">
+              <input type="text" name="class" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+          </div> -->
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">身份证号</label>
+            <div class="layui-input-block">
+              <input type="text" name="pid" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+        </div>
+        <div class="btn-box"><button class="layui-btn" onclick="searchSt()">确定</button></button></div>
+      </div>
+      <div class="add-st-box layui-anim layui-anim-scale" id="addStBox">
+        <div class="header">
+          <div>新增学生</div>
+          <div onclick="asb.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
+        </div>
+        <div class="form-box layui-form" lay-filter="addStForm">
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-block">
+              <input type="text" name="name" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-block">
+              <input type="radio" name="sex" value="男" title="男">
+              <input type="radio" name="sex" value="女" title="女" checked>
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">学校</label>
+            <div class="layui-input-block">
+              <input type="text" name="school" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">年级</label>
+            <div class="layui-input-block">
+              <input type="text" name="grade" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">班级</label>
+            <div class="layui-input-block">
+              <input type="text" name="class" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">身份证号</label>
+            <div class="layui-input-block">
+              <input type="text" name="pid" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+        </div>
+        <div class="btn-box"><button class="layui-btn" onclick="addSt()">确定</button></button></div>
+      </div>
+      <div class="change-st-box layui-anim layui-anim-scale" id="changeStBox">
+        <div class="header">
+          <div>修改学生信息</div>
+          <div onclick="document.getElementById('changeStBox').style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
+        </div>
+        <div class="form-box layui-form" lay-filter="changeStForm">
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">校内ID</label>
+            <div class="layui-input-block">
+              <input type="text" name="id" disabled placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-block">
+              <input type="text" name="name" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-block">
+              <input type="radio" name="sex" value="男" title="男">
+              <input type="radio" name="sex" value="女" title="女" checked>
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">学校</label>
+            <div class="layui-input-block">
+              <input type="text" name="school" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">年级</label>
+            <div class="layui-input-block">
+              <input type="text" name="grade" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">班级</label>
+            <div class="layui-input-block">
+              <input type="text" name="class" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">身份证号</label>
+            <div class="layui-input-block">
+              <input type="text" name="pid" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+        </div>
+        <div class="btn-box"><button class="layui-btn" onclick="changeSt()">确定</button></button></div>
+      </div>
+      <div class="table-box">
+        <div class="header">学生信息</div>
+        <div class="article">
+          <table id="students" lay-data="{id: 'idTest'}" lay-filter="test"></table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../layuiadmin/layui/layui.js"></script>
+  <script>
+    layui.config({
+      base: '../../layuiadmin/' //静态资源所在路径
+    }).extend({
+      index: 'lib/index' //主入口模块
+    }).use(['index', 'console']);
+
+
+    // ------------dtree相关--------------
+    var demoTree = [
+      {
+        id: "1",
+        title: '一中',
+        checkArr: "0",
+        children: [
+          {
+            title: '高一',
+            checkArr: "0",
+          },
+          {
+            title: '高二',
+            checkArr: "0",
+          },
+          {
+            title: '高三',
+            checkArr: "0",
+          },
+        ]
+      },
+      {
+        id: '2',
+        title: '二中',
+        checkArr: "0",
+        children: [
+          {
+            title: '高一',
+            checkArr: "0",
+          },
+          {
+            title: '高二',
+            checkArr: "0",
+          },
+          {
+            title: '高三',
+            checkArr: "0",
+          },
+        ]
+      },
+      {
+        id: '3',
+        title: '三中',
+        checkArr: "0",
+        children: [
+          {
+            title: '高一',
+            checkArr: "0",
+          },
+          {
+            title: '高二',
+            checkArr: "0",
+          },
+          {
+            title: '高三',
+            checkArr: "0",
+          },
+        ]
+      },
+    ]
+    layui.extend({
+      dtree: 'style/dtree/dtree'
+    }).use(['dtree', 'layer', 'jquery'], function () {
+      var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
+      // 初始化树
+      var DemoTree = dtree.render({
+        elem: "#demoTree",
+        data: demoTree, // 使用data加载
+        checkbar: true,
+        checkbarType: "all",
+      });
+      // 绑定节点点击
+      dtree.on("node('demoTree')", function (obj) {
+        layer.msg(JSON.stringify(obj.param));
+      });
+    });
+    // ------------dtree相关（结束）--------------
+
+
+
+    // ----------table组件相关------------------
+    var tableDate = [
+      { id: 1, name: "张三", pid: "530302199701236322", sex: "男", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
+      { id: 2, name: "李四", pid: "530302199701236322", sex: "男", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
+      { id: 3, name: "王五", pid: "530302199701236322", sex: "女", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
+      { id: 4, name: "狗蛋", pid: "530302199701236322", sex: "男", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
+      { id: 5, name: "二妞", pid: "530302199701236322", sex: "女", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
+      { id: 6, name: "小六", pid: "530302199701236322", sex: "女", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
+      { id: 7, name: "来福", pid: "530302199701236322", sex: "男", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
+    ]
+    //  初始化table
+    layui.use(['table', 'layer', 'form'], function () {
+      var table = layui.table;
+      var layer = layui.layer;
+      var form = layui.form;
+
+      //第一个实例
+      table.render({
+        elem: '#students'
+        , id: 'idTest'
+        , height: 475
+        , data: tableDate
+        , page: true //开启分页
+        , cols: [[ //表头
+          { checkbox: true, width: "5%" }
+          , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
+          , { field: 'name', title: '姓名', width: "10%", minWidth: 60 }
+          , { field: 'pid', title: '身份证号', width: "18%", minWidth: 200 }
+          , { field: 'sex', title: '性别', width: "7%", minWidth: 60 }
+          , { field: 'school', title: '学校', width: "10%", minWidth: 100 }
+          , { field: 'grade', title: '年级', width: "10%", minWidth: 100 }
+          , { field: 'class', title: '班级', width: "10%", minWidth: 100 }
+          , { field: 'project', title: '已缴纳费用', width: "25%", minWidth: 200 }
+        ]]
+      });
+
+      // 删除学生信息
+      let deleteStBt = document.getElementById("deleteStBt");
+      
+      deleteStBt.addEventListener("click", function () {
+        let checkStatus = table.checkStatus('idTest');
+
+        if(checkStatus.data.length < 1) {
+          layer.msg("请至少选择一条有效学生信息");
+          return;
+        }
+        
+        layer.open({
+          type: 1,
+          content: '确定删除选中的 ' + checkStatus.data.length + '条信息吗？',
+          skin: 'delete-confirm',
+          area: ['300px', '200px'],
+          btn: ['确定', '取消'],
+          yes: function(index, layero) {
+            console.log('确定删除');
+            layer.close(index);
+          },
+          btn2: function(index, layero) {
+            console.log('取消删除');
+            layer.close(index);
+          },
+        });
+      })
+
+      // 修改学生信息
+      let changeStBt = document.getElementById("changeStBt");
+      changeStBt.addEventListener("click", function () {
+        // 选中学生有效性判断
+        let checkStatus = table.checkStatus('idTest');
+        if (checkStatus.data.length > 1) {
+          layer.msg("每次只能修改一个学生信息");
+          return;
+        }
+        if (checkStatus.data.length < 1) {
+          layer.msg("请至少选择一个有效学生信息");
+          return;
+        }
+
+        // 展示修改表单，并把相关数据填入表单
+        let csb = document.getElementById("changeStBox");
+        let changeInfo = {
+          id: checkStatus.data[0].id,
+          name: checkStatus.data[0].name,
+          sex: checkStatus.data[0].sex,
+          pid: checkStatus.data[0].pid,
+          school: checkStatus.data[0].school,
+          grade: checkStatus.data[0].grade,
+          class: checkStatus.data[0].class
+        };
+
+        csb.style.display = 'block';
+        form.val("changeStForm", changeInfo);
+      })
+    });
+    // ----------table组件相关（结束）------------------
+
+
+
+
+    // --------------------部分独立方法-----------------------
+    //  修改学生信息确认按钮对应方法
+    function changeSt() {
+      let changeInfo = {};
+      let validate = true;
+      layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        var layer = layui.layer;
+
+        changeInfo = form.val("changeStForm");
+        for (let key in changeInfo) {
+          if (!changeInfo[key]) {
+            layer.msg("有必填数据为空");
+            validate = false;
+            return
+          }
+        }
+        if (changeInfo.pid.length != 18) {
+          layer.msg("请输入有效身份证号码");
+          validate = false;
+          return;
+        }
+        validate = true;
+        layer.msg("成功修改校内ID为 " + changeInfo.id + " 的学生相关信息")
+        console.log(changeInfo);
+      });
+      if(validate){
+        reLoadTable();
+      }
+    }
+    //  刷新table
+    function reLoadTable() {
+      layui.use('table', function () {
+        var table = layui.table;
+
+        var tableDate2 = [
+          { id: 1, name: "张三", pid: "530302199701236322", sex: "男", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
+          { id: 2, name: "李四", pid: "530302199701236322", sex: "男", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
+          { id: 3, name: "王五", pid: "530302199701236322", sex: "女", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
+          { id: 4, name: "狗蛋", pid: "530302199701236322", sex: "男", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
+          { id: 5, name: "二妞", pid: "530302199701236322", sex: "女", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
+        ]
+
+        table.render({
+          elem: '#students'
+          , id: 'idTest'
+          , height: 475
+          , data: tableDate2
+          , page: true //开启分页
+          , cols: [[ //表头
+            { checkbox: true, width: "5%" }
+            , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
+            , { field: 'name', title: '姓名', width: "10%", minWidth: 60 }
+            , { field: 'pid', title: '身份证号', width: "18%", minWidth: 200 }
+            , { field: 'sex', title: '性别', width: "7%", minWidth: 60 }
+            , { field: 'school', title: '学校', width: "10%", minWidth: 100 }
+            , { field: 'grade', title: '年级', width: "10%", minWidth: 100 }
+            , { field: 'class', title: '班级', width: "10%", minWidth: 100 }
+            , { field: 'project', title: '已缴纳费用', width: "25%", minWidth: 200 }
+          ]]
+        });
+      })
+    }
+    // --------------------部分独立方法（结束）-----------------------
+  </script>
+  <script src="../../layuiadmin/modules/searchStudent.js"></script>
+  <script src="../../layuiadmin/modules/addSt.js"></script>
+  <script src="../../layuiadmin/modules/upload.js"></script>
+</body>
+
+</html>

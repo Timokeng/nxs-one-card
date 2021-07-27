@@ -1,0 +1,44 @@
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+.main-article {
+    padding: 15px;
+    color: black;
+    width: 100%;
+    min-width: 1000px;
+    overflow: auto;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.header {
+    padding: 15px;
+    font-size: 16px;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.main-article .func-box {
+    background-color: #fff;
+    margin-bottom: 15px;
+}
+
+.main-article .func-box .article {
+    padding: 15px 15px 0 15px;
+}
+
+.main-article .func-box .article .layui-btn {
+    margin-bottom: 15px;
+}
+.main-article .func-box .article .layui-btn:first-child {
+    margin-left: 10px;
+}
+
+.main-article .table-box {
+    background-color: #fff;
+}
+
+.main-article .table-box .article {
+    padding: 0 10px 10px 10px;
+}

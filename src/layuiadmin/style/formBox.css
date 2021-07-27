@@ -1,0 +1,29 @@
+.form-box {
+    width: 100%;
+    font-size: 14px;
+    padding-top: 15px;
+    border-bottom: 1px solid #eee;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.form-box .input-box {
+    box-sizing: border-box;
+    width: 300px;
+}
+.form-box .input-box .layui-input, .layui-textarea {
+    width: 180px;
+}
+
+.btn-box {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>查询信息</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../layuiadmin/style/admin.css">
+    <link rel="stylesheet" href="../../layuiadmin/style/searchStudent.css">
+</head>
+
+<body>
+
+    <div class="form-box layui-form">
+        <div class="layui-form-item input-box">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item input-box">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="sex[man]" title="男">
+                <input type="checkbox" name="sex[womam]" title="女">
+            </div>
+        </div>
+        <div class="layui-form-item input-box">
+            <label class="layui-form-label">学校</label>
+            <div class="layui-input-block">
+                <input type="text" name="" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item input-box">
+            <label class="layui-form-label">年级</label>
+            <div class="layui-input-block">
+                <input type="text" name="" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item input-box">
+            <label class="layui-form-label">班级</label>
+            <div class="layui-input-block">
+                <input type="text" name="" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item input-box">
+            <label class="layui-form-label">身份证号</label>
+            <div class="layui-input-block">
+                <input type="text" name="" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <script src="../../layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.config({
+            base: '../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'console']);
+
+
+    </script>
+</body>
+
+</html>
