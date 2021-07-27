@@ -45,16 +45,22 @@
         </div>
         <div class="form-box layui-form" lay-filter="conditionForm">
           <div class="layui-form-item input-box">
+            <label class="layui-form-label">校内ID</label>
+            <div class="layui-input-block">
+              <input type="text" name="id" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
             <label class="layui-form-label">姓名</label>
             <div class="layui-input-block">
-              <input type="text" name="name" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+              <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
           </div>
           <div class="layui-form-item input-box">
             <label class="layui-form-label">性别</label>
             <div class="layui-input-block">
-              <input type="checkbox" name="sex[man]" title="男">
-              <input type="checkbox" name="sex[womam]" title="女">
+              <input type="checkbox" name="man" title="男">
+              <input type="checkbox" name="woman" title="女">
             </div>
           </div>
           <!-- <div class="layui-form-item input-box">
@@ -78,7 +84,7 @@
           <div class="layui-form-item input-box">
             <label class="layui-form-label">身份证号</label>
             <div class="layui-input-block">
-              <input type="text" name="pid" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+              <input type="text" name="pid" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
           </div>
         </div>
@@ -208,14 +214,20 @@
         checkArr: "0",
         children: [
           {
+            id: "11",
+            parentId: "1",
             title: '高一',
             checkArr: "0",
           },
           {
+            id: "12",
+            parentId: "1",
             title: '高二',
             checkArr: "0",
           },
           {
+            id: "13",
+            parentId: "1",
             title: '高三',
             checkArr: "0",
           },
@@ -227,14 +239,20 @@
         checkArr: "0",
         children: [
           {
+            id: "21",
+            parentId: "2",
             title: '高一',
             checkArr: "0",
           },
           {
+            id: "22",
+            parentId: "2",
             title: '高二',
             checkArr: "0",
           },
           {
+            id: "23",
+            parentId: "2",
             title: '高三',
             checkArr: "0",
           },
@@ -246,20 +264,27 @@
         checkArr: "0",
         children: [
           {
+            id: "31",
+            parentId: "3",
             title: '高一',
             checkArr: "0",
           },
           {
+            id: "32",
+            parentId: "3",
             title: '高二',
             checkArr: "0",
           },
           {
+            id: "33",
+            parentId: "3",
             title: '高三',
             checkArr: "0",
           },
         ]
       },
     ]
+
     layui.extend({
       dtree: 'style/dtree/dtree'
     }).use(['dtree', 'layer', 'jquery'], function () {
@@ -269,12 +294,20 @@
         elem: "#demoTree",
         data: demoTree, // 使用data加载
         checkbar: true,
-        checkbarType: "all",
+        checkbarType: "no-all",
+        checkbarFun: {
+          chooseDone: function(checkbarNodesParam) {
+            classData = checkbarNodesParam;
+            console.log(classData)
+            return;
+          }
+        },
       });
-      // 绑定节点点击
-      dtree.on("node('demoTree')", function (obj) {
-        layer.msg(JSON.stringify(obj.param));
-      });
+
+      // // 绑定节点点击
+      // dtree.on("node('demoTree')", function (obj) {
+      //   layer.msg(JSON.stringify(obj.param));
+      // });
     });
     // ------------dtree相关（结束）--------------
 
