@@ -2,11 +2,15 @@
 
 ## 介绍
 ```
-主要负责校园缴费各项功能的实现。使用的layui-admin前端框架，大部分功能为原生和layui自带组件，机构树功能使用第三方插件dtree实现
+主要负责校园缴费各项功能的实现。
+
+使用的layui-admin前端框架，大部分功能为原生和layui自带组件。
+
+机构树功能使用第三方插件dtree实现
 ```
 
 
-### Project setup
+### 项目启动
 ```
 需要部署到localhost才访问，/dist/views/index.html是入口
 ```
