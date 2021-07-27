@@ -1,9 +1,9 @@
-const addStBt = document.getElementById("addStBt");
-let asb = document.getElementById("addStBox");
+const addBt = document.getElementById("addBt");
+let abox = document.getElementById("addBox");
 let addInfo = {};
 
-addStBt.addEventListener("click", function(){
-    asb.style.display = "block";
+addBt.addEventListener("click", function(){
+    abox.style.display = "block";
 })
 
 function addSt() {
