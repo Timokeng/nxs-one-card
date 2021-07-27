@@ -27,3 +27,35 @@
     display: flex;
     justify-content: space-between;
 }
+
+/* 删除确认框样式 */
+.delete-confirm .layui-layer-content {
+    padding: 15px;
+    font-size: 14px;
+}
+
+
+/* 弹出框样式 */
+.condition-box {
+    box-sizing: border-box;
+    background-color: #fff;
+    width: 100%;
+    margin-bottom: 15px;
+    display: none;
+}
+
+.add-st-box {
+    box-sizing: border-box;
+    background-color: #fff;
+    width: 100%;
+    margin-bottom: 15px;
+    display: none;
+}
+
+.change-st-box {
+    box-sizing: border-box;
+    background-color: #fff;
+    width: 100%;
+    margin-bottom: 15px;
+    display: none;
+}

@@ -368,6 +368,7 @@
           btn: ['确定', '取消'],
           yes: function(index, layero) {
             console.log('确定删除');
+            reloadTable();
             layer.close(index);
           },
           btn2: function(index, layero) {
@@ -443,7 +444,7 @@
       }
     }
     //  刷新table
-    function reLoadTable() {
+    function reloadTable() {
       layui.use('table', function () {
         var table = layui.table;
 

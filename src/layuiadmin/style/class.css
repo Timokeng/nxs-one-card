@@ -57,8 +57,6 @@ html, body {
 
 .main-article .right .func-box .article .layui-btn {
     margin-bottom: 15px;
-}
-.main-article .right .func-box .article .layui-btn:first-child {
     margin-left: 10px;
 }
 

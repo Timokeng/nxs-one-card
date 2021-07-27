@@ -25,11 +25,6 @@ html, body {
     border-bottom: 1px solid #f2f2f2;
 }
 
-.delete-confirm .layui-layer-content {
-    padding: 15px;
-    font-size: 14px;
-}
-
 .main-article .left {
     width: 350px;
     min-width: 350px;
@@ -83,26 +78,3 @@ html, body {
     padding: 0 10px 10px 10px;
 }
 
-.main-article .right .condition-box {
-    box-sizing: border-box;
-    background-color: #fff;
-    width: 100%;
-    margin-bottom: 15px;
-    display: none;
-}
-
-.main-article .right .add-st-box {
-    box-sizing: border-box;
-    background-color: #fff;
-    width: 100%;
-    margin-bottom: 15px;
-    display: none;
-}
-
-.main-article .right .change-st-box {
-    box-sizing: border-box;
-    background-color: #fff;
-    width: 100%;
-    margin-bottom: 15px;
-    display: none;
-}

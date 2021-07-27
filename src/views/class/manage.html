@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="../../layuiadmin/style/dtree/font/dtreefont.css">
   <link rel="stylesheet" href="../../layuiadmin/style/admin.css">
   <link rel="stylesheet" href="../../layuiadmin/style/class.css">
+  <link rel="stylesheet" href="../../layuiadmin/style/formBox.css">
 </head>
 
 <body>
@@ -28,14 +29,94 @@
       <div class="func-box">
         <div class="header">操作</div>
         <div class="article">
-          <button class="layui-btn"><i class="layui-icon layui-icon-add-circle"></i>增加班级</button>
-          <button class="layui-btn"><i class="layui-icon layui-icon-delete"></i>删除班级</button>
-          <button class="layui-btn"><i class="layui-icon layui-icon-edit"></i>修改班级</button>
+          <button id="addBt" class="layui-btn"><i class="layui-icon layui-icon-add-circle"></i>增加班级</button>
+          <button id="deleteBt" class="layui-btn"><i class="layui-icon layui-icon-delete"></i>删除班级</button>
+          <button id="changeBt" class="layui-btn"><i class="layui-icon layui-icon-edit"></i>修改班级</button>
           <button class="layui-btn"><i class="layui-icon layui-icon-templeate-1"></i>绑定缴费模板</button>
-          <button class="layui-btn"><i class="layui-icon layui-icon-upload-drag"></i>导入班级信息</button>
+          <button id="uploadStBt" class="layui-btn"><i class="layui-icon layui-icon-upload-drag"></i>导入班级信息</button>
           <button class="layui-btn"><i class="layui-icon layui-icon-form"></i>下载班级信息导入模板</button>
           <button class="layui-btn"><i class="layui-icon layui-icon-export"></i>导出班级信息</button>
         </div>
+      </div>
+      <div class="add-st-box layui-anim layui-anim-scale" id="addBox">
+        <div class="header">
+          <div>新增班级</div>
+          <div onclick="abox.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
+        </div>
+        <div class="form-box layui-form" lay-filter="addClForm">
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">学校</label>
+            <div class="layui-input-block">
+              <input type="text" name="school" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">年级</label>
+            <div class="layui-input-block">
+              <input type="text" name="grade" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">班级</label>
+            <div class="layui-input-block">
+              <input type="text" name="class" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+        </div>
+        <div class="btn-box"><button class="layui-btn" onclick="addCl()">确定</button></button></div>
+      </div>
+      <div class="change-st-box layui-anim layui-anim-scale" id="changeBox">
+        <div class="header">
+          <div>修改学生信息</div>
+          <div onclick="document.getElementById('changeBox').style.display = 'none'"><i
+              class="layui-icon layui-icon-close"></i></div>
+        </div>
+        <div class="form-box layui-form" lay-filter="changeStForm">
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">校内ID</label>
+            <div class="layui-input-block">
+              <input type="text" name="id" disabled placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-block">
+              <input type="text" name="name" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-block">
+              <input type="radio" name="sex" value="男" title="男">
+              <input type="radio" name="sex" value="女" title="女" checked>
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">学校</label>
+            <div class="layui-input-block">
+              <input type="text" name="school" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">年级</label>
+            <div class="layui-input-block">
+              <input type="text" name="grade" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">班级</label>
+            <div class="layui-input-block">
+              <input type="text" name="class" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">身份证号</label>
+            <div class="layui-input-block">
+              <input type="text" name="pid" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+        </div>
+        <div class="btn-box"><button class="layui-btn" onclick="changeSt()">确定</button></button></div>
       </div>
       <div class="table-box">
         <div class="header">缴费模板</div>
@@ -55,7 +136,9 @@
     }).use(['index', 'console']);
 
 
-    // dtree组件引入
+    // --------------dtree相关----------------
+    var classData = [];//重要数据，tree选中的班级信息
+
     var demoTree = [
       {
         id: "1",
@@ -63,14 +146,20 @@
         checkArr: "0",
         children: [
           {
+            id: "11",
+            parentId: "1",
             title: '高一',
             checkArr: "0",
           },
           {
+            id: "12",
+            parentId: "1",
             title: '高二',
             checkArr: "0",
           },
           {
+            id: "13",
+            parentId: "1",
             title: '高三',
             checkArr: "0",
           },
@@ -82,14 +171,20 @@
         checkArr: "0",
         children: [
           {
+            id: "21",
+            parentId: "2",
             title: '高一',
             checkArr: "0",
           },
           {
+            id: "22",
+            parentId: "2",
             title: '高二',
             checkArr: "0",
           },
           {
+            id: "23",
+            parentId: "2",
             title: '高三',
             checkArr: "0",
           },
@@ -101,39 +196,58 @@
         checkArr: "0",
         children: [
           {
+            id: "31",
+            parentId: "3",
             title: '高一',
             checkArr: "0",
           },
           {
+            id: "32",
+            parentId: "3",
             title: '高二',
             checkArr: "0",
           },
           {
+            id: "33",
+            parentId: "3",
             title: '高三',
             checkArr: "0",
           },
         ]
       },
     ]
+
     layui.extend({
       dtree: 'style/dtree/dtree'
     }).use(['dtree', 'layer', 'jquery'], function () {
       var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
+      
       // 初始化树
       var DemoTree = dtree.render({
         elem: "#demoTree",
         data: demoTree, // 使用data加载
         checkbar: true,
-        checkbarType: "all",
-        checkbarLoad: "leaf",
+        checkbarType: "no-all",
+        checkbarFun: {
+          chooseDone: function (checkbarNodesParam) {
+            classData = checkbarNodesParam;
+            console.log(classData);
+            return;
+          }
+        },
       });
-      // 绑定节点点击
-      dtree.on("node('demoTree')", function (obj) {
-        layer.msg(JSON.stringify(obj.param));
-      });
-    });
 
-    // table组件
+      // // 绑定节点点击
+      // dtree.on("node('demoTree')", function (obj) {
+      //   layer.msg(JSON.stringify(obj.param));
+      // });
+    });
+    // ------------dtree相关（结束）--------------
+
+
+
+
+    // ----------table组件相关------------------
     var tableDate = [
       { id: 1, name: "2021年下学期高三学费", date: "2021-8-31", end: "2021-9-10", sum: 7000 },
       { id: 2, name: "2021年下学期高三书费", date: "2021-8-31", end: "2021-9-10", sum: 1000 },
@@ -141,8 +255,10 @@
       { id: 4, name: "2021年下学期高二学费", date: "2021-8-31", end: "2021-9-10", sum: 7000 },
       { id: 5, name: "2021年下学期高二书费", date: "2021-8-31", end: "2021-9-10", sum: 800 },
     ]
-    layui.use('table', function () {
+    layui.use(['table', 'layer'], function () {
       var table = layui.table;
+      var layer = layui.layer;
+
       //第一个实例
       table.render({
         elem: '#payment-template'
@@ -157,10 +273,138 @@
           , { field: 'end', title: '结束日期', width: "20%", minWidth: 100, sort: true }
           , { field: 'sum', title: '金额', width: "15%", minWidth: 100 }
         ]]
-        , limit: 10
       });
     });
+    // ----------table组件相关（结束）------------------
+
+
+
+    // --------------------部分独立方法-----------------------
+    //  刷新table
+    function reloadTable() {
+      layui.use('table', function () {
+        var table = layui.table;
+
+        var tableDate2 = [
+          { id: 1, name: "2021年下学期高三学费", date: "2021-8-31", end: "2021-9-10", sum: 7000 },
+          { id: 2, name: "2021年下学期高三书费", date: "2021-8-31", end: "2021-9-10", sum: 1000 },
+          { id: 3, name: "2021年下学期高三住宿费", date: "2021-8-31", end: "2021-9-10", sum: 2000 },
+          { id: 4, name: "2021年下学期高二学费", date: "2021-8-31", end: "2021-9-10", sum: 7000 },
+          { id: 5, name: "2021年下学期高二书费", date: "2021-8-31", end: "2021-9-10", sum: 800 },
+          { id: 6, name: "2021年下学期高一书费", date: "2021-8-31", end: "2021-9-10", sum: 1200 },
+        ]
+
+        table.render({
+          elem: '#payment-template'
+          , height: 475
+          , data: tableDate2
+          , page: true //开启分页
+          , cols: [[ //表头
+            { checkbox: true, width: "5%" }
+            , { field: 'id', title: 'ID', width: "10%" }
+            , { field: 'name', title: '收费项目', width: "30%", minWidth: 200 }
+            , { field: 'date', title: '创建日期', width: "20%", minWidth: 100, sort: true }
+            , { field: 'end', title: '结束日期', width: "20%", minWidth: 100, sort: true }
+            , { field: 'sum', title: '金额', width: "15%", minWidth: 100 }
+          ]]
+        });
+      })
+    }
+
+    // 刷新tree
+    function reloadTree() {
+
+      var demoTree2 = [
+        {
+          id: "1",
+          title: '一中',
+          checkArr: "0",
+          children: [
+            {
+              id: "12",
+              parentId: "1",
+              title: '高二',
+              checkArr: "0",
+            },
+            {
+              id: "13",
+              parentId: "1",
+              title: '高三',
+              checkArr: "0",
+            },
+          ]
+        },
+        {
+          id: '2',
+          title: '二中',
+          checkArr: "0",
+          children: [
+            {
+              id: "22",
+              parentId: "2",
+              title: '高二',
+              checkArr: "0",
+            },
+            {
+              id: "23",
+              parentId: "2",
+              title: '高三',
+              checkArr: "0",
+            },
+          ]
+        },
+        {
+          id: '3',
+          title: '三中',
+          checkArr: "0",
+          children: [
+            {
+              id: "32",
+              parentId: "3",
+              title: '高二',
+              checkArr: "0",
+            },
+            {
+              id: "33",
+              parentId: "3",
+              title: '高三',
+              checkArr: "0",
+            },
+          ]
+        },
+      ]
+
+      layui.use(['dtree', 'layer', 'jquery'], function () {
+        var dtree = layui.dtree,
+            layer = layui.layer, 
+            $ = layui.jquery;
+            
+        // 初始化树
+        var DemoTree = dtree.render({
+          elem: "#demoTree",
+          data: demoTree2, // 使用data加载
+          checkbar: true,
+          checkbarType: "no-all",
+          checkbarFun: {
+            chooseDone: function (checkbarNodesParam) {
+              classData = checkbarNodesParam;
+              console.log(classData);
+              return;
+            }
+          },
+        });
+
+        // // 绑定节点点击
+        // dtree.on("node('demoTree')", function (obj) {
+        //   layer.msg(JSON.stringify(obj.param));
+        // });
+      });
+    }
+    // --------------------部分独立方法（结束）-----------------------
   </script>
+  <script src="../../layuiadmin/modules/add.js"></script>
+  <script src="../../layuiadmin/modules/delete.js"></script>
+  <script src="../../layuiadmin/modules/upload.js"></script>
 </body>
 
 </html>
