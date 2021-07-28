@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
   <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
   <link rel="stylesheet" href="../../layuiadmin/style/payment.css">
+  <link rel="stylesheet" href="../../layuiadmin/style/formBox.css">
 </head>
 
 <body>
@@ -19,11 +20,38 @@
     <div class="func-box">
       <div class="header">操作</div>
       <div class="article">
-        <button class="layui-btn"><i class="layui-icon layui-icon-add-circle"></i>添加缴费模板</button>
-        <button class="layui-btn"><i class="layui-icon layui-icon-delete"></i>删除缴费模板</button>
-        <button class="layui-btn"><i class="layui-icon layui-icon-edit"></i>修改缴费模板</button>
-        <button class="layui-btn"><i class="layui-icon layui-icon-search"></i>查找缴费模板</button>
+        <button id="addBt" class="layui-btn"><i class="layui-icon layui-icon-add-circle"></i>添加缴费模板</button>
+        <button id="deleteBt" class="layui-btn"><i class="layui-icon layui-icon-delete"></i>删除缴费模板</button>
+        <button id="changeBt" class="layui-btn"><i class="layui-icon layui-icon-edit"></i>修改缴费模板</button>
+        <button id="searchBt" class="layui-btn"><i class="layui-icon layui-icon-search"></i>查找缴费模板</button>
       </div>
+    </div>
+    <div class="add-box layui-anim layui-anim-scale" id="addBox">
+      <div class="header">
+        <div>新增模板</div>
+        <div onclick="abox.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
+      </div>
+      <div class="form-box layui-form" lay-filter="addTeForm">
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">模板名称</label>
+          <div class="layui-input-block">
+            <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">金额</label>
+          <div class="layui-input-block">
+            <input type="text" name="sum" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">结束日期</label>
+          <div class="layui-input-block">
+            <input id="endDate1" type="text" name="endDate" placeholder="数据格式:xx-xx-xx" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+      </div>
+      <div class="btn-box"><button class="layui-btn" onclick="addTe()">确定</button></button></div>
     </div>
     <div class="table-box">
       <div class="header">模板信息</div>
@@ -41,13 +69,16 @@
       index: 'lib/index' //主入口模块
     }).use(['index', 'console']);
 
-    // table组件
+
+
+
+    // ------------------- table组件 -------------------------
     var tableDate = [
-      { id: 1, name: "2021年下学期高三学费", date: "2021-8-31", end: "2021-9-10", sum: 7000 },
-      { id: 2, name: "2021年下学期高三书费", date: "2021-8-31", end: "2021-9-10", sum: 1000 },
-      { id: 3, name: "2021年下学期高三住宿费", date: "2021-8-31", end: "2021-9-10", sum: 2000 },
-      { id: 4, name: "2021年下学期高二学费", date: "2021-8-31", end: "2021-9-10", sum: 7000 },
-      { id: 5, name: "2021年下学期高二书费", date: "2021-8-31", end: "2021-9-10", sum: 800 },
+      { id: 1, name: "2021年下学期高三学费", date: "2021-8-31", end: "2021-9-10", sum: 7000, status: '可用' },
+      { id: 2, name: "2021年下学期高三书费", date: "2021-8-31", end: "2021-9-10", sum: 1000, status: '可用' },
+      { id: 3, name: "2021年下学期高三住宿费", date: "2021-8-31", end: "2021-9-10", sum: 2000, status: '可用' },
+      { id: 4, name: "2021年下学期高二学费", date: "2021-8-31", end: "2021-9-10", sum: 7000, status: '可用' },
+      { id: 5, name: "2021年下学期高二书费", date: "2021-8-31", end: "2021-9-10", sum: 800, status: '可用' },
     ]
     layui.use('table', function () {
       var table = layui.table;
@@ -61,13 +92,71 @@
           { checkbox: true, width: "5%" }
           , { field: 'id', title: 'ID', width: "10%" }
           , { field: 'name', title: '收费项目', width: "30%", minWidth: 300 }
-          , { field: 'date', title: '创建日期', width: "20%", minWidth: 200, sort: true }
-          , { field: 'end', title: '结束日期', width: "20%", minWidth: 200, sort: true }
+          , { field: 'date', title: '创建日期', width: "15%", minWidth: 200, sort: true }
+          , { field: 'end', title: '结束日期', width: "15%", minWidth: 200, sort: true }
           , { field: 'sum', title: '金额', width: "15%", minWidth: 150 }
+          , { field: 'status', title: '状态', width: "10%", minWidth: 150 }  
         ]]
       });
     });
+    // ------------------- table组件(结束) -------------------------
+
+
+
+    // --------------------日期与时间选择器------------------------
+    layui.use('laydate', function () {
+      var laydate = layui.laydate;
+
+      laydate.render({
+        elem: '#endDate1', //指定元素
+        type: 'date',
+        min: 0,
+      });
+    });
+    // --------------------日期与时间选择器（结束）------------------------
+
+
+
+
+
+    // --------------------部分独立方法-----------------------
+    // 刷新table
+    function reloadTable() {
+      let tableDate = [
+        { id: 1, name: "2021年下学期高三学费", date: "2021-8-31", end: "2021-9-10", sum: 7000, status: '可用' },
+        { id: 2, name: "2021年下学期高三书费", date: "2021-8-31", end: "2021-9-10", sum: 1000, status: '可用' },
+        { id: 3, name: "2021年下学期高三住宿费", date: "2021-8-31", end: "2021-9-10", sum: 2000, status: '可用' },
+        { id: 4, name: "2021年下学期高二学费", date: "2021-8-31", end: "2021-9-10", sum: 7000, status: '可用' },
+        { id: 5, name: "2021年下学期高二书费", date: "2021-8-31", end: "2021-9-10", sum: 800, status: '可用' },
+        { id: 6, name: "2021年下学期高一书费", date: "2021-8-31", end: "2021-9-10", sum: 1200, status: '可用' },
+        { id: 7, name: "2021年下学期高一书费", date: "2021-8-31", end: "2021-9-10", sum: 800, status: '可用' },
+      ]
+      layui.use('table', function () {
+        var table = layui.table;
+        //第一个实例
+        table.render({
+          elem: '#payment-template'
+          , height: 475
+          , data: tableDate
+          , page: true //开启分页
+          , cols: [[ //表头
+            { checkbox: true, width: "5%" }
+            , { field: 'id', title: 'ID', width: "10%" }
+            , { field: 'name', title: '收费项目', width: "30%", minWidth: 300 }
+            , { field: 'date', title: '创建日期', width: "20%", minWidth: 200, sort: true }
+            , { field: 'end', title: '结束日期', width: "20%", minWidth: 200, sort: true }
+            , { field: 'sum', title: '金额', width: "15%", minWidth: 150 }
+            , { field: 'status', title: '状态', width: "10%", minWidth: 150 }  
+          ]]
+        });
+      });
+    }
+    // --------------------部分独立方法（结束）-----------------------
   </script>
+  <script src="../../layuiadmin/modules/add.js"></script>
+  <script src="../../layuiadmin/modules/delete.js"></script>
+  <script src="../../layuiadmin/modules/search.js"></script>
+  <script src="../../layuiadmin/modules/change.js"></script>
 </body>
 
 </html>

@@ -58,3 +58,27 @@ function addCl() {
         reloadTree();
     }
 }
+
+// 新增模板
+function addTe() {
+    let validate = false;
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        var layer = layui.layer;
+
+        addInfo = form.val("addTeForm");
+        for(let key in addInfo) {
+            if(!addInfo[key]) {
+                layer.msg("有必填数据为空");
+                validate = false;
+                return
+            }
+        }
+        validate = true;
+        layer.msg("成功添加 " + addInfo.name + " 模板")
+        console.log(addInfo);
+    });
+    if(validate){
+        reloadTable();
+    }
+}
