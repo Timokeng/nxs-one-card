@@ -417,7 +417,7 @@
     //  修改学生信息确认按钮对应方法
     function changeSt() {
       let changeInfo = {};
-      let validate = true;
+      let validate = false;
       layui.use(['form', 'layer'], function () {
         var form = layui.form;
         var layer = layui.layer;
@@ -437,7 +437,6 @@
         }
         validate = true;
         layer.msg("成功修改校内ID为 " + changeInfo.id + " 的学生相关信息")
-        console.log(changeInfo);
       });
       if(validate){
         reLoadTable();

@@ -71,52 +71,27 @@
           <div onclick="document.getElementById('changeBox').style.display = 'none'"><i
               class="layui-icon layui-icon-close"></i></div>
         </div>
-        <div class="form-box layui-form" lay-filter="changeStForm">
-          <div class="layui-form-item input-box">
-            <label class="layui-form-label">校内ID</label>
-            <div class="layui-input-block">
-              <input type="text" name="id" disabled placeholder="请输入至少一项" autocomplete="off" class="layui-input">
-            </div>
-          </div>
-          <div class="layui-form-item input-box">
-            <label class="layui-form-label">姓名</label>
-            <div class="layui-input-block">
-              <input type="text" name="name" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
-            </div>
-          </div>
-          <div class="layui-form-item input-box">
-            <label class="layui-form-label">性别</label>
-            <div class="layui-input-block">
-              <input type="radio" name="sex" value="男" title="男">
-              <input type="radio" name="sex" value="女" title="女" checked>
-            </div>
-          </div>
+        <div class="form-box layui-form" lay-filter="changeClForm">
           <div class="layui-form-item input-box">
             <label class="layui-form-label">学校</label>
             <div class="layui-input-block">
-              <input type="text" name="school" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+              <input type="text" name="school" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
           </div>
           <div class="layui-form-item input-box">
             <label class="layui-form-label">年级</label>
             <div class="layui-input-block">
-              <input type="text" name="grade" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+              <input type="text" name="grade" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
           </div>
           <div class="layui-form-item input-box">
             <label class="layui-form-label">班级</label>
             <div class="layui-input-block">
-              <input type="text" name="class" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
-            </div>
-          </div>
-          <div class="layui-form-item input-box">
-            <label class="layui-form-label">身份证号</label>
-            <div class="layui-input-block">
-              <input type="text" name="pid" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+              <input type="text" name="class" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
           </div>
         </div>
-        <div class="btn-box"><button class="layui-btn" onclick="changeSt()">确定</button></button></div>
+        <div class="btn-box"><button class="layui-btn" onclick="changeCl()">确定</button></button></div>
       </div>
       <div class="table-box">
         <div class="header">缴费模板</div>
@@ -150,6 +125,14 @@
             parentId: "1",
             title: '高一',
             checkArr: "0",
+            children: [
+              {
+                id: '111',
+                parentId: '11',
+                title: '一班',
+                checkArr: '0'
+              }
+            ]
           },
           {
             id: "12",
@@ -405,6 +388,7 @@
   <script src="../../layuiadmin/modules/add.js"></script>
   <script src="../../layuiadmin/modules/delete.js"></script>
   <script src="../../layuiadmin/modules/upload.js"></script>
+  <script src="../../layuiadmin/modules/change.js"></script>
 </body>
 
 </html>
