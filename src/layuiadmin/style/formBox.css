@@ -44,7 +44,7 @@
     display: none;
 }
 
-.add-st-box {
+.add-box {
     box-sizing: border-box;
     background-color: #fff;
     width: 100%;
@@ -52,10 +52,22 @@
     display: none;
 }
 
-.change-st-box {
+.change-box {
     box-sizing: border-box;
     background-color: #fff;
     width: 100%;
     margin-bottom: 15px;
     display: none;
+}
+
+.unbound-box {
+    box-sizing: border-box;
+    background-color: #fff;
+    width: 100%;
+    margin-bottom: 15px;
+    display: none;
+}
+
+.unbound-box .article {
+    padding: 0 10px;
 }

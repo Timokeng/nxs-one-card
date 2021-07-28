@@ -32,13 +32,14 @@
           <button id="addBt" class="layui-btn"><i class="layui-icon layui-icon-add-circle"></i>增加班级</button>
           <button id="deleteBt" class="layui-btn"><i class="layui-icon layui-icon-delete"></i>删除班级</button>
           <button id="changeBt" class="layui-btn"><i class="layui-icon layui-icon-edit"></i>修改班级</button>
-          <button id="bindBt" class="layui-btn"><i class="layui-icon layui-icon-templeate-1"></i>绑定缴费模板</button>
+          <button id="bindBt" class="layui-btn"><i class="layui-icon layui-icon-template-1"></i>绑定缴费模板</button>
+          <button id="unboundBt" class="layui-btn"><i class="layui-icon layui-icon-close-fill"></i>禁用缴费模板</button>
           <button id="uploadClBt" class="layui-btn"><i class="layui-icon layui-icon-upload-drag"></i>导入班级信息</button>
           <button class="layui-btn"><i class="layui-icon layui-icon-form"></i>下载班级信息导入模板</button>
           <button class="layui-btn"><i class="layui-icon layui-icon-export"></i>导出班级信息</button>
         </div>
       </div>
-      <div class="add-st-box layui-anim layui-anim-scale" id="addBox">
+      <div class="add-box layui-anim layui-anim-scale" id="addBox">
         <div class="header">
           <div>新增班级</div>
           <div onclick="abox.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
@@ -65,9 +66,19 @@
         </div>
         <div class="btn-box"><button class="layui-btn" onclick="addCl()">确定</button></button></div>
       </div>
-      <div class="change-st-box layui-anim layui-anim-scale" id="changeBox">
+      <div class="unbound-box layui-anim layui-anim-scale" id="unboundBox">
         <div class="header">
-          <div>修改学生信息</div>
+          <div id="headerTitle"></div>
+          <div onclick="ubb.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
+        </div>
+        <div class="article">
+          <table id="class-payment-template" lay-filter="test"></table>
+        </div>
+        <div class="btn-box"><button class="layui-btn" onclick="unTem()">禁用</button></button></div>
+      </div>
+      <div class="change-box layui-anim layui-anim-scale" id="changeBox">
+        <div class="header">
+          <div>修改班级信息</div>
           <div onclick="document.getElementById('changeBox').style.display = 'none'"><i
               class="layui-icon layui-icon-close"></i></div>
         </div>
@@ -204,7 +215,7 @@
       dtree: 'style/dtree/dtree'
     }).use(['dtree', 'layer', 'jquery'], function () {
       var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
-      
+
       // 初始化树
       var DemoTree = dtree.render({
         elem: "#demoTree",
@@ -361,9 +372,9 @@
 
       layui.use(['dtree', 'layer', 'jquery'], function () {
         var dtree = layui.dtree,
-            layer = layui.layer, 
-            $ = layui.jquery;
-            
+          layer = layui.layer,
+          $ = layui.jquery;
+
         // 初始化树
         var DemoTree = dtree.render({
           elem: "#demoTree",
@@ -391,7 +402,7 @@
   <script src="../../layuiadmin/modules/delete.js"></script>
   <script src="../../layuiadmin/modules/upload.js"></script>
   <script src="../../layuiadmin/modules/change.js"></script>
-  <script src="../../layuiadmin/modules/bind.js"></script>
+  <script src="../../layuiadmin/modules/bindOrUnbound.js"></script>
 </body>
 
 </html>
