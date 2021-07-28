@@ -1,12 +1,5 @@
 const sbt = document.getElementById("searchBt");
 let cdb = document.getElementById("condition");
-let conditionData = {
-    id: "",
-    name: "",
-    sex: "",
-    pid: "",
-    class: []
-};
 var classData = [];
 
 sbt.addEventListener("click", function () {
@@ -14,6 +7,8 @@ sbt.addEventListener("click", function () {
 });
 
 function searchSt() {
+    let conditionData = {};
+
     layui.use(['form', 'layer'], function () {
         var form = layui.form;
         var layer = layui.layer;
@@ -54,5 +49,31 @@ function searchSt() {
         } 
         console.log(conditionData);
     });
+
     reLoadTable();
+}
+
+function searchTe() {
+    let conditionData = {};
+    let validate = false;
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        var layer = layui.layer;
+
+        conditionData = form.val("conditionForm");
+
+        let sdate = Date.parse(conditionData.startDate),
+            edate = Date.parse(conditionData.endDate);
+        if(sdate > edate) {
+            layer.msg("结束时间要在开始时间之后");
+            return;
+        }
+
+        validate = true;
+
+        console.log(conditionData);
+    })
+    if(validate) {
+        reloadTable();
+    }
 }

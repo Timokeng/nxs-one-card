@@ -47,11 +47,58 @@
         <div class="layui-form-item input-box">
           <label class="layui-form-label">结束日期</label>
           <div class="layui-input-block">
-            <input id="endDate1" type="text" name="endDate" placeholder="数据格式:xx-xx-xx" autocomplete="off" class="layui-input">
+            <input id="endDate1" type="text" name="endDate" placeholder="数据格式:xx-xx-xx" autocomplete="off"
+              class="layui-input">
           </div>
         </div>
       </div>
       <div class="btn-box"><button class="layui-btn" onclick="addTe()">确定</button></button></div>
+    </div>
+    <div class="condition-box layui-anim layui-anim-scale" id="condition">
+      <div class="header">
+        <div>筛选条件</div>
+        <div onclick="abox.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
+      </div>
+      <div class="form-box layui-form" lay-filter="conditionForm">
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">模板名称</label>
+          <div class="layui-input-block">
+            <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">金额</label>
+          <div class="layui-input-block">
+            <input type="text" name="sum" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">开始日期</label>
+          <div class="layui-input-block">
+            <input id="startDate2" type="text" name="startDate" placeholder="数据格式:xx-xx-xx" autocomplete="off"
+              class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">结束日期</label>
+          <div class="layui-input-block">
+            <input id="endDate2" type="text" name="endDate" placeholder="数据格式:xx-xx-xx" autocomplete="off"
+              class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">状态</label>
+          <div class="layui-input-block">
+            <select name="status" lay-verify="required">
+              <option value=""></option>
+              <option value="0">过期</option>
+              <option value="1">可用</option>
+              <option value="2">全部</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="btn-box"><button class="layui-btn" onclick="searchTe()">确定</button></button></div>
     </div>
     <div class="table-box">
       <div class="header">模板信息</div>
@@ -95,7 +142,7 @@
           , { field: 'date', title: '创建日期', width: "15%", minWidth: 200, sort: true }
           , { field: 'end', title: '结束日期', width: "15%", minWidth: 200, sort: true }
           , { field: 'sum', title: '金额', width: "15%", minWidth: 150 }
-          , { field: 'status', title: '状态', width: "10%", minWidth: 150 }  
+          , { field: 'status', title: '状态', width: "10%", minWidth: 150 }
         ]]
       });
     });
@@ -111,6 +158,16 @@
         elem: '#endDate1', //指定元素
         type: 'date',
         min: 0,
+      });
+
+      laydate.render({
+        elem: '#endDate2', //指定元素
+        type: 'date',
+      });
+
+      laydate.render({
+        elem: '#startDate2', //指定元素
+        type: 'date',
       });
     });
     // --------------------日期与时间选择器（结束）------------------------
@@ -143,10 +200,10 @@
             { checkbox: true, width: "5%" }
             , { field: 'id', title: 'ID', width: "10%" }
             , { field: 'name', title: '收费项目', width: "30%", minWidth: 300 }
-            , { field: 'date', title: '创建日期', width: "20%", minWidth: 200, sort: true }
-            , { field: 'end', title: '结束日期', width: "20%", minWidth: 200, sort: true }
+            , { field: 'date', title: '创建日期', width: "15%", minWidth: 200, sort: true }
+            , { field: 'end', title: '结束日期', width: "15%", minWidth: 200, sort: true }
             , { field: 'sum', title: '金额', width: "15%", minWidth: 150 }
-            , { field: 'status', title: '状态', width: "10%", minWidth: 150 }  
+            , { field: 'status', title: '状态', width: "10%", minWidth: 150 }
           ]]
         });
       });

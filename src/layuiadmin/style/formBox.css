@@ -16,6 +16,9 @@
 .form-box .input-box .layui-input, .layui-textarea {
     width: 180px;
 }
+.form-box .input-box .layui-form-select .layui-edge {
+    right: 20px;
+}
 
 .btn-box {
     display: flex;
