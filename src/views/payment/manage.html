@@ -57,7 +57,7 @@
     <div class="condition-box layui-anim layui-anim-scale" id="condition">
       <div class="header">
         <div>筛选条件</div>
-        <div onclick="abox.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
+        <div onclick="cdb.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
       </div>
       <div class="form-box layui-form" lay-filter="conditionForm">
         <div class="layui-form-item input-box">
@@ -132,6 +132,7 @@
       //第一个实例
       table.render({
         elem: '#payment-template'
+        , id: 'idTest'
         , height: 475
         , data: tableDate
         , page: true //开启分页
@@ -193,6 +194,7 @@
         //第一个实例
         table.render({
           elem: '#payment-template'
+          , id: 'idTest'
           , height: 475
           , data: tableDate
           , page: true //开启分页
