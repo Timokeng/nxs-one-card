@@ -32,8 +32,8 @@
           <button id="addBt" class="layui-btn"><i class="layui-icon layui-icon-add-circle"></i>增加班级</button>
           <button id="deleteBt" class="layui-btn"><i class="layui-icon layui-icon-delete"></i>删除班级</button>
           <button id="changeBt" class="layui-btn"><i class="layui-icon layui-icon-edit"></i>修改班级</button>
-          <button class="layui-btn"><i class="layui-icon layui-icon-templeate-1"></i>绑定缴费模板</button>
-          <button id="uploadStBt" class="layui-btn"><i class="layui-icon layui-icon-upload-drag"></i>导入班级信息</button>
+          <button id="bindBt" class="layui-btn"><i class="layui-icon layui-icon-templeate-1"></i>绑定缴费模板</button>
+          <button id="uploadClBt" class="layui-btn"><i class="layui-icon layui-icon-upload-drag"></i>导入班级信息</button>
           <button class="layui-btn"><i class="layui-icon layui-icon-form"></i>下载班级信息导入模板</button>
           <button class="layui-btn"><i class="layui-icon layui-icon-export"></i>导出班级信息</button>
         </div>
@@ -245,6 +245,7 @@
       //第一个实例
       table.render({
         elem: '#payment-template'
+        , id: 'idTest'
         , height: 475
         , data: tableDate
         , page: true //开启分页
@@ -279,6 +280,7 @@
 
         table.render({
           elem: '#payment-template'
+          , id: 'idTest'
           , height: 475
           , data: tableDate2
           , page: true //开启分页
@@ -389,6 +391,7 @@
   <script src="../../layuiadmin/modules/delete.js"></script>
   <script src="../../layuiadmin/modules/upload.js"></script>
   <script src="../../layuiadmin/modules/change.js"></script>
+  <script src="../../layuiadmin/modules/bind.js"></script>
 </body>
 
 </html>

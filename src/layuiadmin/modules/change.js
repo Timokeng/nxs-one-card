@@ -47,8 +47,9 @@ changeBt.addEventListener("click", function () {
             school: {
                 name: scnode.context,
                 id: scnode.nodeId,
-            }
+            },
         };
+        changeClassInfo.totalName = changeClassInfo.school.name + " " + changeClassInfo.grade.name + " " + changeClassInfo.class.name;
 
         let changeInfo = {
             school: changeClassInfo.school.name,
@@ -78,7 +79,7 @@ function changeCl() {
             }
         }
         validate = true;
-        layer.msg("成功修改原 " + changeClassInfo.school.name + " " + changeClassInfo.grade.name + " " + changeClassInfo.class.name + " 的班级信息")
+        layer.msg("成功修改原 " + changeClassInfo.totalName + " 的班级信息")
     })
 
     if(validate) {
