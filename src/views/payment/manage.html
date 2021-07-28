@@ -100,6 +100,34 @@
       </div>
       <div class="btn-box"><button class="layui-btn" onclick="searchTe()">确定</button></button></div>
     </div>
+    <div class="change-box layui-anim layui-anim-scale" id="changeBox">
+      <div class="header">
+        <div>修改模板</div>
+        <div onclick="cdb.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
+      </div>
+      <div class="form-box layui-form" lay-filter="changeTeForm">
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">模板名称</label>
+          <div class="layui-input-block">
+            <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">金额</label>
+          <div class="layui-input-block">
+            <input type="text" name="sum" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">结束日期</label>
+          <div class="layui-input-block">
+            <input id="endDate3" type="text" name="endDate" placeholder="数据格式:xx-xx-xx" autocomplete="off"
+              class="layui-input">
+          </div>
+        </div>
+      </div>
+      <div class="btn-box"><button class="layui-btn" onclick="changeTe()">确定</button></button></div>
+    </div>
     <div class="table-box">
       <div class="header">模板信息</div>
       <div class="article">
@@ -169,6 +197,12 @@
       laydate.render({
         elem: '#startDate2', //指定元素
         type: 'date',
+      });
+
+      laydate.render({
+        elem: '#endDate3', //指定元素
+        type: 'date',
+        min: 0,
       });
     });
     // --------------------日期与时间选择器（结束）------------------------
