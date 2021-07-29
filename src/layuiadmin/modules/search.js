@@ -77,3 +77,21 @@ function searchTe() {
         reloadTable();
     }
 }
+
+function searchWx() {
+    let conditionData = {};
+    let validate = false;
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        var layer = layui.layer;
+
+        conditionData = form.val("conditionForm");
+
+        validate = true;
+
+        console.log(conditionData);
+    })
+    if(validate) {
+        reloadTable();
+    }
+}

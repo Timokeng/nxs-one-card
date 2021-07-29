@@ -64,5 +64,37 @@ deleteBt.addEventListener("click", function () {
                 },
             });
         })
+    } else if (deleteBt.innerText.indexOf('公众号') >= 0) {
+        let checkStatus = {},
+            validate = false;
+        layui.use(['layer', 'table'], function () {
+            var layer = layui.layer;
+            var table = layui.table;
+
+            checkStatus = table.checkStatus('idTest')
+            
+            if(checkStatus.data.length < 1) {
+                layer.msg('请至少选择一个有效公众号信息');
+                return;
+            }
+            validate = true;
+
+            layer.open({
+                type: 1,
+                content: '确定删除选中的 ' + checkStatus.data.length + '个公众号信息吗？',
+                skin: 'delete-confirm',
+                area: ['300px', '200px'],
+                btn: ['确定', '取消'],
+                yes: function (index, layero) {
+                    console.log('确定删除');
+                    reloadTable();
+                    layer.close(index);
+                },
+                btn2: function (index, layero) {
+                    console.log('取消删除');
+                    layer.close(index);
+                },
+            });
+        })
     }
 })

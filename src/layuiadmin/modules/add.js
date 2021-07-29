@@ -82,3 +82,27 @@ function addTe() {
         reloadTable();
     }
 }
+
+// 新增微信公众号号
+function addWx() {
+    let validate = false;
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        var layer = layui.layer;
+
+        addInfo = form.val("addWxForm");
+        for(let key in addInfo) {
+            if(!addInfo[key]) {
+                layer.msg("有必填数据为空");
+                validate = false;
+                return
+            }
+        }
+        validate = true;
+        layer.msg("成功添加公开ID为 " + addInfo.wxid + " 的微信公众号信息")
+        console.log(addInfo);
+    });
+    if(validate){
+        reloadTable();
+    }
+}
