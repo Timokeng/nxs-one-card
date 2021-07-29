@@ -1,0 +1,37 @@
+.side-upload {
+    background-color: #fff;
+    height: 80%;
+    width: 300px;
+    position: fixed;
+    right: 0;
+    top: 50px;
+    border: 1px solid #eee;
+    display: none;
+}
+
+.side-upload .article {
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.side-upload .article .upload-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 5px;
+    border: 1px solid #eee;
+}
+
+.side-upload .article .upload-item.ok:hover {
+    background-color: #eee;
+    cursor: pointer;
+}
+
+.side-upload .article .upload-item .item-status.doing {
+    color: #AA3130;
+}
+
+.side-upload .article .upload-item .item-status.ok {
+    color: rgb(95, 202, 166);
+}
