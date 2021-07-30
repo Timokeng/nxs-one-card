@@ -4,6 +4,7 @@ let cbox = document.getElementById("changeBox");
 let changeClassInfo = {};
 let changeTemplateInfo = {};
 let changeWxInfo = {};
+let changeUserInfo
 
 changeBt.addEventListener("click", function () {
     if (changeBt.innerText.indexOf('班级') >= 0) {
@@ -114,6 +115,29 @@ changeBt.addEventListener("click", function () {
             cbox.style.display = 'block';
             form.val("changeWxForm", changeWxInfo);
         })
+    } else if (changeBt.innerText.indexOf('使用者') >= 0) {
+        layui.use(['layer', 'table', 'form'], function () {
+            var layer = layui.layer;
+            var table = layui.table;
+            var form = layui.form;
+
+            let checkStatus = table.checkStatus('idTest');
+
+            if(checkStatus.data.length < 1) {
+                layer.msg("请至少选择一个有效使用者信息");
+                return;
+            }
+            if(checkStatus.data.length > 1) {
+                layer.msg("每次只能修改一个有效使用者信息");
+                return;
+            }
+
+            changeUserInfo = checkStatus.data[0];
+            console.log(changeUserInfo);
+
+            cbox.style.display = 'block';
+            form.val("changeUserForm", changeUserInfo);
+        })
     }
 })
 
@@ -183,6 +207,30 @@ function changeWx() {
         }
         validate = true;
         layer.msg("成功修改原公开id为 " + changeWxInfo.wxid + " 的公众号信息")
+    })
+
+    if (validate) {
+        reloadTable();
+    }
+}
+
+function changeUser() {
+    let newInfo = {};
+    let validate = false;
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        var layer = layui.layer;
+
+        newInfo = form.val("changeUserForm");
+        for (let key in newInfo) {
+            if (!newInfo[key]) {
+                layer.msg("有必填数据为空");
+                validate = false;
+                return
+            }
+        }
+        validate = true;
+        layer.msg("成功修改原姓名为 " + changeUserInfo.name + " 的使用者信息")
     })
 
     if (validate) {

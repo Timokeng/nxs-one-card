@@ -12,19 +12,218 @@
   <link rel="stylesheet" href="../../layuiadmin/style/dtree/dtree.css">
   <link rel="stylesheet" href="../../layuiadmin/style/dtree/font/dtreefont.css">
   <link rel="stylesheet" href="../../layuiadmin/style/admin.css">
+  <link rel="stylesheet" href="../../layuiadmin/style/wx.css">
+  <link rel="stylesheet" href="../../layuiadmin/style/formBox.css">
 </head>
 
 <body>
-    <div class="main-article">
-        权限管理
+  <div class="main-article">
+    <div class="func-box">
+      <div class="header">操作</div>
+      <div class="article">
+        <button id="addBt" class="layui-btn"><i class="layui-icon layui-icon-add-circle"></i>新增使用者</button>
+        <button id="deleteBt" class="layui-btn"><i class="layui-icon layui-icon-delete"></i>删除使用者</button>
+        <button id="changeBt" class="layui-btn"><i class="layui-icon layui-icon-edit"></i>修改使用者</button>
+        <button id="searchBt" class="layui-btn"><i class="layui-icon layui-icon-search"></i>查找使用者</button>
+        <button id="bindBt" class="layui-btn"><i class="layui-icon layui-icon-template-1"></i>配置使用者权限</button>
+      </div>
     </div>
-</body>
+    <div class="add-box layui-anim layui-anim-scale" id="addBox">
+      <div class="header">
+        <div>新增公众号</div>
+        <div onclick="abox.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
+      </div>
+      <div class="form-box layui-form" lay-filter="addUserForm">
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">姓名</label>
+          <div class="layui-input-block">
+            <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">所属机构</label>
+          <div class="layui-input-block">
+            <select id="orgSelect" name="organization" lay-verify="required">
+              <option value=""></option>
+              <option value="0">网融科技</option>
+              <option value="1">晋宁一中</option>
+              <option value="2">昆明二中</option>
+            </select>
+          </div>
+        </div>
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">角色</label>
+          <div class="layui-input-block">
+            <input type="text" name="role" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+      </div>
+      <div class="btn-box"><button class="layui-btn" onclick="addUser()">确定</button></button></div>
+    </div>
+    <div class="change-box layui-anim layui-anim-scale" id="changeBox">
+      <div class="header">
+        <div>修改公众号</div>
+        <div onclick="cbox.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
+      </div>
+      <div class="form-box layui-form" lay-filter="changeUserForm">
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">姓名</label>
+          <div class="layui-input-block">
+            <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">所属机构</label>
+          <div class="layui-input-block">
+            <select id="orgSelect" name="organization" lay-verify="required">
+              <option value=""></option>
+              <option value="0">网融科技</option>
+              <option value="1">晋宁一中</option>
+              <option value="2">昆明二中</option>
+            </select>
+          </div>
+        </div>
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">角色</label>
+          <div class="layui-input-block">
+            <input type="text" name="role" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+      </div>
+      <div class="btn-box"><button class="layui-btn" onclick="changeUser()">确定</button></button></div>
+    </div>
+    <div class="condition-box layui-anim layui-anim-scale" id="condition">
+      <div class="header">
+        <div>查找使用者</div>
+        <div onclick="cdb.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
+      </div>
+      <div class="form-box layui-form" lay-filter="conditionForm">
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">ID</label>
+          <div class="layui-input-block">
+            <input type="text" name="id" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">姓名</label>
+          <div class="layui-input-block">
+            <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">所属机构</label>
+          <div class="layui-input-block">
+            <select id="orgSelect" name="organization" lay-verify="required">
+              <option value=""></option>
+              <option value="0">网融科技</option>
+              <option value="1">晋宁一中</option>
+              <option value="2">昆明二中</option>
+            </select>
+          </div>
+        </div>
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">角色</label>
+          <div class="layui-input-block">
+            <input type="text" name="role" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+      </div>
+      <div class="btn-box"><button class="layui-btn" onclick="searchUser()">确定</button></button></div>
+    </div>
+    <div class="table-box">
+      <div class="header">使用者信息</div>
+      <div class="article">
+        <table id="users-table" lay-filter="test"></table>
+      </div>
+    </div>
+  </div>
 
-<script src="../../layuiadmin/layui/layui.js"></script>
-<script>
+  <script src="../../layuiadmin/layui/layui.js"></script>
+  <script>
     layui.config({
       base: '../../layuiadmin/' //静态资源所在路径
     }).extend({
       index: 'lib/index' //主入口模块
     }).use(['index', 'console']);
-</script>
+
+
+
+    // ----------table组件相关------------------
+    var tableDate = [
+      { id: 1, name: "张三", organization: "晋宁一中", role: "manger", jurisdiction: "一中，二中，三中" },
+      { id: 2, name: "李四", organization: "昆明三中", role: "manger", jurisdiction: "一中，二中，三中" },
+      { id: 3, name: "王五", organization: "师大附中", role: "manger", jurisdiction: "一中，二中，三中" },
+      { id: 4, name: "狗蛋", organization: "网融科技", role: "manger", jurisdiction: "一中，二中，三中" },
+    ]
+    //  初始化table
+    layui.use(['table', 'layer', 'form'], function () {
+      var table = layui.table;
+      var layer = layui.layer;
+      var form = layui.form;
+
+      //第一个实例
+      table.render({
+        elem: '#users-table'
+        , id: 'idTest'
+        , height: 475
+        , data: tableDate
+        , page: true //开启分页
+        , cols: [[ //表头
+          { checkbox: true, width: "5%" }
+          , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
+          , { field: 'name', title: '姓名', width: "10%", minWidth: 120 }
+          , { field: 'organization', title: '所属机构', width: "20%", minWidth: 240 }
+          , { field: 'role', title: '角色', width: "10%", minWidth: 120 }
+          , { field: 'jurisdiction', title: '管理院校', width: "50%", minWidth: 600 }
+        ]]
+      });
+    })
+    // ----------table组件相关（结束）------------------
+
+
+
+
+    // ----------------------部分独立方法---------------------------
+    function reloadTable() {
+      var tableDate = [
+        { id: 1, name: "张三", organization: "晋宁一中", role: "manger", jurisdiction: "一中，二中，三中" },
+        { id: 2, name: "李四", organization: "昆明三中", role: "manger", jurisdiction: "一中，二中，三中" },
+        { id: 3, name: "王五", organization: "师大附中", role: "manger", jurisdiction: "一中，二中，三中" },
+        { id: 4, name: "狗蛋", organization: "网融科技", role: "manger", jurisdiction: "一中，二中，三中" },
+        { id: 5, name: "来福", organization: "网融科技", role: "manger", jurisdiction: "一中，二中，三中" },
+      ]
+      //  初始化table
+      layui.use(['table', 'layer', 'form'], function () {
+        var table = layui.table;
+        var layer = layui.layer;
+        var form = layui.form;
+
+        //第一个实例
+        table.render({
+          elem: '#users-table'
+          , id: 'idTest'
+          , height: 475
+          , data: tableDate
+          , page: true //开启分页
+          , cols: [[ //表头
+            { checkbox: true, width: "5%" }
+            , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
+            , { field: 'name', title: '姓名', width: "10%", minWidth: 120 }
+            , { field: 'organization', title: '所属机构', width: "20%", minWidth: 240 }
+            , { field: 'role', title: '角色', width: "10%", minWidth: 120 }
+            , { field: 'jurisdiction', title: '管理院校', width: "50%", minWidth: 600 }
+          ]]
+        });
+      })
+    }
+    // ----------------------部分独立方法（结束）---------------------------
+  </script>
+  <script src="../../layuiadmin/modules/add.js"></script>
+  <script src="../../layuiadmin/modules/delete.js"></script>
+  <script src="../../layuiadmin/modules/search.js"></script>
+  <script src="../../layuiadmin/modules/change.js"></script>
+</body>
+
+
+
+</html>

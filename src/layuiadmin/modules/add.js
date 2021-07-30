@@ -83,7 +83,7 @@ function addTe() {
     }
 }
 
-// 新增微信公众号号
+// 新增微信公众号
 function addWx() {
     let validate = false;
     layui.use(['form', 'layer'], function () {
@@ -106,3 +106,28 @@ function addWx() {
         reloadTable();
     }
 }
+
+// 新增用户
+function addUser() {
+    let validate = false;
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        var layer = layui.layer;
+
+        addInfo = form.val("addUserForm");
+        for(let key in addInfo) {
+            if(!addInfo[key]) {
+                layer.msg("有必填数据为空");
+                validate = false;
+                return
+            }
+        }
+        validate = true;
+        layer.msg("成功添加名为 " + addInfo.name + " 的用户信息")
+        console.log(addInfo);
+    });
+    if(validate){
+        reloadTable();
+    }
+}
+
