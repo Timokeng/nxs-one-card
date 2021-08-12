@@ -67,6 +67,7 @@ html, body {
     flex: auto;
     display: flex;
     flex-direction: column;
+    overflow: auto;
 }
 
 .main-article .right .table-box .article {

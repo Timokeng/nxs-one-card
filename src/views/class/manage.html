@@ -19,12 +19,12 @@
 <body>
 
   <div class="main-article">
-    <div class="left">
+    <!-- <div class="left">
       <div class="header">机构选择</div>
       <div class="tree-box">
         <ul id="demoTree" class="dtree" data-id="0"></ul>
       </div>
-    </div>
+    </div> -->
     <div class="right">
       <div class="func-box">
         <div class="header">操作</div>
@@ -32,8 +32,6 @@
           <button id="addBt" class="layui-btn"><i class="layui-icon layui-icon-add-circle"></i>增加班级</button>
           <button id="deleteBt" class="layui-btn"><i class="layui-icon layui-icon-delete"></i>删除班级</button>
           <button id="changeBt" class="layui-btn"><i class="layui-icon layui-icon-edit"></i>修改班级</button>
-          <button id="bindBt" class="layui-btn"><i class="layui-icon layui-icon-template-1"></i>绑定缴费模板</button>
-          <button id="unboundBt" class="layui-btn"><i class="layui-icon layui-icon-close-fill"></i>禁用缴费模板</button>
           <button id="uploadClBt" class="layui-btn"><i class="layui-icon layui-icon-upload-drag"></i>导入班级信息</button>
           <button class="layui-btn"><i class="layui-icon layui-icon-form"></i>下载班级信息导入模板</button>
           <button class="layui-btn"><i class="layui-icon layui-icon-export"></i>导出班级信息</button>
@@ -105,10 +103,13 @@
         <div class="btn-box"><button class="layui-btn" onclick="changeCl()">确定</button></button></div>
       </div>
       <div class="table-box">
-        <div class="header">可用缴费模板</div>
-        <div class="article">
-          <table id="payment-template" lay-filter="test"></table>
+        <div class="header">班级选择</div>
+        <div class="tree-box">
+          <ul id="demoTree" class="dtree" data-id="0"></ul>
         </div>
+        <!-- <div class="article">
+          <table id="payment-template" lay-filter="test"></table>
+        </div> -->
       </div>
     </div>
   </div>
@@ -402,7 +403,6 @@
   <script src="../../layuiadmin/modules/delete.js"></script>
   <script src="../../layuiadmin/modules/upload.js"></script>
   <script src="../../layuiadmin/modules/change.js"></script>
-  <script src="../../layuiadmin/modules/bindOrUnbound.js"></script>
 </body>
 
 </html>
