@@ -11,6 +11,7 @@ html, body {
     overflow: auto;
     height: 100%;
     box-sizing: border-box;
+    position: relative;
 }
 
 .header {

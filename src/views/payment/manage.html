@@ -10,8 +10,11 @@
     content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
   <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/dtree/dtree.css">
+  <link rel="stylesheet" href="../../layuiadmin/style/dtree/font/dtreefont.css">
   <link rel="stylesheet" href="../../layuiadmin/style/payment.css">
   <link rel="stylesheet" href="../../layuiadmin/style/formBox.css">
+  <link rel="stylesheet" href="../../layuiadmin/style/dialog.css">
 </head>
 
 <body>
@@ -134,6 +137,23 @@
         <table id="payment-template" lay-filter="test"></table>
       </div>
     </div>
+    <div id="dialong-box" class="dialog-box">
+      <div id="dialog-article" class="dialog-article">
+        <div class="left">
+          <div class="header">可选机构</div>
+          <div class="dialog-tree-box">
+            <ul id="cskTree1" class="dtree" data-id="0"></ul>
+          </div>
+        </div>
+        <div class="center"></div>
+        <div class="right">
+          <div class="header">已启用机构</div>
+          <div class="dialog-tree-box">
+            <ul id="cskTree2" class="dtree" data-id="-1"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="../../layuiadmin/layui/layui.js"></script>
@@ -250,6 +270,7 @@
   <script src="../../layuiadmin/modules/delete.js"></script>
   <script src="../../layuiadmin/modules/search.js"></script>
   <script src="../../layuiadmin/modules/change.js"></script>
+  <script src="../../layuiadmin/modules/bindOrUnbound.js"></script>
 </body>
 
 </html>
