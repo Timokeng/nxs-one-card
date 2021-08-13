@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../../layuiadmin/style/admin.css">
   <link rel="stylesheet" href="../../layuiadmin/style/wx.css">
   <link rel="stylesheet" href="../../layuiadmin/style/formBox.css">
+  <link rel="stylesheet" href="../../layuiadmin/style/dialog.css">
 </head>
 
 <body>
@@ -136,6 +137,29 @@
         <table id="users-table" lay-filter="test"></table>
       </div>
     </div>
+    <div id="dialong-box" class="dialog-box">
+      <div id="dialog-article" class="dialog-article">
+        <div class="left">
+          <div class="header">可选机构</div>
+          <div class="dialog-tree-box">
+            <ul id="cskTree1" class="dtree" data-id="0"></ul>
+          </div>
+        </div>
+        <div class="center">
+          <div class="dialog-btn-box">
+            <button id="bindCl" class="layui-btn" onclick="bindCl(0)">启用班级<i class="layui-icon layui-icon-next"></i></button>
+            <button id="unboundCl" class="layui-btn"><i class="layui-icon layui-icon-prev"></i>禁用班级</button>
+            <button id="close-bind-dialog" class="layui-btn" onclick="dlb.style.display = 'none'"><i class="layui-icon layui-icon-close"></i>关闭</button>
+          </div>
+        </div>
+        <div class="right">
+          <div class="header">已启用机构</div>
+          <div class="dialog-tree-box">
+            <ul id="cskTree2" class="dtree" data-id="-1"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="../../layuiadmin/layui/layui.js"></script>
@@ -222,6 +246,7 @@
   <script src="../../layuiadmin/modules/delete.js"></script>
   <script src="../../layuiadmin/modules/search.js"></script>
   <script src="../../layuiadmin/modules/change.js"></script>
+  <script src="../../layuiadmin/modules/bindOrUnbound.js"></script>
 </body>
 
 

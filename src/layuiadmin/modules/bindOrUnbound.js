@@ -1,11 +1,16 @@
 let dlb = document.getElementById("dialong-box");
 let dla = document.getElementById("dialog-article");
+const bb = document.getElementById("bindBt");
 
-dlb.addEventListener("click", function(e){
+bb.addEventListener("click", function () {
+    dlb.style.display = 'flex';
+});
+
+dlb.addEventListener("click", function (e) {
     dlb.style.display = 'none';
 })
 
-dla.addEventListener("click", function(e){
+dla.addEventListener("click", function (e) {
     e.stopPropagation();
 })
 
@@ -118,7 +123,9 @@ layui.extend({
         elem: "#cskTree2",
         data: [], // 使用data加载
         checkbar: true,
-        checkbarType: "no-all",
+
+        response: { treeId: "nodeId", title: "context", parentId: "parentId" },
+        dataFormat: "list"
         // checkbarFun: {
         //   chooseDone: function (checkbarNodesParam) {
         //     classData = checkbarNodesParam;
@@ -127,4 +134,42 @@ layui.extend({
         //   }
         // },
     });
+
+    // $("#bindCl").click(function () {
+    //     var param = dtree.getCheckbarNodesParam("cskTree1");  // 获取选中数据
+    //     if (param.length == 0) {
+    //         layer.msg("请至少选择一个节点");
+    //     }
+
+    //     param.forEach(item => {
+    //         if (item.parentId == "undefined") {
+    //             item.parentId = '-1';
+    //         }
+    //     })
+
+    //     dtree.reload("cskTree2", { data: param });
+    // });
+
 })
+
+
+// num用来判断是那个页面的业务，从而对应正确接口
+function bindCl(num) {
+    layui.use(['dtree', 'layer', 'jquery'], function () {
+        var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
+
+        var param = dtree.getCheckbarNodesParam("cskTree1");  // 获取选中数据
+        if (param.length == 0) {
+            layer.msg("请至少选择一个节点");
+        }
+
+        param.forEach(item => {
+            if (item.parentId == "undefined") {
+                item.parentId = '-1';
+            }
+        })
+
+        dtree.reload("cskTree2", { data: param });
+
+    })
+}

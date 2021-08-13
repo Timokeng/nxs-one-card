@@ -27,6 +27,7 @@
         <button id="deleteBt" class="layui-btn"><i class="layui-icon layui-icon-delete"></i>删除缴费模板</button>
         <button id="changeBt" class="layui-btn"><i class="layui-icon layui-icon-edit"></i>修改缴费模板</button>
         <button id="searchBt" class="layui-btn"><i class="layui-icon layui-icon-search"></i>查找缴费模板</button>
+        <button id="bindBt" class="layui-btn"><i class="layui-icon layui-icon-template-1"></i>配置模板启用机构</button>
       </div>
     </div>
     <div class="add-box layui-anim layui-anim-scale" id="addBox">
@@ -145,7 +146,13 @@
             <ul id="cskTree1" class="dtree" data-id="0"></ul>
           </div>
         </div>
-        <div class="center"></div>
+        <div class="center">
+          <div class="dialog-btn-box">
+            <button id="bindCl" class="layui-btn" onclick="bindCl(0)">启用班级<i class="layui-icon layui-icon-next"></i></button>
+            <button id="unboundCl" class="layui-btn"><i class="layui-icon layui-icon-prev"></i>禁用班级</button>
+            <button id="close-bind-dialog" class="layui-btn" onclick="dlb.style.display = 'none'"><i class="layui-icon layui-icon-close"></i>关闭</button>
+          </div>
+        </div>
         <div class="right">
           <div class="header">已启用机构</div>
           <div class="dialog-tree-box">
