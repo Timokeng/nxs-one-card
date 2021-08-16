@@ -152,3 +152,42 @@ function exportCl() {
 
   list.appendChild(item);
 }
+
+function exportLi() {
+  let onlyClass = classData.filter((item) => {
+    return item.leaf;
+  })
+
+  if (onlyClass.length < 1) {
+    msg("请至少选择一个有效班级导出班级缴费记录");
+    return;
+  }
+
+  // 节流
+  if (timeout) {
+    msg("请勿频繁进行重复操作，容易导致系统卡顿");
+    return
+  }
+  timeout = setTimeout(() => {
+    timeout = null;
+  }, 5000);
+
+  sub.style.display = 'block';
+
+  var list = document.getElementById("uploadList")
+
+  var item = document.createElement("div");
+
+  let id = `uploadItem${list.children.length}`;
+  let date = new Date();
+
+  item.id = id;
+  item.className = "upload-item";
+
+  item.innerHTML = `
+    <div class="item-title">缴费记录表 ${date.toLocaleDateString()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</div>
+    <div class="item-status doing">准备中</div>
+  `;
+
+  list.appendChild(item);
+}
