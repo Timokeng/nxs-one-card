@@ -28,6 +28,7 @@
         <button id="changeBt" class="layui-btn"><i class="layui-icon layui-icon-edit"></i>修改缴费模板</button>
         <button id="searchBt" class="layui-btn"><i class="layui-icon layui-icon-search"></i>查找缴费模板</button>
         <button id="bindBt" class="layui-btn"><i class="layui-icon layui-icon-template-1"></i>配置模板启用机构</button>
+        <button id="detailBt" class="layui-btn"><i class="layui-icon layui-icon-survey"></i>查看费用明细</button>
       </div>
     </div>
     <div class="add-box layui-anim layui-anim-scale" id="addBox">
@@ -140,23 +141,51 @@
     </div>
     <div id="dialong-box" class="dialog-box">
       <div id="dialog-article" class="dialog-article">
-        <div class="left">
-          <div class="header">可选机构</div>
-          <div class="dialog-tree-box">
-            <ul id="cskTree1" class="dtree" data-id="0"></ul>
+        <div id="dialog-tree-fuc-box" class="dialog-tree-fuc-box">
+          <div class="left">
+            <div class="header">可选机构</div>
+            <div class="dialog-tree-box">
+              <ul id="cskTree1" class="dtree" data-id="0"></ul>
+            </div>
+          </div>
+          <div class="center">
+            <div class="dialog-btn-box">
+              <button id="bindCl" class="layui-btn" onclick="bindCl(0)">启用班级<i
+                  class="layui-icon layui-icon-next"></i></button>
+              <button id="unboundCl" class="layui-btn"><i class="layui-icon layui-icon-prev"></i>禁用班级</button>
+              <button id="close-bind-dialog" class="layui-btn" onclick="dlb.style.display = 'none'"><i
+                  class="layui-icon layui-icon-close"></i>关闭</button>
+            </div>
+          </div>
+          <div class="right">
+            <div class="header">已启用机构</div>
+            <div class="dialog-tree-box">
+              <ul id="cskTree2" class="dtree" data-id="-1"></ul>
+            </div>
           </div>
         </div>
-        <div class="center">
-          <div class="dialog-btn-box">
-            <button id="bindCl" class="layui-btn" onclick="bindCl(0)">启用班级<i class="layui-icon layui-icon-next"></i></button>
-            <button id="unboundCl" class="layui-btn"><i class="layui-icon layui-icon-prev"></i>禁用班级</button>
-            <button id="close-bind-dialog" class="layui-btn" onclick="dlb.style.display = 'none'"><i class="layui-icon layui-icon-close"></i>关闭</button>
+        <div id="dialog-detail-fuc-box" class="dialog-detail-fuc-box">
+          <div class="header">
+            <div class="title">费用明细</div>
+            <div onclick="dlb.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
           </div>
-        </div>
-        <div class="right">
-          <div class="header">已启用机构</div>
-          <div class="dialog-tree-box">
-            <ul id="cskTree2" class="dtree" data-id="-1"></ul>
+          <div class="detail-list">
+            <div class="detail-item">
+              <div class="name">学费</div>
+              <div class="num">2000</div>
+            </div>
+            <div class="detail-item">
+              <div class="name">书费</div>
+              <div class="num">1500</div>
+            </div>
+            <div class="detail-item">
+              <div class="name">杂费</div>
+              <div class="num">1000</div>
+            </div>
+            <div class="detail-sum">
+              <div class>总计：</div>
+              <div class="num">4500（元）</div>
+            </div>
           </div>
         </div>
       </div>
