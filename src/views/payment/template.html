@@ -46,18 +46,21 @@
         <div class="layui-form-item input-box">
           <label class="layui-form-label">金额</label>
           <div class="layui-input-block">
-            <input type="text" name="sum" placeholder="请输入" autocomplete="off" class="layui-input">
+            <input id="addSum" type="text" disabled name="sum" placeholder="点击配置金额按钮设置" autocomplete="off" class="layui-input">
           </div>
         </div>
         <div class="layui-form-item input-box">
           <label class="layui-form-label">结束日期</label>
           <div class="layui-input-block">
-            <input id="endDate1" type="text" name="endDate" placeholder="数据格式:xx-xx-xx" autocomplete="off"
+            <input id="endDate1" type="text" name="endDate" placeholder="点击设置" autocomplete="off"
               class="layui-input">
           </div>
         </div>
       </div>
-      <div class="btn-box"><button class="layui-btn" onclick="addTe()">确定</button></div>
+      <div class="btn-box">
+        <button class="layui-btn" onclick="handleSetDetail(0)">配置金额</button>
+        <button class="layui-btn" onclick="addTe()">确定</button>
+      </div>
     </div>
     <div class="condition-box layui-anim layui-anim-scale" id="condition">
       <div class="header">
@@ -120,7 +123,7 @@
         <div class="layui-form-item input-box">
           <label class="layui-form-label">金额</label>
           <div class="layui-input-block">
-            <input type="text" name="sum" placeholder="请输入" autocomplete="off" class="layui-input">
+            <input type="text" name="sum" disabled placeholder="请输入" autocomplete="off" class="layui-input">
           </div>
         </div>
         <div class="layui-form-item input-box">
@@ -153,7 +156,7 @@
               <button id="bindCl" class="layui-btn" onclick="bindCl(0)">启用班级<i
                   class="layui-icon layui-icon-next"></i></button>
               <button id="unboundCl" class="layui-btn"><i class="layui-icon layui-icon-prev"></i>禁用班级</button>
-              <button id="close-bind-dialog" class="layui-btn" onclick="dlb.style.display = 'none'"><i
+              <button id="close-bind-dialog" class="layui-btn" onclick="closeDialog()"><i
                   class="layui-icon layui-icon-close"></i>关闭</button>
             </div>
           </div>
@@ -167,7 +170,7 @@
         <div id="dialog-detail-fuc-box" class="dialog-detail-fuc-box">
           <div class="header">
             <div class="title">费用明细</div>
-            <div onclick="dlb.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
+            <div onclick="closeDialog()"><i class="layui-icon layui-icon-close"></i></div>
           </div>
           <div class="detail-list">
             <div class="detail-item">
@@ -186,6 +189,19 @@
               <div class>总计：</div>
               <div class="num">4500（元）</div>
             </div>
+          </div>
+        </div>
+        <div id="dialog-set-detail-box" class="dialog-set-detail-box">
+          <div class="header">
+            <div class="title">配置金额</div>
+            <div onclick="closeDialog()"><i class="layui-icon layui-icon-close"></i></div>
+          </div>
+          <div class="projects-box">
+          </div>
+          <div class="btn-box">
+            <button class="layui-btn" onclick="addDetailProject()">新增项目</button>
+            <button class="layui-btn" onclick="deleteDetailProject()">删除项目</button>
+            <button class="layui-btn" onclick="getDatailData()">确定</button>
           </div>
         </div>
       </div>
@@ -308,6 +324,7 @@
   <script src="../../layuiadmin/modules/change.js"></script>
   <script src="../../layuiadmin/modules/dialog.js"></script>
   <script src="../../layuiadmin/modules/bindOrUnbound.js"></script>
+  <script src="../../layuiadmin/modules/paymentDetail.js"></script>
 </body>
 
 </html>

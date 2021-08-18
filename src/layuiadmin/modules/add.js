@@ -1,6 +1,5 @@
 const addBt = document.getElementById("addBt");
 let abox = document.getElementById("addBox");
-let addInfo = {};
 
 addBt.addEventListener("click", function(){
     abox.style.display = "block";
@@ -9,6 +8,7 @@ addBt.addEventListener("click", function(){
 // 新增学生
 function addSt() {
     let validate = false;
+    let addInfo = {};
     layui.use(['form', 'layer'], function () {
         var form = layui.form;
         var layer = layui.layer;
@@ -38,6 +38,7 @@ function addSt() {
 // 新增班级
 function addCl() {
     let validate = false;
+    let addInfo = {};
     layui.use(['form', 'layer'], function () {
         var form = layui.form;
         var layer = layui.layer;
@@ -62,6 +63,7 @@ function addCl() {
 // 新增模板
 function addTe() {
     let validate = false;
+    let addInfo = {};
     layui.use(['form', 'layer'], function () {
         var form = layui.form;
         var layer = layui.layer;
@@ -86,6 +88,7 @@ function addTe() {
 // 新增微信公众号
 function addWx() {
     let validate = false;
+    let addInfo = {};
     layui.use(['form', 'layer'], function () {
         var form = layui.form;
         var layer = layui.layer;
@@ -110,6 +113,7 @@ function addWx() {
 // 新增用户
 function addUser() {
     let validate = false;
+    let addInfo = {};
     layui.use(['form', 'layer'], function () {
         var form = layui.form;
         var layer = layui.layer;
