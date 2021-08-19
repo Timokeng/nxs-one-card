@@ -6,7 +6,7 @@ addBt.addEventListener("click", function(){
     cbox.style.display = "none";
 
     // 判断是不是存在detail相关功能
-    if(pb) {
+    if(addBt.innerText.indexOf("模板") != -1) {
         pb.innerHTML = "";
         detailData = [];
         detailDataTo = -1;
