@@ -57,7 +57,6 @@ if (db) {
             var table = layui.table;
 
             checkStatus = table.checkStatus('idTest');
-            console.log(checkStatus);
 
             if (checkStatus.data.length < 1) {
                 layer.msg('请至少选择一个模板');
@@ -83,26 +82,19 @@ if (db) {
 
 // num用于判断是新增模板，还是修改模板
 function handleSetDetail(num) {
-    if (num == 0) {
-        dlb.style.display = 'flex';
-        for (let i = 0; i < dla.children.length; i++) {
-            dla.children[i].style.display = 'none';
-        }
-        dls.style.display = 'block';
-        ma.style.overflow = 'hidden';
-        if(ph.children.length < 1) {
-            addDetailProject();
-        }
-        detailDataTo = num;
-    } else {
-        dlb.style.display = 'flex';
-        for (let i = 0; i < dla.children.length; i++) {
-            dla.children[i].style.display = 'none';
-        }
-        dls.style.display = 'block';
-        ma.style.overflow = 'hidden';
-        detailDataTo = num;
+    dlb.style.display = 'flex';
+    for (let i = 0; i < dla.children.length; i++) {
+        dla.children[i].style.display = 'none';
     }
+    dls.style.display = 'block';
+    ma.style.overflow = 'hidden';
+    if(detailDataTo == -1 && detailData.length > 0) {
+        rewriteDetailProject();
+    }
+    if(pb.children.length < 1) {
+        addDetailProject();
+    }
+    detailDataTo = num;
 }
 
 

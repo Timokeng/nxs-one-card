@@ -3,6 +3,15 @@ let abox = document.getElementById("addBox");
 
 addBt.addEventListener("click", function(){
     abox.style.display = "block";
+    cbox.style.display = "none";
+
+    // 判断是不是存在detail相关功能
+    if(pb) {
+        pb.innerHTML = "";
+        detailData = [];
+        detailDataTo = -1;
+        document.getElementById("addSum").value = '';
+    }
 })
 
 // 新增学生

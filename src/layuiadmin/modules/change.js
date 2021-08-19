@@ -62,6 +62,7 @@ changeBt.addEventListener("click", function () {
             }
 
             cbox.style.display = 'block';
+            abox.style.display = "none";
             form.val("changeClForm", changeInfo);
         })
     } else if (changeBt.innerText.indexOf('模板') >= 0) {
@@ -81,7 +82,13 @@ changeBt.addEventListener("click", function () {
                 return;
             }
 
+            // 初始化缴费模板的细节设置功能
+            detailDataTo = -1;
+            detailData = [];
+            pb.innerHTML = '';
+
             changeTemplateInfo = checkStatus.data[0];
+            // 这里要写一段数据写入，把明细部分数据写入detailData
             
             let changeInfo = {
                 name: changeTemplateInfo.name,
@@ -90,6 +97,7 @@ changeBt.addEventListener("click", function () {
             }
 
             cbox.style.display = 'block';
+            abox.style.display = "none";
             form.val("changeTeForm", changeInfo);
         })
     } else if (changeBt.innerText.indexOf('公众号') >= 0) {
@@ -136,6 +144,7 @@ changeBt.addEventListener("click", function () {
             console.log(changeUserInfo);
 
             cbox.style.display = 'block';
+            abox.style.display = "none";
             form.val("changeUserForm", changeUserInfo);
         })
     }
