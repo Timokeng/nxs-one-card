@@ -138,6 +138,7 @@ layui.extend({
 
 
 // num用来判断是那个页面的业务，从而对应正确接口
+// 一个是模板界面，一个是权限界面
 function bindCl(num) {
     layui.use(['dtree', 'layer', 'jquery'], function () {
         var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;

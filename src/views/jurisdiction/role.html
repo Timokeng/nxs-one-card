@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>角色管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../layuiadmin/style/dtree/dtree.css">
+    <link rel="stylesheet" href="../../layuiadmin/style/dtree/font/dtreefont.css">
+    <link rel="stylesheet" href="../../layuiadmin/style/admin.css">
+    <link rel="stylesheet" href="../../layuiadmin/style/wx.css">
+    <link rel="stylesheet" href="../../layuiadmin/style/formBox.css">
+    <link rel="stylesheet" href="../../layuiadmin/style/dialog.css">
+</head>
+
+<body>
+    <div class="main-article">
+        <div class="func-box">
+            <div class="header">操作</div>
+            <div class="article">
+                <button id="addBt" class="layui-btn"><i class="layui-icon layui-icon-add-circle"></i>新增角色</button>
+                <button id="deleteBt" class="layui-btn"><i class="layui-icon layui-icon-delete"></i>删除角色</button>
+                <button id="changeBt" class="layui-btn"><i class="layui-icon layui-icon-edit"></i>修改角色</button>
+                <button id="searchBt" class="layui-btn"><i class="layui-icon layui-icon-search"></i>查找角色</button>
+            </div>
+        </div>
+        <div class="add-box layui-anim layui-anim-scale" id="addBox">
+            <div class="header">
+                <div>新增角色</div>
+                <div onclick="abox.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
+            </div>
+            <div class="form-box layui-form" lay-filter="addRoleForm">
+                <div class="layui-form-item input-box">
+                    <label class="layui-form-label">角色名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item input-box">
+                    <label class="layui-form-label">菜单权限</label>
+                    <div class="layui-input-block">
+                        <input type="text" disabled name="nav" placeholder="点击下方按钮配置" autocomplete="off"
+                            class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="btn-box">
+                <button class="layui-btn" onclick="handleSetNav(0)">配置菜单权限</button>
+                <button class="layui-btn" onclick="addRole()">确定</button>
+            </div>
+        </div>
+        <div class="change-box layui-anim layui-anim-scale" id="changeBox">
+            <div class="header">
+                <div>修改公众号</div>
+                <div onclick="cbox.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
+            </div>
+            <div class="form-box layui-form" lay-filter="changeRoleForm">
+                <div class="layui-form-item input-box">
+                    <label class="layui-form-label">角色名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item input-box">
+                    <label class="layui-form-label">菜单权限</label>
+                    <div class="layui-input-block">
+                        <input type="text" disabled name="nav" placeholder="点击下方按钮配置" autocomplete="off"
+                            class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="btn-box">
+                <button class="layui-btn" onclick="handleSetNav(1)">配置菜单权限</button>
+                <button class="layui-btn" onclick="">确定</button>
+            </div>
+        </div>
+        <div class="condition-box layui-anim layui-anim-scale" id="condition">
+            <div class="header">
+                <div>查找角色</div>
+                <div onclick="cdb.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
+            </div>
+            <div class="form-box layui-form" lay-filter="conditionForm">
+                <div class="layui-form-item input-box">
+                    <label class="layui-form-label">角色名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="btn-box"><button class="layui-btn" onclick="searchUser()">确定</button></div>
+        </div>
+        <div class="table-box">
+            <div class="header">角色信息</div>
+            <div class="article">
+                <table id="users-table" lay-filter="test"></table>
+            </div>
+        </div>
+        <div id="dialong-box" class="dialog-box">
+            <div id="dialog-article" class="dialog-article">
+                <div id="dialog-tree-fuc-box" class="dialog-tree-fuc-box">
+                    <div class="left">
+                        <div class="header">可选菜单</div>
+                        <div class="dialog-tree-box">
+                            <ul id="cskTree1" class="dtree" data-id="0"></ul>
+                        </div>
+                    </div>
+                    <div class="center">
+                        <div class="dialog-btn-box">
+                            <button id="bindCl" class="layui-btn" onclick="useNav()">启用菜单<i
+                                    class="layui-icon layui-icon-next"></i></button>
+                            <button id="unboundCl" class="layui-btn"><i
+                                    class="layui-icon layui-icon-prev"></i>禁用菜单</button>
+                            <button id="close-bind-dialog" class="layui-btn" onclick="closeDialog()"><i
+                                    class="layui-icon layui-icon-close"></i>关闭</button>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="header">已启用菜单</div>
+                        <div class="dialog-tree-box">
+                            <ul id="cskTree2" class="dtree" data-id="-1"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.config({
+            base: '../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index', //主入口模块
+        }).use(['index', 'console']);
+
+
+
+        // ----------table组件相关------------------
+        var tableDate = [
+            { id: 1, name: "管理员", navs: "主页，班级管理，学生管理，缴费管理", navsId: [1,2,3,4] },
+            { id: 2, name: "老师", navs: "主页，班级管理，学生管理，缴费管理" },
+            { id: 3, name: "超级管理员", navs: "主页，班级管理，学生管理，缴费管理" },
+        ]
+        // 初始化table
+        layui.use(['table', 'layer', 'form'], function () {
+            var table = layui.table;
+            var layer = layui.layer;
+            var form = layui.form;
+
+            // 第一个实例
+            table.render({
+                elem: '#users-table'
+                , id: 'idTest'
+                , height: 475
+                , data: tableDate
+                , page: true // 开启分页
+                , cols: [[ // 表头
+                    { checkbox: true, width: "5%" }
+                    , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
+                    , { field: 'name', title: '角色名', width: "15%", minWidth: 180 }
+                    , { field: 'navs', title: '菜单权限', width: "75%" }
+                ]]
+            });
+        })
+        // ----------table组件相关（结束）------------------
+
+
+
+
+        // ----------------------部分独立方法---------------------------
+        function reloadTable() {
+            var tableDate = [
+                { id: 1, name: "张三", organization: "晋宁一中", role: "manger", jurisdiction: "一中，二中，三中" },
+                { id: 2, name: "李四", organization: "昆明三中", role: "manger", jurisdiction: "一中，二中，三中" },
+                { id: 3, name: "王五", organization: "师大附中", role: "manger", jurisdiction: "一中，二中，三中" },
+                { id: 4, name: "狗蛋", organization: "网融科技", role: "manger", jurisdiction: "一中，二中，三中" },
+                { id: 5, name: "来福", organization: "网融科技", role: "manger", jurisdiction: "一中，二中，三中" },
+            ]
+            //  初始化table
+            layui.use(['table', 'layer', 'form'], function () {
+                var table = layui.table;
+                var layer = layui.layer;
+                var form = layui.form;
+
+                //第一个实例
+                table.render({
+                    elem: '#users-table'
+                    , id: 'idTest'
+                    , height: 475
+                    , data: tableDate
+                    , page: true //开启分页
+                    , cols: [[ //表头
+                        { checkbox: true, width: "5%" }
+                        , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
+                        , { field: 'name', title: '角色名', width: "10%", minWidth: 120 }
+                        , { field: 'organization', title: '所属机构', width: "20%", minWidth: 240 }
+                        , { field: 'role', title: '角色', width: "10%", minWidth: 120 }
+                        , { field: 'jurisdiction', title: '管理院校', width: "50%", minWidth: 600 }
+                    ]]
+                });
+            })
+        }
+    // ----------------------部分独立方法（结束）---------------------------
+    </script>
+    <script src="../../layuiadmin/modules/add.js"></script>
+    <script src="../../layuiadmin/modules/delete.js"></script>
+    <script src="../../layuiadmin/modules/search.js"></script>
+    <script src="../../layuiadmin/modules/change.js"></script>
+    <script src="../../layuiadmin/modules/dialog.js"></script>
+    <script src="../../layuiadmin/modules/setNav.js"></script>
+</body>
+
+
+
+</html>

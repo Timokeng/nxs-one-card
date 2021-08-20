@@ -39,6 +39,7 @@ if (bb) {
         })
         if (validate) {
             dlb.style.display = 'flex';
+            ma.style.overflow = 'hidden';
             for (let i = 0; i < dla.children.length; i++) {
                 dla.children[i].style.display = 'none';
             }
@@ -70,6 +71,7 @@ if (db) {
         })
         if (validate) {
             dlb.style.display = 'flex';
+            ma.style.overflow = 'hidden';
             for (let i = 0; i < dla.children.length; i++) {
                 dla.children[i].style.display = 'none';
             }
@@ -95,6 +97,13 @@ function handleSetDetail(num) {
         addDetailProject();
     }
     detailDataTo = num;
+}
+
+
+function handleSetNav(num) {
+    dlb.style.display = 'flex';
+    dlt.style.display = 'flex';
+    ma.style.overflow = 'hidden';
 }
 
 

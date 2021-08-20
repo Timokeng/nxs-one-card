@@ -34,11 +34,11 @@
           </li>
         </ul>
         <ul class="layui-nav layui-layout-right" style="margin-right: 15px;" lay-filter="layadmin-layout-right">
-          <li class="layui-nav-item layui-hide-xs" lay-unselect>
+          <!-- <li class="layui-nav-item layui-hide-xs" lay-unselect>
             <a href="javascript:;" layadmin-event="note">
               <i class="layui-icon layui-icon-note"></i>
             </a>
-          </li>
+          </li> -->
           <li class="layui-nav-item layui-hide-xs" ay-unselect>
             <a href="javascript:;" layadmin-event="fullscreen">
               <i class="layui-icon layui-icon-screen-full"></i>
@@ -106,10 +106,18 @@
               </dl>
             </li>
             <li data-name="template" class="layui-nav-item">
-              <a href="javascript:;" lay-href="jurisdiction/manage.html" lay-tips="权限管理" lay-direction="2">
+              <a href="javascript:;" lay-tips="权限管理" lay-direction="2">
                 <i class="layui-icon layui-icon-set"></i>
                 <cite>权限管理</cite>
               </a>
+              <dl class="layui-nav-child">
+                <dd data-name="template">
+                  <a lay-href="jurisdiction/manage.html">用户管理</a>
+                </dd>
+                <dd data-name="list">
+                  <a lay-href="jurisdiction/role.html">角色管理</a>
+                </dd>
+              </dl>
             </li>
             <li data-name="template" class="layui-nav-item">
               <a href="javascript:;" lay-href="wx/manage.html" lay-tips="微信管理" lay-direction="2">
@@ -164,17 +172,6 @@
   }).extend({
     index: 'lib/index' //主入口模块
   }).use('index');
-  </script>
-  
-  <!-- 百度统计 -->
-  <script>
-  var _hmt = _hmt || [];
-  (function() {
-    var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?d214947968792b839fd669a4decaaffc";
-    var s = document.getElementsByTagName("script")[0]; 
-    s.parentNode.insertBefore(hm, s);
-  })();
   </script>
 </body>
 </html>

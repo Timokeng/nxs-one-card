@@ -144,3 +144,26 @@ function addUser() {
     }
 }
 
+// 新增角色
+function addRole() {
+    let validate = false;
+    let addInfo = {};
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        var layer = layui.layer;
+
+        addInfo = form.val("addRoleForm");
+        if(addInfo.name == '') {
+            layer.msg("角色名不能为空");
+            return;
+        }
+        // 这里还要写一段菜单权限检测的代码
+        validate = true;
+        layer.msg("成功添加名为 " + addInfo.name + " 的角色信息")
+        console.log(addInfo);
+    });
+    if(validate){
+        reloadTable();
+    }
+}
+

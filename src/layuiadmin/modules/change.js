@@ -123,7 +123,7 @@ changeBt.addEventListener("click", function () {
             cbox.style.display = 'block';
             form.val("changeWxForm", changeWxInfo);
         })
-    } else if (changeBt.innerText.indexOf('使用者') >= 0) {
+    } else if (changeBt.innerText.indexOf('用户') >= 0) {
         layui.use(['layer', 'table', 'form'], function () {
             var layer = layui.layer;
             var table = layui.table;
@@ -146,6 +146,35 @@ changeBt.addEventListener("click", function () {
             cbox.style.display = 'block';
             abox.style.display = "none";
             form.val("changeUserForm", changeUserInfo);
+        })
+    } else if (changeBt.innerText.indexOf('角色') >= 0) {
+        layui.use(['layer', 'table', 'form'], function () {
+            var layer = layui.layer;
+            var table = layui.table;
+            var form = layui.form;
+
+            let checkStatus = table.checkStatus('idTest');
+
+            if(checkStatus.data.length < 1) {
+                layer.msg("请至少选择一个有效角色信息");
+                return;
+            }
+            if(checkStatus.data.length > 1) {
+                layer.msg("每次只能修改一个有效角色信息");
+                return;
+            }
+
+            changeInfo = checkStatus.data[0];
+            console.log(changeInfo);
+
+            // 打卡changeBox，关闭addBox
+            cbox.style.display = 'block';
+            abox.style.display = "none";
+
+            // 把需要显示的值写入表单
+            form.val("changeRoleForm", changeInfo);
+
+            setHasNavs(changeInfo.navsId)
         })
     }
 })
