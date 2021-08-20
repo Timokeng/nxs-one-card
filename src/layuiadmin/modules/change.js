@@ -176,6 +176,33 @@ changeBt.addEventListener("click", function () {
 
             setHasNavs(changeInfo.navsId)
         })
+    } else if (changeBt.innerText.indexOf('学校') >= 0) {
+        layui.use(['layer', 'table', 'form'], function () {
+            var layer = layui.layer;
+            var table = layui.table;
+            var form = layui.form;
+
+            let checkStatus = table.checkStatus('idTest');
+
+            if(checkStatus.data.length < 1) {
+                layer.msg("请至少选择一个有效学校信息");
+                return;
+            }
+            if(checkStatus.data.length > 1) {
+                layer.msg("每次只能修改一个有效学校信息");
+                return;
+            }
+
+            changeInfo = checkStatus.data[0];
+            console.log(changeInfo);
+
+            // 打卡changeBox，关闭addBox
+            cbox.style.display = 'block';
+            abox.style.display = "none";
+
+            // 把需要显示的值写入表单
+            form.val("changeSchoolForm", changeInfo);
+        })
     }
 })
 

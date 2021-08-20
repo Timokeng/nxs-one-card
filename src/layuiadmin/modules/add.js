@@ -167,3 +167,27 @@ function addRole() {
     }
 }
 
+// 新增学校
+function addSc() {
+    let validate = false;
+    let addInfo = {};
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        var layer = layui.layer;
+
+        addInfo = form.val("addSchoolForm");
+        for(let key in addInfo) {
+            if(!addInfo[key]) {
+                layer.msg("有必填数据为空");
+                validate = false;
+                return
+            }
+        }
+        validate = true;
+        layer.msg("成功添加名为 " + addInfo.name + " 的学校信息")
+        console.log(addInfo);
+    });
+    if(validate){
+        reloadTable();
+    }
+}

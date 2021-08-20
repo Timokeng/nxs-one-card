@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>学校管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../layuiadmin/style/dtree/dtree.css">
+    <link rel="stylesheet" href="../../layuiadmin/style/dtree/font/dtreefont.css">
+    <link rel="stylesheet" href="../../layuiadmin/style/admin.css">
+    <link rel="stylesheet" href="../../layuiadmin/style/wx.css">
+    <link rel="stylesheet" href="../../layuiadmin/style/formBox.css">
+</head>
+
+<body>
+    <div class="main-article">
+        <div class="func-box">
+            <div class="header">操作</div>
+            <div class="article">
+                <button id="addBt" class="layui-btn"><i class="layui-icon layui-icon-add-circle"></i>新增学校</button>
+                <button id="deleteBt" class="layui-btn"><i class="layui-icon layui-icon-delete"></i>删除学校</button>
+                <button id="changeBt" class="layui-btn"><i class="layui-icon layui-icon-edit"></i>修改学校</button>
+                <button id="searchBt" class="layui-btn"><i class="layui-icon layui-icon-search"></i>查找学校</button>
+            </div>
+        </div>
+        <div class="add-box layui-anim layui-anim-scale" id="addBox">
+            <div class="header">
+                <div>新增学校</div>
+                <div onclick="abox.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
+            </div>
+            <div class="form-box layui-form" lay-filter="addSchoolForm">
+                <div class="layui-form-item input-box">
+                    <label class="layui-form-label">学校名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item input-box">
+                    <label class="layui-form-label">所属县份</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="area" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="btn-box"><button class="layui-btn" onclick="addSc()">确定</button></div>
+        </div>
+        <div class="change-box layui-anim layui-anim-scale" id="changeBox">
+            <div class="header">
+                <div>修改学校</div>
+                <div onclick="cbox.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
+            </div>
+            <div class="form-box layui-form" lay-filter="changeSchoolForm">
+                <div class="layui-form-item input-box">
+                    <label class="layui-form-label">学校名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item input-box">
+                    <label class="layui-form-label">所属县份</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="area" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="btn-box"><button class="layui-btn" onclick="changeWx()">确定</button></div>
+        </div>
+        <div class="condition-box layui-anim layui-anim-scale" id="condition">
+            <div class="header">
+                <div>查找学校</div>
+                <div onclick="cdb.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
+            </div>
+            <div class="form-box layui-form" lay-filter="conditionForm">
+                <div class="layui-form-item input-box">
+                    <label class="layui-form-label">学校名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item input-box">
+                    <label class="layui-form-label">所属县份</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="area" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="btn-box"><button class="layui-btn" onclick="searchWx()">确定</button></div>
+        </div>
+        <div class="table-box">
+            <div class="header">学校</div>
+            <div class="article">
+                <table id="wx" lay-filter="test"></table>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.config({
+            base: '../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'console']);
+
+
+
+        // ----------table组件相关------------------
+        var tableDate = [
+            { id: 1, name: "晋宁一中", area: "晋宁" },
+            { id: 2, name: "晋宁二中", area: "晋宁" },
+            { id: 3, name: "晋宁三中", area: "晋宁" },
+            { id: 4, name: "晋宁四中", area: "晋宁" },
+        ]
+        //  初始化table
+        layui.use(['table', 'layer', 'form'], function () {
+            var table = layui.table;
+            var layer = layui.layer;
+            var form = layui.form;
+
+            //第一个实例
+            table.render({
+                elem: '#wx'
+                , id: 'idTest'
+                , height: 475
+                , data: tableDate
+                , page: true //开启分页
+                , cols: [[ //表头
+                    { checkbox: true, width: "5%" }
+                    , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
+                    , { field: 'name', title: '学校名', width: "15%", minWidth: 180 }
+                    , { field: 'area', title: '所属县份', width: "75%" }
+                ]]
+            });
+        })
+        // ----------table组件相关（结束）------------------
+
+
+
+
+        // ----------------------部分独立方法---------------------------
+        function reloadTable() {
+            var tableDate = [
+                { id: 1, name: "晋宁一中", area: "晋宁" },
+                { id: 2, name: "晋宁二中", area: "晋宁" },
+                { id: 3, name: "晋宁三中", area: "晋宁" },
+                { id: 4, name: "晋宁四中", area: "晋宁" },
+            ]
+            //  初始化table
+            layui.use(['table', 'layer', 'form'], function () {
+                var table = layui.table;
+                var layer = layui.layer;
+                var form = layui.form;
+
+                //第一个实例
+                table.render({
+                    elem: '#wx'
+                    , id: 'idTest'
+                    , height: 475
+                    , data: tableDate
+                    , page: true //开启分页
+                    , cols: [[ //表头
+                        { checkbox: true, width: "5%" }
+                        , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
+                        , { field: 'name', title: '学校名', width: "15%", minWidth: 180 }
+                        , { field: 'area', title: '所属县份', width: "75%" }
+                    ]]
+                });
+            })
+        }
+    // ----------------------部分独立方法（结束）---------------------------
+    </script>
+    <script src="../../layuiadmin/modules/add.js"></script>
+    <script src="../../layuiadmin/modules/delete.js"></script>
+    <script src="../../layuiadmin/modules/search.js"></script>
+    <script src="../../layuiadmin/modules/change.js"></script>
+</body>
+
+
+
+</html>
