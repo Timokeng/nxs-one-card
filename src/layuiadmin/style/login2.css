@@ -1,0 +1,438 @@
+html,
+body,
+#LAY_app {
+	height: 100%;
+	background-color: #E4F1F4;
+	overflow: hidden;
+}
+
+.layui-layout-body {
+	overflow: auto;
+}
+
+.layui-col-md10 {
+	/*width: 83.33333333%;*/
+}
+
+
+/* #LAY-user-login, .layadmin-user-display-show {
+  display: block !important;
+} */
+
+.layadmin-user-login {
+	position: relative;
+	left: 0;
+	top: 35%;
+	/*padding: 110px 0;*/
+	height: 260px;
+	/*min-height: calc(100% - 60px);*/
+	box-sizing: border-box;
+	clear: both;
+	background: rgba(0, 0, 0, 0.3);
+}
+
+.back-wrap {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	/*filter: blur(5px);*/
+	/*filter:grayscale(100%);*/
+	/*object-fit: fill*/
+	object-fit: cover;
+}
+
+.back-wrap img {
+	width: 100%;
+	height: 100%;
+}
+
+.back-wrap video {
+	min-height: 768px;
+	min-width: 1366px;
+	object-fit: cover;
+}
+
+.loginBg {
+	float: left;
+	width: 50%;
+	height: auto;
+	text-align: center;
+	background: rgba(0, 0, 0, 0.3);
+}
+
+.loginBg img.loginImg {
+	min-width: 400px;
+	width: inherit;
+	height: 100%;
+}
+
+.loginImg {
+	height: 3rem;
+	width: auto;
+	min-width: 8rem;
+	margin: 0 3vw;
+}
+
+.loginImg.platform {
+	margin: 0 6vw 0 3vw;
+	margin-top: 10px;
+}
+
+.loginImg img {
+	width: 100%;
+	height: 100%;
+}
+
+.login_icon {
+	height: 50px;
+	width: auto
+}
+
+.login_icon img {
+	height: 100%;
+	width: auto;
+	margin: 0 5px 0 0;
+}
+
+.header_info .top_info span {
+	display: block;
+	line-height: 20px;
+	transform: translateY(5px);
+	/*color: #fff;*/
+	color: rgba(255, 255, 255, 0.88);
+	white-space: nowrap;
+}
+
+.header_info .top_info .platform {
+	/*color: #333;*/
+	font-size: .8rem;
+	font-weight: bold;
+	/*font-style: oblique;*/
+}
+
+.header_info .top_info .version {
+	font-size: 0.5rem;
+	/*color: #999;*/
+	/* margin-top: -20px; */
+	transform: translateY(0px);
+}
+
+.layadmin-user-login-main {
+	/* width: 50%; */
+	margin: 0 auto;
+	box-sizing: border-box;
+	float: left;
+	text-align: center;
+	/*padding: 0 0px 0 50px;*/
+	width: 400px;
+	z-index: 9;
+	/* background-color: #fff;
+  border-radius: 10px; */
+}
+
+.layui-tab {
+	min-width: 400px;
+	border-radius: 10px;
+	box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.3);
+}
+
+.layui-tab-title,
+.layui-tab-title .layui-this:after {
+	border: none;
+}
+
+.layui-tab-title li {
+	background: #fff;
+	border-radius: 10px 10px 0 0;
+	text-align: center;
+	padding: 0;
+	width: 50%;
+	box-sizing: border-box;
+	font-size: 0.8rem;
+}
+
+.layui-tab-content {
+	background-color: #fff;
+	border-radius: 10px;
+	height: 300px;
+	padding: 20px 0;
+	width: 400px;
+}
+
+.layui-tab-title {
+	border-bottom: 1px solid #eee;
+	background: #fff;
+	padding: 30px 0 0px;
+	border-radius: 10px 10px 0 0;
+	font-weight: bold;
+	width: 400px;
+	/*font-size: 1.2rem;*/
+}
+
+.layui-tab-title .layui-this {
+	/*background: #fff;
+	color: #3195EA;*/
+	position: relative;
+	color: #3195EA;
+	/*border-bottom: 3px solid #3195EA;
+	box-sizing: border-box;*/
+}
+
+.layui-tab-title .layui-this:after {
+	position: absolute;
+	top: initial;
+	bottom: 0;
+	left: 20%;
+	width: 60%;
+	height: 3px;
+	background: #3195EA;
+}
+
+.layadmin-user-login-box {
+	/*padding: 20px;*/
+	width: 300px;
+	margin: auto;
+}
+
+.layadmin-user-login-header {
+	text-align: center;
+}
+
+.layadmin-user-login-header h2 {
+	margin-bottom: 10px;
+	font-weight: 300;
+	font-size: 30px;
+	color: #000;
+}
+
+.layadmin-user-login-header p {
+	font-weight: 300;
+	color: #999;
+}
+
+.layadmin-user-login-body .layui-form-item {
+	position: relative;
+	margin: 15px 0;
+}
+
+.login_title img {
+	min-height: 15px;
+	height: 1rem;
+	width: auto;
+	margin: 0 5px 0 0;
+}
+
+.login_title {
+	font-size: 1rem;
+	margin: 0 0 5px 10px;
+	display: flex;
+	align-items: center;
+}
+
+.layadmin-user-login-icon {
+	position: absolute;
+	left: 1px;
+	top: 1px;
+	width: 38px;
+	line-height: 36px;
+	text-align: center;
+	color: #d2d2d2;
+}
+
+.layadmin-user-login-body .layui-form-item .layui-input {
+	/*padding-left: 38px;*/
+	border-radius: 5px;
+	padding: 10px;
+	height: 50px;
+	text-indent: 5px;
+}
+
+.layui-form-item button.getCode {
+	position: absolute;
+	height: 30px;
+	line-height: 30px;
+	width: auto;
+	padding: 0 5px;
+	background: linear-gradient(to right, #2482D3, #2EAAFB);
+	bottom: 10px;
+	right: 10px;
+}
+
+.layadmin-user-login-codeimg {
+	max-height: 38px;
+	width: 100%;
+	cursor: pointer;
+	box-sizing: border-box;
+}
+
+.layadmin-user-login-other {
+	position: relative;
+	font-size: 0;
+	line-height: 38px;
+	padding-top: 20px;
+}
+
+.layadmin-user-login-other>* {
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 10px;
+	font-size: 14px;
+}
+
+.layadmin-user-login-other .layui-icon {
+	position: relative;
+	top: 2px;
+	font-size: 26px;
+}
+
+.layadmin-user-login-other a:hover {
+	opacity: 0.8;
+}
+
+.layadmin-user-jump-change {
+	float: right;
+}
+
+.qrcode {
+	width: 100%;
+	height: auto;
+	/* float: left; */
+	position: relative;
+}
+
+.qrcode img {
+	width: 50%;
+	height: auto;
+	display: block;
+	margin: 40px auto;
+}
+
+.qrcode .mask {
+	position: absolute;
+	color: lawngreen;
+	width: 50%;
+	height: 100%;
+	top: 0;
+	left: 25%;
+	background: rgba(0, 0, 0, 0.1);
+	display: none;
+}
+
+.qrcode .mask i {
+	position: absolute;
+	font-size: 40px;
+	top: calc(50% - 20px);
+	left: calc(50% - 20px);
+	font-size: 40px;
+	color: lawngreen;
+}
+
+.layadmin-user-login-footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	line-height: 30px;
+	padding: 20px;
+	text-align: center;
+	box-sizing: border-box;
+	color: rgba(0, 0, 0, .5)
+}
+
+.layadmin-user-login-footer span {
+	padding: 0 5px;
+}
+
+.layadmin-user-login-footer a {
+	padding: 0 5px;
+	color: rgba(0, 0, 0, .5);
+}
+
+.layadmin-user-login-footer a:hover {
+	color: rgba(0, 0, 0, 1);
+}
+
+.loginBtn {
+	width: 100%;
+	margin: 30px auto 0;
+	/*padding: 10px 0;*/
+	background: linear-gradient(to bottom, #3EB4FD, #4C96FC);
+	box-shadow: 0px 10px 20px 10px rgba(59, 179, 239, 0.2);
+	border-radius: 10px;
+	height: 50px;
+	line-height: 50px;
+	font-size: 1rem;
+	letter-spacing: 8px;
+	text-indent: 8px;
+}
+
+.tips {
+	color: rgb(179, 179, 179);
+}
+
+.btnCon {
+	width: 100%;
+}
+
+.refreshCode {
+	background: linear-gradient(to right, #3195EA, #3BB3EF);
+	color: white;
+}
+
+.loadingBtn {
+	display: none;
+}
+
+
+/* 有背景图时 */
+
+.layadmin-user-login-main[bgimg] {
+	background-color: #fff;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+
+/* 主题背景 */
+
+.ladmin-user-login-theme {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	text-align: center;
+}
+
+.ladmin-user-login-theme ul {
+	display: inline-block;
+	padding: 5px;
+	background-color: #fff;
+}
+
+.ladmin-user-login-theme ul li {
+	display: inline-block;
+	vertical-align: top;
+	width: 64px;
+	height: 43px;
+	cursor: pointer;
+	transition: all .3s;
+	-webkit-transition: all .3s;
+	background-color: #f2f2f2;
+}
+
+.ladmin-user-login-theme ul li:hover {
+	opacity: 0.9
+}
+
+@media screen and (max-width: 768px) {
+	.layadmin-user-login {
+		/*padding-top: 60px;*/
+	}
+	.layadmin-user-login-main {
+		/*width: 320px;*/
+	}
+	.layadmin-user-login-box {
+		/*padding: 10px;*/
+	}
+}

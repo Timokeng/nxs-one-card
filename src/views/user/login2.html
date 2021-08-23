@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>登录2</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+	<link rel="stylesheet" href="../../layuiadmin/style/common.css" media="all">
+	<link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+	<link rel="stylesheet" href="../../layuiadmin/style/login2.css" media="all">
+</head>
+
+<body>
+	<div class="back-wrap">
+		<!--<img src="../../layuiadmin/layui/css/modules/layim/skin/2.jpg" />-->
+		<video width="100%" autoplay loop muted id="login_bgVideo" data-setup="{'fluid:true'}"
+			poster="../../layuiadmin/layui/css/modules/layim/skin/2.jpg">
+			<!--autoplay自动播放、loop循环播放、muted静音-->
+			<source src="../../layuiadmin/img/sea.mp4" type="video/mp4">
+			</source>
+			<!--<source src="myvideo.ogv" type="video/ogg"></source>-->
+
+			<!--<object width="" height="" type="application/x-shockwave-flash" data="myvideo.swf">
+					<param name="movie" value="myvideo.swf" />
+					<param name="flashvars" value="autostart=true&amp;file=myvideo.swf" />
+				</object>-->
+			<!--当前浏览器不支持 video直接播放，点击这里下载视频： <a href="myvideo.webm">下载视频</a>-->
+		</video>
+
+	</div>
+
+	<div class="layadmin-user-login layadmin-user-display-show flex_around" id="LAY-user-login">
+
+		<!--<div class="loginBg">
+				<img src="../../static/img/login_bg.png" class="loginImg" />
+			</div>-->
+
+		<div class="flex_center header_info">
+			<div class="loginImg">
+				<img src="../../layuiadmin/img/company.png" />
+			</div>
+
+			<!--<div class="loginImg">
+					<img src="../../static/img/platform.png" />
+				</div>-->
+
+			<div class="flex_start loginImg platform">
+				<!--<img src="../../static/img/platform.png" />-->
+				<div class="login_icon">
+					<img src="../../layuiadmin/img/platform.png" />
+				</div>
+			</div>
+
+			<div class="layadmin-user-login-main">
+
+				<div class=" layui-tab">
+					<div class="layui-tab-content">
+						<div class="layui-tab-item layui-show">
+							<div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+								<div class="layui-form-item">
+									<div class="login_title">
+										<img src="../../layuiadmin/img/login01.png" />
+										<span>手机号码</span>
+									</div>
+
+									<!--	<label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-username"></label>-->
+									<input id="phone" type="text" name="username" id="LAY-user-login-username"
+										lay-verify="required" placeholder="请输入手机号" class="layui-input" maxlength="11">
+								</div>
+								<div class="layui-form-item">
+									<div class="login_title">
+										<img src="../../layuiadmin/img/login02.png" />
+										<span>验证码</span>
+									</div>
+
+									<!--<label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>-->
+									<input type="password" name="password" id="LAY-user-login-password"
+										lay-verify="required" placeholder="短信验证码" class="layui-input" maxlength="20">
+									<button class="layui-btn layui-btn- getCode" id="getCode" onclick="getCode()">获取验证码</button>
+								</div>
+
+
+								<!--<div class="layui-form-item" style="margin-bottom: 20px;">
+										<input type="checkbox" name="remember" lay-skin="primary" title="记住密码">
+										<a href="forget.html" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;">忘记密码？</a>
+									</div>-->
+								<div class="layui-form-item center">
+									<button class="layui-btn layui-btn-radius loginBtn" lay-submit
+										lay-filter="LAY-user-login-submit">登录</button>
+								</div>
+
+							</div>
+						</div>
+						<!-- <div class="layui-tab-item">
+								<div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+									<div class="tips">
+										请使用微信小程序/公众号扫下方二维码，扫码后在手机上点击“确认授权”即可
+									</div>
+									<div class="layui-form-item">
+										<div class="qrcode center">
+											<div class="mask">
+												<i class="layui-icon layui-icon-ok-circle "></i> </div>
+											<img src="../../layuiadmin/img/qrcode.jpg" class="qrcodeImg" />
+										</div>
+									</div>
+								</div>
+								<div class="layui-form-item center btnCon">
+									<button type="button" class="layui-btn layui-btn-radius refreshCode">
+								<span class="refreshBtn">点击刷新二维码</span>
+								<span class="loadingBtn"> <i
+										class="layui-icon layui-icon-loading  layui-anim layui-anim-rotate layui-anim-loop"></i>
+									刷新中</span>
+							</button>
+								</div>
+							</div> -->
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="layui-trans layadmin-user-login-footer">
+			<p>© 2021 云南网融科技有限公司
+				<a href="http://www.xxxxxxx.com/" target="_blank">xxxxxxxxxxxxx.com</a>
+			</p>
+
+		</div>
+
+	</div>
+
+	<script src="../../layuiadmin/layui/layui.js"></script>
+
+	<script>
+		layui.config({
+			base: '../../layuiadmin/' //静态资源所在路径
+		}).extend({
+			index: 'lib/index' //主入口模块
+		}).use(['index', 'user'], function () {
+			var $ = layui.$,
+				setter = layui.setter,
+				admin = layui.admin,
+				form = layui.form,
+				router = layui.router(),
+				search = router.search;
+
+			form.render();
+
+			// //提交
+			// form.on('submit(LAY-user-login-submit)', function(obj) {
+
+			// 	//请求登录接口
+			// 	admin.req({
+			// 		url: layui.setter.base + 'json/user/login.js' //实际使用请改成服务端真实接口
+			// 			,
+			// 		data: obj.field,
+			// 		done: function(res) {
+
+			// 			//请求成功后，写入 access_token
+			// 			layui.data(setter.tableName, {
+			// 				key: setter.request.tokenName,
+			// 				value: res.data.access_token
+			// 			});
+
+			// 			//登录成功的提示与跳转
+			// 			layer.msg('登录成功', {
+			// 				offset: '15px',
+			// 				icon: 1,
+			// 				time: 1000
+			// 			}, function() {
+			// 				location.href = '../index.html'; //后台主页
+			// 			});
+			// 		}
+			// 	});
+
+			// });
+
+			// $(".refreshBtn").on("click", function() {
+			// 	$(".loadingBtn").css("display", "block")
+			// 	$(".refreshBtn").css("display", "none");
+			// 	setTimeout(function() {
+			// 		$(".refreshBtn").css("display", "block");
+			// 		$(".loadingBtn").css("display", "none")
+			// 	}, 1000)
+			// })
+
+			let div = $(".back-wrap")
+			let video = $("#login_bgVideo")[0];
+			$("#login_bgVideo").width(div.width())
+			$("#login_bgVideo").height(div.height())
+
+			window.onresize = function () {
+				$("#login_bgVideo").width(div.width())
+				$("#login_bgVideo").height(div.height())
+				//					video.style.minWidth = $(window).width()
+				//					video.style.minHeight = $(window).height()
+				if (video.videoWidth < $(window).width()) {
+					$("#login_bgVideo").width(div.width())
+				}
+				if (video.videoHeight < $(window).height()) {
+					$("#login_bgVideo").height(div.height())
+				}
+			}
+
+			$('.qrcodeImg').click(() => {
+				$('.mask').css('display', 'block')
+			})
+		});
+	</script>
+	<script src="../../layuiadmin/modules/api.js"></script>
+	<script src="../../layuiadmin/modules/login.js"></script>
+</body>
+
+</html>

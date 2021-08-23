@@ -1,0 +1,216 @@
+/* html,body{
+    font-size: 1vw;
+} */
+
+.layadmin-iframe {
+	background: #fff;
+}
+
+.p_relative {
+	position: relative;
+}
+
+.unit {
+	position: absolute;
+	right: -30px;
+	top: 0;
+}
+
+.dashBorder {
+	border: 1px dashed #999;
+	padding: 15px 0 0;
+	margin: 0 0 15px;
+}
+
+.pageBotBtns {
+	text-align: center !important;
+	margin: 30px 0;
+}
+
+.btn_confirm {
+	border-color: #1E9FFF;
+	background-color: #1E9FFF;
+}
+
+.btn_readCard {
+	border-color: #009688 !important;
+	background-color: #009688 !important;
+	color: #fff !important;
+}
+
+.btn_cancel {
+	border-color: #D2D2D2 !important;
+	background-color: #D2D2D2 !important;
+	/*color: #fff !important;*/
+}
+
+.center {
+	text-align: center !important;
+}
+
+.left {
+	text-align: left !important;
+}
+
+.right {
+	text-align: right !important;
+}
+
+.flex {
+	display: flex;
+	align-items: center;
+}
+
+.flex_start {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.flex_end {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.flex_around {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.flex_center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.flex_between {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.equipment .layadmin-tabs-select.layui-nav {
+	position: initial;
+	width: auto;
+}
+
+.equipment .shuxian {
+	position: absolute;
+	top: 5px;
+	left: 50%;
+	right: 50%;
+	width: 1px;
+	height: 30px;
+	background-color: #808080;
+}
+
+.layui-layer-page #LAY_adminPopupAbout.layui-layer-content {
+	min-width: 300px;
+	max-width: 600px;
+}
+
+.layui-upload-list img {
+	width: 100%;
+	height: auto;
+	margin: 0 0 10px;
+}
+
+.layui-bg-999 {
+	background: #eee;
+}
+
+.layui-bg-666 {
+	background: #666;
+}
+
+.layui-bg-eee {
+	background: #eee;
+}
+
+.layui-table-tool-self .layui-inline:last-child {
+	display: none;
+}
+
+.layui-table-tool .layui-table-tool-self .layui-inline[lay-event="LAYTABLE_PRINT"] {
+	display: none !important;
+}
+
+.width_auto {
+	width: auto;
+}
+
+.must {
+	position: relative;
+}
+
+.must::after {
+	content: "*";
+	position: absolute;
+	top: 7px;
+	right: 15px;
+	font-size: 15px;
+	color: red;
+}
+
+.layui-table-tool .layui-table-tool-self .layui-inline[lay-event] {
+	display: none;
+}
+
+.operationBar {
+	flex-wrap: wrap;
+}
+
+.operationBar button.layui-btn {
+	/* height: 60px; */
+	/* background: none;
+    border: 1px solid #009688;
+    color: #009688; */
+	padding: 0 10px;
+	background-color: #1D7EC5;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	position: relative;
+	z-index: 9;
+}
+
+.operationBar button.layui-btn .layui-table-tool-panel {
+	top: 38px;
+	z-index: 99;
+}
+
+.operationBar button.layui-btn img {
+	display: inline-block;
+	/* height: 2rem;
+	width: 2rem; */
+	height: 100%;
+	width: auto;
+	margin: auto;
+}
+
+.operationBar button.layui-btn:nth-child(1n+0) {
+	/* (an + b)表示周期的长度，n 是计数器（从 0 开始），b 是偏移值。*/
+	background-color: #1D7EFF !important;
+}
+
+.operationBar button.layui-btn:nth-child(2n+0) {
+	background-color: #6270D9 !important;
+}
+
+.operationBar button.layui-btn:nth-child(3n+0) {
+	background-color: #F88861 !important;
+}
+
+.operationBar button.layui-btn:nth-child(4n+0) {
+	background-color: #51CB79 !important;
+}
+
+/*.operationBar button.layui-btn.bgcolor:nth-child(5n+0) {
+	background-color: #47A8F5;
+}
+
+.operationBar button.layui-btn.bgcolor:nth-child(6n+0) {
+	background-color: #4298A1;
+}*/

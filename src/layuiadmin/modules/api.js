@@ -1,4 +1,4 @@
-const baseUrl = 'http:192.168.1.18/rcc_pay/commonApi';
+const baseUrl = 'http://192.168.1.18/rcc_pay/commonApi';
 
 const req = {
     get:(url, suc, data = null, async = true)=>{
@@ -20,6 +20,8 @@ const req = {
         }
 
         xhr.open("GET", url, async);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        // xhr.withCredentials = true;
         xhr.send();
     },
 
@@ -33,6 +35,13 @@ const req = {
         }
         
         xhr.open("POST", url, async);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        // xhr.withCredentials = true;
         xhr.send(JSON.stringify(data));
     },
+}
+
+
+const api = {
+    getCode:(data, suc) => req.post(baseUrl + '/sendSms', suc, data)
 }
