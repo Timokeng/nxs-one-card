@@ -1,3 +1,5 @@
+const baseUrl = 'http:192.168.1.18/rcc_pay/commonApi';
+
 const req = {
     get:(url, suc, data = null, async = true)=>{
         let xhr = new XMLHttpRequest();
@@ -9,11 +11,12 @@ const req = {
         }
 
         if(data) {
+            let params = '?';
             for(let key in data) {
                 params = params + `${key}=${data[key]}&`
             }
             params = params.slice(0, params.length - 1);
-            url = url + '?' + params;
+            url = url + params;
         }
 
         xhr.open("GET", url, async);
