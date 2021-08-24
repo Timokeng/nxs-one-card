@@ -20,28 +20,28 @@ const req = {
         }
 
         xhr.open("GET", url, async);
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         // xhr.withCredentials = true;
         xhr.send();
     },
 
-    post:(url, suc, data = null, async = true)=>{
-        let xhr = new XMLHttpRequest();
+    post:(url, suc, data = null)=>{
+        layui.use("jquery",function(){
+            var $ = layui.$;
 
-        xhr.onreadystatechange = function() {
-            if(this.readyState == 4 && this.status == 200) {
-                suc(JSON.parse(this.responseText));
-            }
-        }
-        
-        xhr.open("POST", url, async);
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        // xhr.withCredentials = true;
-        xhr.send(JSON.stringify(data));
+            $.post(
+                url, 
+                data, 
+                function (res) {
+                    suc(res);
+                }, 
+                "json"
+            );
+        })
     },
 }
 
 
 const api = {
-    getCode:(data, suc) => req.post(baseUrl + '/sendSms', suc, data)
+    getCode: (data, suc) => req.post(baseUrl + '/sendSms', suc, data),
+    login: (data, suc) => req.post(baseUrl + '/login', suc, data)
 }
