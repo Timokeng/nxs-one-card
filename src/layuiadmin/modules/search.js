@@ -162,3 +162,22 @@ function searchLi() {
 
     reloadTable();
 }
+
+
+function searchRole() {
+    let conditionData = {};
+    let validate = false;
+    let data = '';
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        var layer = layui.layer;
+
+        conditionData = form.val("conditionForm");
+
+        validate = true;
+        data = conditionData.name;
+    })
+    if(validate) {
+        reloadTable(data);
+    }
+}

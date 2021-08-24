@@ -143,14 +143,28 @@ deleteBt.addEventListener("click", function () {
             }
             validate = true;
 
+            let arr = checkStatus.data.map(item => {
+                return item.id
+            })
+
             layer.open({
                 type: 1,
-                content: '确定删除选中的 ' + checkStatus.data.length + '个使用者信息吗？',
+                content: '确定删除选中的 ' + checkStatus.data.length + '个角色信息吗？',
                 skin: 'delete-confirm',
                 area: ['300px', '200px'],
                 btn: ['确定', '取消'],
                 yes: function (index, layero) {
                     console.log('确定删除');
+
+                    api.role.delete({id: arr}, function(res) {
+                        if(res.code == "000") {
+                            setTimeout(()=>{
+                                reloadTable();
+                            }, 1500)
+                        } else {
+                            layer.msg(res.msg);
+                        }
+                    })
                     reloadTable();
                     layer.close(index);
                 },

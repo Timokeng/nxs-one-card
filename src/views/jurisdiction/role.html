@@ -60,6 +60,12 @@
             </div>
             <div class="form-box layui-form" lay-filter="changeRoleForm">
                 <div class="layui-form-item input-box">
+                    <label class="layui-form-label">ID</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="id" disabled placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item input-box">
                     <label class="layui-form-label">角色名</label>
                     <div class="layui-input-block">
                         <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
@@ -75,7 +81,7 @@
             </div>
             <div class="btn-box">
                 <button class="layui-btn" onclick="handleSetNav(1)">配置菜单权限</button>
-                <button class="layui-btn" onclick="">确定</button>
+                <button class="layui-btn" onclick="changeRole()">确定</button>
             </div>
         </div>
         <div class="condition-box layui-anim layui-anim-scale" id="condition">
@@ -91,7 +97,7 @@
                     </div>
                 </div>
             </div>
-            <div class="btn-box"><button class="layui-btn" onclick="searchUser()">确定</button></div>
+            <div class="btn-box"><button class="layui-btn" onclick="searchRole()">确定</button></div>
         </div>
         <div class="table-box">
             <div class="header">角色信息</div>
@@ -112,7 +118,7 @@
                         <div class="dialog-btn-box">
                             <button id="bindCl" class="layui-btn" onclick="useNav()">启用菜单<i
                                     class="layui-icon layui-icon-next"></i></button>
-                            <button id="unboundCl" class="layui-btn"><i
+                            <button id="unboundCl" class="layui-btn" onclick="deleteNav()"><i
                                     class="layui-icon layui-icon-prev"></i>禁用菜单</button>
                             <button id="close-bind-dialog" class="layui-btn" onclick="closeDialog()"><i
                                     class="layui-icon layui-icon-close"></i>关闭</button>
@@ -130,6 +136,7 @@
     </div>
 
     <script src="../../layuiadmin/layui/layui.js"></script>
+    <script src="../../layuiadmin/modules/api.js"></script>
     <script>
         layui.config({
             base: '../../layuiadmin/' //静态资源所在路径
@@ -137,71 +144,67 @@
             index: 'lib/index', //主入口模块
         }).use(['index', 'console']);
 
-
-
-        // ----------table组件相关------------------
-        var tableDate = [
-            { id: 1, name: "管理员", navs: "主页，班级管理，学生管理，缴费管理", navsId: [1,2,3,4] },
-            { id: 2, name: "老师", navs: "主页，班级管理，学生管理，缴费管理" },
-            { id: 3, name: "超级管理员", navs: "主页，班级管理，学生管理，缴费管理" },
-        ]
-        // 初始化table
-        layui.use(['table', 'layer', 'form'], function () {
-            var table = layui.table;
-            var layer = layui.layer;
-            var form = layui.form;
-
-            // 第一个实例
-            table.render({
-                elem: '#users-table'
-                , id: 'idTest'
-                , height: 475
-                , data: tableDate
-                , page: true // 开启分页
-                , cols: [[ // 表头
-                    { checkbox: true, width: "5%" }
-                    , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
-                    , { field: 'name', title: '角色名', width: "15%", minWidth: 180 }
-                    , { field: 'navs', title: '菜单权限', width: "75%" }
-                ]]
-            });
-        })
-        // ----------table组件相关（结束）------------------
-
-
-
+        reloadTable();
 
         // ----------------------部分独立方法---------------------------
-        function reloadTable() {
-            var tableDate = [
-                { id: 1, name: "张三", organization: "晋宁一中", role: "manger", jurisdiction: "一中，二中，三中" },
-                { id: 2, name: "李四", organization: "昆明三中", role: "manger", jurisdiction: "一中，二中，三中" },
-                { id: 3, name: "王五", organization: "师大附中", role: "manger", jurisdiction: "一中，二中，三中" },
-                { id: 4, name: "狗蛋", organization: "网融科技", role: "manger", jurisdiction: "一中，二中，三中" },
-                { id: 5, name: "来福", organization: "网融科技", role: "manger", jurisdiction: "一中，二中，三中" },
-            ]
-            //  初始化table
+        function reloadTable(name = null, page = '1') {
+
             layui.use(['table', 'layer', 'form'], function () {
                 var table = layui.table;
                 var layer = layui.layer;
                 var form = layui.form;
 
-                //第一个实例
-                table.render({
-                    elem: '#users-table'
-                    , id: 'idTest'
-                    , height: 475
-                    , data: tableDate
-                    , page: true //开启分页
-                    , cols: [[ //表头
-                        { checkbox: true, width: "5%" }
-                        , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
-                        , { field: 'name', title: '角色名', width: "10%", minWidth: 120 }
-                        , { field: 'organization', title: '所属机构', width: "20%", minWidth: 240 }
-                        , { field: 'role', title: '角色', width: "10%", minWidth: 120 }
-                        , { field: 'jurisdiction', title: '管理院校', width: "50%", minWidth: 600 }
-                    ]]
-                });
+
+                let reqData = {
+                    type_name: name,
+                    page,
+                    epage: '10'
+                }
+
+                api.role.getList(reqData, function (res) {
+                    if (res.code == '000') {
+                        let data = [];
+                        res.rows.list.forEach(item => {
+
+                            let navsId = item.menu_auth.split(','),
+                                navs = '';
+
+                            navsId.forEach(id => {
+                                navs = navs + navTreeData[id - 1].title + ',';
+                            })
+                            if (navs.length > 0) {
+                                navs = navs.slice(0, navs.length - 1);
+                            }
+
+                            let one = {
+                                id: item.id,
+                                name: item.type_name,
+                                navs,
+                                navsId
+                            }
+
+                            data.push(one);
+                        })
+
+                        table.render({
+                            elem: '#users-table'
+                            , id: 'idTest'
+                            , height: 475
+                            , data: data
+                            , page: true // 开启分页
+                            , cols: [[ // 表头
+                                { checkbox: true, width: "5%" }
+                                , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
+                                , { field: 'name', title: '角色名', width: "15%", minWidth: 180 }
+                                , { field: 'navs', title: '菜单权限', width: "75%" }
+                            ]]
+                        });
+
+
+                    } else {
+                        layer.msg(res.msg)
+                    }
+                })
             })
         }
     // ----------------------部分独立方法（结束）---------------------------

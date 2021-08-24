@@ -1,16 +1,22 @@
 const addBt = document.getElementById("addBt");
 let abox = document.getElementById("addBox");
 
-addBt.addEventListener("click", function(){
+addBt.addEventListener("click", function () {
     abox.style.display = "block";
     cbox.style.display = "none";
 
     // 判断是不是存在detail相关功能
-    if(addBt.innerText.indexOf("模板") != -1) {
+    if (addBt.innerText.indexOf("模板") != -1) {
         pb.innerHTML = "";
         detailData = [];
         detailDataTo = -1;
         document.getElementById("addSum").value = '';
+    }
+
+    if (addBt.innerText.indexOf("角色") != -1) {
+        setHasNavs([]);
+        navs = '';
+        navsId = [];
     }
 })
 
@@ -23,14 +29,14 @@ function addSt() {
         var layer = layui.layer;
 
         addInfo = form.val("addStForm");
-        for(let key in addInfo) {
-            if(!addInfo[key]) {
+        for (let key in addInfo) {
+            if (!addInfo[key]) {
                 layer.msg("有必填数据为空");
                 validate = false;
                 return
             }
         }
-        if(addInfo.pid.length != 18) {
+        if (addInfo.pid.length != 18) {
             layer.msg("请输入有效身份证号码");
             validate = false;
             return;
@@ -39,7 +45,7 @@ function addSt() {
         layer.msg("成功添加 " + addInfo.name + " 的相关信息")
         console.log(addInfo);
     });
-    if(validate){
+    if (validate) {
         reloadTable();
     }
 }
@@ -53,8 +59,8 @@ function addCl() {
         var layer = layui.layer;
 
         addInfo = form.val("addClForm");
-        for(let key in addInfo) {
-            if(!addInfo[key]) {
+        for (let key in addInfo) {
+            if (!addInfo[key]) {
                 layer.msg("有必填数据为空");
                 validate = false;
                 return
@@ -64,7 +70,7 @@ function addCl() {
         layer.msg("成功添加 " + addInfo.school + addInfo.grade + addInfo.class + " 的班级")
         console.log(addInfo);
     });
-    if(validate){
+    if (validate) {
         reloadTree();
     }
 }
@@ -78,8 +84,8 @@ function addTe() {
         var layer = layui.layer;
 
         addInfo = form.val("addTeForm");
-        for(let key in addInfo) {
-            if(!addInfo[key]) {
+        for (let key in addInfo) {
+            if (!addInfo[key]) {
                 layer.msg("有必填数据为空");
                 validate = false;
                 return
@@ -89,7 +95,7 @@ function addTe() {
         layer.msg("成功添加 " + addInfo.name + " 模板")
         console.log(addInfo);
     });
-    if(validate){
+    if (validate) {
         reloadTable();
     }
 }
@@ -103,8 +109,8 @@ function addWx() {
         var layer = layui.layer;
 
         addInfo = form.val("addWxForm");
-        for(let key in addInfo) {
-            if(!addInfo[key]) {
+        for (let key in addInfo) {
+            if (!addInfo[key]) {
                 layer.msg("有必填数据为空");
                 validate = false;
                 return
@@ -114,7 +120,7 @@ function addWx() {
         layer.msg("成功添加公开ID为 " + addInfo.wxid + " 的微信公众号信息")
         console.log(addInfo);
     });
-    if(validate){
+    if (validate) {
         reloadTable();
     }
 }
@@ -128,8 +134,8 @@ function addUser() {
         var layer = layui.layer;
 
         addInfo = form.val("addUserForm");
-        for(let key in addInfo) {
-            if(!addInfo[key]) {
+        for (let key in addInfo) {
+            if (!addInfo[key]) {
                 layer.msg("有必填数据为空");
                 validate = false;
                 return
@@ -139,7 +145,7 @@ function addUser() {
         layer.msg("成功添加名为 " + addInfo.name + " 的用户信息")
         console.log(addInfo);
     });
-    if(validate){
+    if (validate) {
         reloadTable();
     }
 }
@@ -153,18 +159,36 @@ function addRole() {
         var layer = layui.layer;
 
         addInfo = form.val("addRoleForm");
-        if(addInfo.name == '') {
+        if (addInfo.name == '') {
             layer.msg("角色名不能为空");
             return;
         }
-        // 这里还要写一段菜单权限检测的代码
+
+        if (navsId.length < 1) {
+            layer.msg("角色未配置菜单权限");
+            return;
+        }
+
         validate = true;
-        layer.msg("成功添加名为 " + addInfo.name + " 的角色信息")
-        console.log(addInfo);
+
+        // 数据预处理
+        let data = {
+            type_name: addInfo.name,
+            menu_auth: navsId
+        }
+
+        api.role.add(data, function (res) {
+            if (res.code == '000') {
+                setTimeout(()=>{
+                    abox.style.display = 'none';
+                    reloadTable();
+                }, 1500);
+                layer.msg("成功添加名为 " + addInfo.name + " 的角色信息")
+            } else {
+                layer.msg(res.msg);
+            }
+        })
     });
-    if(validate){
-        reloadTable();
-    }
 }
 
 // 新增学校
@@ -176,8 +200,8 @@ function addSc() {
         var layer = layui.layer;
 
         addInfo = form.val("addSchoolForm");
-        for(let key in addInfo) {
-            if(!addInfo[key]) {
+        for (let key in addInfo) {
+            if (!addInfo[key]) {
                 layer.msg("有必填数据为空");
                 validate = false;
                 return
@@ -187,7 +211,7 @@ function addSc() {
         layer.msg("成功添加名为 " + addInfo.name + " 的学校信息")
         console.log(addInfo);
     });
-    if(validate){
+    if (validate) {
         reloadTable();
     }
 }

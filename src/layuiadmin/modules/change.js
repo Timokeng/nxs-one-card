@@ -165,7 +165,6 @@ changeBt.addEventListener("click", function () {
             }
 
             changeInfo = checkStatus.data[0];
-            console.log(changeInfo);
 
             // 打卡changeBox，关闭addBox
             cbox.style.display = 'block';
@@ -295,10 +294,51 @@ function changeUser() {
             }
         }
         validate = true;
-        layer.msg("成功修改原姓名为 " + changeUserInfo.name + " 的使用者信息")
+        layer.msg("成功修改原姓名为 " + newInfo.name + " 的使用者信息")
     })
 
     if (validate) {
         reloadTable();
     }
+}
+
+function changeRole() {
+    let newInfo = {};
+    let validate = false;
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        var layer = layui.layer;
+
+        newInfo = form.val("changeRoleForm");
+        for (let key in newInfo) {
+            if(key == 'nav') {
+                continue;
+            }
+            if (!newInfo[key]) {
+                layer.msg("有必填数据为空");
+                validate = false;
+                return
+            }
+        }
+
+        validate = true;
+
+        let data = {
+            id: newInfo.id,
+            type_name: newInfo.name,
+            menu_auth: navsId
+        }
+
+        api.role.change(data, function(res){
+            if(res.code == '000') {
+                setTimeout(()=>{
+                    cbox.style.display = "none";
+                    reloadTable();
+                }, 1500);
+                layer.msg("成功修改原ID为 " + newInfo.id + " 的使用者信息");
+            } else {
+                layer.msg(res.msg);
+            }
+        })
+    })
 }

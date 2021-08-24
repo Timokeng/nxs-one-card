@@ -1,4 +1,4 @@
-const baseUrl = 'http://192.168.1.18/rcc_pay/commonApi';
+const baseUrl = 'http://192.168.1.18/rcc_pay';
 
 const req = {
     get:(url, suc, data = null, async = true)=>{
@@ -42,6 +42,12 @@ const req = {
 
 
 const api = {
-    getCode: (data, suc) => req.post(baseUrl + '/sendSms', suc, data),
-    login: (data, suc) => req.post(baseUrl + '/login', suc, data)
+    getCode: (data, suc) => req.post(baseUrl + '/commonApi/sendSms', suc, data),
+    login: (data, suc) => req.post(baseUrl + '/commonApi/login', suc, data),
+    role: {
+        add: (data, suc) => req.post(baseUrl + '/user_typeApi/userTypeAdd', suc, data),
+        getList: (data, suc) => req.post(baseUrl + '/user_typeApi/userTypeList', suc, data),
+        change: (data, suc) => req.post(baseUrl + '/user_typeApi/userTypeUpdate', suc, data),
+        delete: (data, suc) => req.post(baseUrl + '/user_typeApi/userTypeDel', suc, data)
+    },
 }
