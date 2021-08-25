@@ -141,7 +141,6 @@ changeBt.addEventListener("click", function () {
             }
 
             changeUserInfo = checkStatus.data[0];
-            console.log(changeUserInfo);
 
             cbox.style.display = 'block';
             abox.style.display = "none";
@@ -289,17 +288,36 @@ function changeUser() {
         for (let key in newInfo) {
             if (!newInfo[key]) {
                 layer.msg("有必填数据为空");
-                validate = false;
+                return
+            }
+
+            if(key == 'phone' && newInfo[key].length != 11) {
+                layer.msg("请输入有效手机号");
                 return
             }
         }
-        validate = true;
-        layer.msg("成功修改原姓名为 " + newInfo.name + " 的使用者信息")
-    })
 
-    if (validate) {
-        reloadTable();
-    }
+        validate = true;
+
+        let reqData = {
+            id: newInfo.id,
+            username: newInfo.name,
+            phone: newInfo.phone,
+            type_id: newInfo.role
+        }
+
+        api.user.change(reqData, function(res) {
+            if(res.code == '000') {
+                setTimeout(()=>{
+                    cbox.style.display = "none";
+                    reloadTable();
+                }, 1500);
+                layer.msg("成功修改原ID为 " + newInfo.id + " 的使用者信息");
+            } else {
+                layer.msg(res.msg)
+            }
+        });
+    })
 }
 
 function changeRole() {

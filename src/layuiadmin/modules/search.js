@@ -106,11 +106,9 @@ function searchUser() {
         conditionData = form.val("conditionForm");
 
         validate = true;
-
-        console.log(conditionData);
     })
     if(validate) {
-        reloadTable();
+        reloadTable(conditionData.name, conditionData.phone);
     }
 }
 

@@ -42,20 +42,17 @@
           </div>
         </div>
         <div class="layui-form-item input-box">
-          <label class="layui-form-label">所属机构</label>
+          <label class="layui-form-label">电话</label>
           <div class="layui-input-block">
-            <select id="orgSelect" name="organization" lay-verify="required">
-              <option value=""></option>
-              <option value="0">网融科技</option>
-              <option value="1">晋宁一中</option>
-              <option value="2">昆明二中</option>
-            </select>
+            <input type="text" name="phone" placeholder="请输入" autocomplete="off" class="layui-input">
           </div>
         </div>
         <div class="layui-form-item input-box">
-          <label class="layui-form-label">角色</label>
+          <label class="layui-form-label">用户身份</label>
           <div class="layui-input-block">
-            <input type="text" name="role" placeholder="请输入" autocomplete="off" class="layui-input">
+            <select class="roleSelect" name="role" lay-verify="required">
+              <option value=""></option>
+            </select>
           </div>
         </div>
       </div>
@@ -63,10 +60,16 @@
     </div>
     <div class="change-box layui-anim layui-anim-scale" id="changeBox">
       <div class="header">
-        <div>修改公众号</div>
+        <div>修改用户</div>
         <div onclick="cbox.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
       </div>
       <div class="form-box layui-form" lay-filter="changeUserForm">
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">ID</label>
+          <div class="layui-input-block">
+            <input type="text" name="id" disabled placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
         <div class="layui-form-item input-box">
           <label class="layui-form-label">姓名</label>
           <div class="layui-input-block">
@@ -74,20 +77,17 @@
           </div>
         </div>
         <div class="layui-form-item input-box">
-          <label class="layui-form-label">所属机构</label>
+          <label class="layui-form-label">电话</label>
           <div class="layui-input-block">
-            <select id="orgSelect" name="organization" lay-verify="required">
-              <option value=""></option>
-              <option value="0">网融科技</option>
-              <option value="1">晋宁一中</option>
-              <option value="2">昆明二中</option>
-            </select>
+            <input type="text" name="phone" placeholder="请输入" autocomplete="off" class="layui-input">
           </div>
         </div>
         <div class="layui-form-item input-box">
-          <label class="layui-form-label">角色</label>
+          <label class="layui-form-label">用户身份</label>
           <div class="layui-input-block">
-            <input type="text" name="role" placeholder="请输入" autocomplete="off" class="layui-input">
+            <select class="roleSelect" name="role" lay-verify="required">
+              <option value=""></option>
+            </select>
           </div>
         </div>
       </div>
@@ -100,34 +100,25 @@
       </div>
       <div class="form-box layui-form" lay-filter="conditionForm">
         <div class="layui-form-item input-box">
-          <label class="layui-form-label">ID</label>
-          <div class="layui-input-block">
-            <input type="text" name="id" placeholder="请输入" autocomplete="off" class="layui-input">
-          </div>
-        </div>
-        <div class="layui-form-item input-box">
           <label class="layui-form-label">姓名</label>
           <div class="layui-input-block">
             <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
           </div>
         </div>
         <div class="layui-form-item input-box">
-          <label class="layui-form-label">所属机构</label>
+          <label class="layui-form-label">电话</label>
           <div class="layui-input-block">
-            <select id="orgSelect" name="organization" lay-verify="required">
+            <input type="text" name="phone" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <!-- <div class="layui-form-item input-box">
+          <label class="layui-form-label">用户身份</label>
+          <div class="layui-input-block">
+            <select class="roleSelect" name="role" lay-verify="required">
               <option value=""></option>
-              <option value="0">网融科技</option>
-              <option value="1">晋宁一中</option>
-              <option value="2">昆明二中</option>
             </select>
           </div>
-        </div>
-        <div class="layui-form-item input-box">
-          <label class="layui-form-label">角色</label>
-          <div class="layui-input-block">
-            <input type="text" name="role" placeholder="请输入" autocomplete="off" class="layui-input">
-          </div>
-        </div>
+        </div> -->
       </div>
       <div class="btn-box"><button class="layui-btn" onclick="searchUser()">确定</button></div>
     </div>
@@ -166,6 +157,7 @@
     </div>
   </div>
 
+  <script src="../../layuiadmin/modules/api.js"></script>
   <script src="../../layuiadmin/layui/layui.js"></script>
   <script>
     layui.config({
@@ -174,74 +166,102 @@
       index: 'lib/index' //主入口模块
     }).use(['index', 'console']);
 
-
-
-    // ----------table组件相关------------------
-    var tableDate = [
-      { id: 1, name: "张三", organization: "晋宁一中", role: "manger", jurisdiction: "一中，二中，三中" },
-      { id: 2, name: "李四", organization: "昆明三中", role: "manger", jurisdiction: "一中，二中，三中" },
-      { id: 3, name: "王五", organization: "师大附中", role: "manger", jurisdiction: "一中，二中，三中" },
-      { id: 4, name: "狗蛋", organization: "网融科技", role: "manger", jurisdiction: "一中，二中，三中" },
-    ]
-    //  初始化table
-    layui.use(['table', 'layer', 'form'], function () {
-      var table = layui.table;
-      var layer = layui.layer;
-      var form = layui.form;
-
-      //第一个实例
-      table.render({
-        elem: '#users-table'
-        , id: 'idTest'
-        , height: 475
-        , data: tableDate
-        , page: true //开启分页
-        , cols: [[ //表头
-          { checkbox: true, width: "5%" }
-          , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
-          , { field: 'name', title: '姓名', width: "10%", minWidth: 120 }
-          , { field: 'organization', title: '所属机构', width: "20%", minWidth: 240 }
-          , { field: 'role', title: '角色', width: "10%", minWidth: 120 }
-          , { field: 'jurisdiction', title: '管理院校', width: "50%", minWidth: 600 }
-        ]]
-      });
-    })
-    // ----------table组件相关（结束）------------------
-
-
-
+    reloadTable();
+    getRoleList();
 
     // ----------------------部分独立方法---------------------------
-    function reloadTable() {
-      var tableDate = [
-        { id: 1, name: "张三", organization: "晋宁一中", role: "manger", jurisdiction: "一中，二中，三中" },
-        { id: 2, name: "李四", organization: "昆明三中", role: "manger", jurisdiction: "一中，二中，三中" },
-        { id: 3, name: "王五", organization: "师大附中", role: "manger", jurisdiction: "一中，二中，三中" },
-        { id: 4, name: "狗蛋", organization: "网融科技", role: "manger", jurisdiction: "一中，二中，三中" },
-        { id: 5, name: "来福", organization: "网融科技", role: "manger", jurisdiction: "一中，二中，三中" },
-      ]
-      //  初始化table
+    function reloadTable(name = '', phone = '', page = '1') {
       layui.use(['table', 'layer', 'form'], function () {
         var table = layui.table;
         var layer = layui.layer;
         var form = layui.form;
 
-        //第一个实例
-        table.render({
-          elem: '#users-table'
-          , id: 'idTest'
-          , height: 475
-          , data: tableDate
-          , page: true //开启分页
-          , cols: [[ //表头
-            { checkbox: true, width: "5%" }
-            , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
-            , { field: 'name', title: '姓名', width: "10%", minWidth: 120 }
-            , { field: 'organization', title: '所属机构', width: "20%", minWidth: 240 }
-            , { field: 'role', title: '角色', width: "10%", minWidth: 120 }
-            , { field: 'jurisdiction', title: '管理院校', width: "50%", minWidth: 600 }
-          ]]
-        });
+        let reqData = {
+          username: name,
+          phone,
+          page,
+          epage: '10'
+        }
+
+        api.user.getList(reqData, function (res) {
+          if (res.code == '000') {
+            let tabData = [];
+            res.rows.list.forEach(item => {
+              let one = {
+                id: item.id,
+                name: item.username,
+                role: item.type_id,
+                roleName: item.type_name,
+                phone: item.phone
+              }
+
+              tabData.push(one);
+            })
+
+            table.render({
+              elem: '#users-table'
+              , id: 'idTest'
+              , height: 475
+              , data: tabData
+              , page: true //开启分页
+              , cols: [[ //表头
+                { checkbox: true, width: "5%" }
+                , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
+                , { field: 'name', title: '姓名', width: "10%", minWidth: 120 }
+                , { field: 'phone', title: '号码', width: "20%", minWidth: 240 }
+                , { field: 'roleName', title: '角色', width: "20%", minWidth: 120 }
+                , { field: 'jurisdiction', title: '管理院校', width: "40%", minWidth: 600 }
+              ]]
+            });
+          } else {
+            layer.msg(res.msg);
+          }
+        })
+      })
+    }
+
+
+    function getRoleList(name = null, page = '1') {
+      let reqData = {
+        type_name: name,
+        page,
+        epage: '100'
+      }
+
+      api.role.getList(reqData, function (res) {
+        if (res.code == '000') {
+          let selects = document.getElementsByClassName("roleSelect");
+
+          res.rows.list.forEach(item => {
+            let option = document.createElement("option");
+
+            option.value = item.id;
+            option.innerHTML = item.type_name;
+
+            selects[0].appendChild(option);
+          })
+
+          for(let i = 1; i < selects.length; i++) {
+            selects[i].innerHTML = selects[0].innerHTML;
+          }
+
+          layui.use('form', function () {
+            let form = layui.form;
+
+            form.render("select");
+          })
+        } else {
+          msg(res.msg)
+        }
+      })
+    }
+
+
+    function msg(str) {
+      layui.use('layer', function () {
+        let layer = layui.layer;
+
+        layer.msg(str);
       })
     }
     // ----------------------部分独立方法（结束）---------------------------

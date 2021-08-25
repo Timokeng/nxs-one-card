@@ -106,10 +106,14 @@ deleteBt.addEventListener("click", function () {
             checkStatus = table.checkStatus('idTest')
             
             if(checkStatus.data.length < 1) {
-                layer.msg('请至少选择一个有用户信息');
+                layer.msg('请至少选择一个用户信息');
                 return;
             }
             validate = true;
+
+            let arr = checkStatus.data.map(item => {
+                return item.id
+            })
 
             layer.open({
                 type: 1,
@@ -119,7 +123,16 @@ deleteBt.addEventListener("click", function () {
                 btn: ['确定', '取消'],
                 yes: function (index, layero) {
                     console.log('确定删除');
-                    reloadTable();
+
+                    api.user.delete({id: arr}, function(res) {
+                        if(res.code == "000") {
+                            setTimeout(()=>{
+                                reloadTable();
+                            }, 1500)
+                        } else {
+                            layer.msg(res.msg);
+                        }
+                    })
                     layer.close(index);
                 },
                 btn2: function (index, layero) {
@@ -165,7 +178,6 @@ deleteBt.addEventListener("click", function () {
                             layer.msg(res.msg);
                         }
                     })
-                    reloadTable();
                     layer.close(index);
                 },
                 btn2: function (index, layero) {

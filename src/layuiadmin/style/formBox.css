@@ -22,6 +22,9 @@
 .form-box .input-box .layui-form-label {
     width: 100px;
 }
+.layui-unselect dl { 
+    max-height:140px;
+}
 
 .btn-box {
     display: flex;

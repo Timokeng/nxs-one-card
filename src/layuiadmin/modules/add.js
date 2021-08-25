@@ -5,7 +5,7 @@ addBt.addEventListener("click", function () {
     abox.style.display = "block";
     cbox.style.display = "none";
 
-    // 判断是不是存在detail相关功能
+    // 重置数据
     if (addBt.innerText.indexOf("模板") != -1) {
         pb.innerHTML = "";
         detailData = [];
@@ -14,9 +14,20 @@ addBt.addEventListener("click", function () {
     }
 
     if (addBt.innerText.indexOf("角色") != -1) {
+        clearForm("addRoleForm", {
+            name: ''
+        });
         setHasNavs([]);
         navs = '';
         navsId = [];
+    }
+
+    if (addBt.innerText.indexOf("用户") != -1) {
+        clearForm("addUserForm", {
+            name: '',
+            role: '',
+            phone: ''
+        });
     }
 })
 
@@ -137,17 +148,34 @@ function addUser() {
         for (let key in addInfo) {
             if (!addInfo[key]) {
                 layer.msg("有必填数据为空");
-                validate = false;
+                return
+            }
+            if(key == 'phone' && addInfo[key].length != 11) {
+                layer.msg("请输入有效手机号");
                 return
             }
         }
+
         validate = true;
-        layer.msg("成功添加名为 " + addInfo.name + " 的用户信息")
-        console.log(addInfo);
+
+        let data = {
+            type_id: addInfo.role,
+            username: addInfo.name,
+            phone: addInfo.phone
+        }
+
+        api.user.add(data, function(res) {
+            if(res.code == '000') {
+                setTimeout(() => {
+                    abox.style.display = 'none';
+                    reloadTable();
+                }, 1500);
+                layer.msg("成功添加名为 " + addInfo.name + " 的用户信息");
+            } else {
+                layer.msg(res.msg);
+            }
+        })
     });
-    if (validate) {
-        reloadTable();
-    }
 }
 
 // 新增角色
@@ -179,7 +207,7 @@ function addRole() {
 
         api.role.add(data, function (res) {
             if (res.code == '000') {
-                setTimeout(()=>{
+                setTimeout(() => {
                     abox.style.display = 'none';
                     reloadTable();
                 }, 1500);
@@ -214,4 +242,13 @@ function addSc() {
     if (validate) {
         reloadTable();
     }
+}
+
+
+function clearForm(str, val) {
+    layui.use('form', function () {
+        let form = layui.form;
+
+        form.val(str, val)
+    })
 }
