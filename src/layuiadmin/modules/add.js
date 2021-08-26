@@ -14,20 +14,18 @@ addBt.addEventListener("click", function () {
     }
 
     if (addBt.innerText.indexOf("角色") != -1) {
-        clearForm("addRoleForm", {
-            name: ''
-        });
+        clearForm("addRoleForm");
         setHasNavs([]);
         navs = '';
         navsId = [];
     }
 
     if (addBt.innerText.indexOf("用户") != -1) {
-        clearForm("addUserForm", {
-            name: '',
-            role: '',
-            phone: ''
-        });
+        clearForm("addUserForm");
+    }
+
+    if (addBt.innerText.indexOf("学校") != -1) {
+        clearForm("addSchoolForm");
     }
 })
 
@@ -150,7 +148,7 @@ function addUser() {
                 layer.msg("有必填数据为空");
                 return
             }
-            if(key == 'phone' && addInfo[key].length != 11) {
+            if (key == 'phone' && addInfo[key].length != 11) {
                 layer.msg("请输入有效手机号");
                 return
             }
@@ -164,12 +162,12 @@ function addUser() {
             phone: addInfo.phone
         }
 
-        api.user.add(data, function(res) {
-            if(res.code == '000') {
+        api.user.add(data, function (res) {
+            if (res.code == '000') {
                 setTimeout(() => {
                     abox.style.display = 'none';
                     reloadTable();
-                }, 1500);
+                }, 500);
                 layer.msg("成功添加名为 " + addInfo.name + " 的用户信息");
             } else {
                 layer.msg(res.msg);
@@ -210,7 +208,7 @@ function addRole() {
                 setTimeout(() => {
                     abox.style.display = 'none';
                     reloadTable();
-                }, 1500);
+                }, 500);
                 layer.msg("成功添加名为 " + addInfo.name + " 的角色信息")
             } else {
                 layer.msg(res.msg);
@@ -223,7 +221,7 @@ function addRole() {
 function addSc() {
     let validate = false;
     let addInfo = {};
-    layui.use(['form', 'layer'], function () {
+    layui.use(['form', 'layer'], async function () {
         var form = layui.form;
         var layer = layui.layer;
 
@@ -236,19 +234,42 @@ function addSc() {
             }
         }
         validate = true;
-        layer.msg("成功添加名为 " + addInfo.name + " 的学校信息")
-        console.log(addInfo);
+
+        let point = await getPoint(addInfo.name, '昭通市');
+
+        let reqData = {
+            areaid: addInfo.area,
+            schoolname: addInfo.name,
+            address: addInfo.address,
+            longitude: point.lng,
+            latitude: point.lat
+        }
+
+        api.school.add(reqData, function (res) {
+            if (res.code == "000") {
+                setTimeout(() => {
+                    abox.style.display = 'none';
+                    reloadTable();
+                }, 500);
+                layer.msg("成功添加名为 " + addInfo.name + " 的学校信息")
+            } else {
+                layer.msg(res.msg)
+            }
+        })
     });
-    if (validate) {
-        reloadTable();
-    }
 }
 
 
-function clearForm(str, val) {
+function clearForm(str) {
     layui.use('form', function () {
         let form = layui.form;
 
-        form.val(str, val)
+        let data =  form.val(str);
+
+        for(let key in data) {
+            data[key] = '';
+        }
+
+        form.val(str, data);
     })
 }

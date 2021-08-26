@@ -40,9 +40,17 @@
                     </div>
                 </div>
                 <div class="layui-form-item input-box">
-                    <label class="layui-form-label">所属县份</label>
+                    <label class="layui-form-label">所属区县</label>
                     <div class="layui-input-block">
-                        <input type="text" name="area" placeholder="请输入" autocomplete="off" class="layui-input">
+                        <select class="areaSelect" name="area" lay-verify="required">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item input-box">
+                    <label class="layui-form-label">详细地址</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="address" placeholder="请输入" autocomplete="off" class="layui-input">
                     </div>
                 </div>
             </div>
@@ -55,19 +63,33 @@
             </div>
             <div class="form-box layui-form" lay-filter="changeSchoolForm">
                 <div class="layui-form-item input-box">
+                    <label class="layui-form-label">ID</label>
+                    <div class="layui-input-block">
+                        <input type="text" disabled name="id" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item input-box">
                     <label class="layui-form-label">学校名</label>
                     <div class="layui-input-block">
                         <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item input-box">
-                    <label class="layui-form-label">所属县份</label>
+                    <label class="layui-form-label">所属区县</label>
                     <div class="layui-input-block">
-                        <input type="text" name="area" placeholder="请输入" autocomplete="off" class="layui-input">
+                        <select class="areaSelect" name="area" lay-verify="required">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item input-box">
+                    <label class="layui-form-label">详细地址</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="address" placeholder="请输入" autocomplete="off" class="layui-input">
                     </div>
                 </div>
             </div>
-            <div class="btn-box"><button class="layui-btn" onclick="changeWx()">确定</button></div>
+            <div class="btn-box"><button class="layui-btn" onclick="changeSc()">确定</button></div>
         </div>
         <div class="condition-box layui-anim layui-anim-scale" id="condition">
             <div class="header">
@@ -82,22 +104,27 @@
                     </div>
                 </div>
                 <div class="layui-form-item input-box">
-                    <label class="layui-form-label">所属县份</label>
+                    <label class="layui-form-label">所属区县</label>
                     <div class="layui-input-block">
-                        <input type="text" name="area" placeholder="请输入" autocomplete="off" class="layui-input">
+                        <select class="areaSelect" name="area" lay-verify="required">
+                            <option value=""></option>
+                        </select>
                     </div>
                 </div>
             </div>
-            <div class="btn-box"><button class="layui-btn" onclick="searchWx()">确定</button></div>
+            <div class="btn-box"><button class="layui-btn" onclick="searchSc()">确定</button></div>
         </div>
         <div class="table-box">
             <div class="header">学校</div>
             <div class="article">
-                <table id="wx" lay-filter="test"></table>
+                <table id="sc" lay-filter="test"></table>
             </div>
         </div>
     </div>
 
+    <script src="../../layuiadmin/modules/api.js"></script>
+    <script type="text/javascript"
+        src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=6BpgZvZ5E6HCaDRcXDE18cDWsuNmpOwp"></script>
     <script src="../../layuiadmin/layui/layui.js"></script>
     <script>
         layui.config({
@@ -106,70 +133,116 @@
             index: 'lib/index' //主入口模块
         }).use(['index', 'console']);
 
+        var areaMap = {};
+  
+        getAreaList('530601');
 
-
-        // ----------table组件相关------------------
-        var tableDate = [
-            { id: 1, name: "晋宁一中", area: "晋宁" },
-            { id: 2, name: "晋宁二中", area: "晋宁" },
-            { id: 3, name: "晋宁三中", area: "晋宁" },
-            { id: 4, name: "晋宁四中", area: "晋宁" },
-        ]
-        //  初始化table
-        layui.use(['table', 'layer', 'form'], function () {
-            var table = layui.table;
-            var layer = layui.layer;
-            var form = layui.form;
-
-            //第一个实例
-            table.render({
-                elem: '#wx'
-                , id: 'idTest'
-                , height: 475
-                , data: tableDate
-                , page: true //开启分页
-                , cols: [[ //表头
-                    { checkbox: true, width: "5%" }
-                    , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
-                    , { field: 'name', title: '学校名', width: "15%", minWidth: 180 }
-                    , { field: 'area', title: '所属县份', width: "75%" }
-                ]]
-            });
-        })
-        // ----------table组件相关（结束）------------------
+        // 手动延迟
+        setTimeout(()=>{
+            reloadTable();
+        }, 500)
 
 
 
 
         // ----------------------部分独立方法---------------------------
-        function reloadTable() {
-            var tableDate = [
-                { id: 1, name: "晋宁一中", area: "晋宁" },
-                { id: 2, name: "晋宁二中", area: "晋宁" },
-                { id: 3, name: "晋宁三中", area: "晋宁" },
-                { id: 4, name: "晋宁四中", area: "晋宁" },
-            ]
-            //  初始化table
-            layui.use(['table', 'layer', 'form'], function () {
-                var table = layui.table;
-                var layer = layui.layer;
-                var form = layui.form;
+        function reloadTable(schoolname = '', areaid = '', page = '1') {
+            let reqData = {
+                schoolname,
+                areaid,
+                page,
+                epage: '10'
+            }
 
-                //第一个实例
-                table.render({
-                    elem: '#wx'
-                    , id: 'idTest'
-                    , height: 475
-                    , data: tableDate
-                    , page: true //开启分页
-                    , cols: [[ //表头
-                        { checkbox: true, width: "5%" }
-                        , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
-                        , { field: 'name', title: '学校名', width: "15%", minWidth: 180 }
-                        , { field: 'area', title: '所属县份', width: "75%" }
-                    ]]
-                });
+            api.school.getList(reqData, function (res) {
+                layui.use(['table', 'layer', 'form'], function () {
+                    var table = layui.table;
+                    var layer = layui.layer;
+                    var form = layui.form;
+
+                    if (res.code == '000') {
+                        let tabData = [];
+                        res.rows.list.forEach(item => {
+                            let one = {
+                                id: item.id,
+                                name: item.schoolname,
+                                area: areaMap[item.areaid],
+                                areaid: item.areaid,
+                                address: item.address
+                            }
+
+                            tabData.push(one);
+                        })
+
+                        table.render({
+                            elem: '#sc'
+                            , id: 'idTest'
+                            , height: 475
+                            , data: tabData
+                            , page: true //开启分页
+                            , cols: [[ //表头
+                                { checkbox: true, width: "5%" }
+                                , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
+                                , { field: 'name', title: '学校名', width: "15%", minWidth: 180 }
+                                , { field: 'area', title: '县/区/市', width: "15%" }
+                                , { field: 'address', title: '详细地址', width: "60%" }
+                            ]]
+                        });
+                    } else {
+                        layer.msg(res.msg);
+                    }
+                })
             })
+        }
+
+
+        function getAreaList(id) {
+            api.getAreaList({ pid: id }, function (res) {
+                layui.use(['form', 'layer'], function () {
+                    let form = layui.form, layer = layui.layer;
+
+                    if (res.code == '000') {
+                        let selects = document.getElementsByClassName("areaSelect");
+
+                        res.result.forEach(item => {
+                            let option = document.createElement("option");
+
+                            option.value = item.areaid;
+                            option.innerHTML = item.name;
+
+                            areaMap[item.areaid] = item.name;
+
+                            selects[0].appendChild(option);
+                        })
+
+                        for (let i = 1; i < selects.length; i++) {
+                            selects[i].innerHTML = selects[0].innerHTML;
+                        }
+
+                        form.render('select');
+                    } else {
+                        layer.msg(res.msg);
+                    }
+                })
+            })
+        }
+
+
+        function getPoint(str, area) {
+            var myGeo = new BMapGL.Geocoder();
+
+            let res = new Promise((reject, resolve) => {
+                myGeo.getPoint(str, function (point) {
+                    if (point) {
+                        reject(point);
+                    } else {
+                        console.log('解析失败');
+                        reject({lng: '0', lat: '0'});
+                    }
+                }, area);
+            });
+
+            return res;
         }
     // ----------------------部分独立方法（结束）---------------------------
     </script>

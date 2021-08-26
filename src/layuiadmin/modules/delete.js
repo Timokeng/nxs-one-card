@@ -32,7 +32,7 @@ deleteBt.addEventListener("click", function () {
                 },
             });
         })
-    } else if (deleteBt.innerText.indexOf('模板') >= 0) { 
+    } else if (deleteBt.innerText.indexOf('模板') >= 0) {
         let checkStatus = {},
             validate = false;
         layui.use(['layer', 'table'], function () {
@@ -40,8 +40,8 @@ deleteBt.addEventListener("click", function () {
             var table = layui.table;
 
             checkStatus = table.checkStatus('idTest')
-            
-            if(checkStatus.data.length < 1) {
+
+            if (checkStatus.data.length < 1) {
                 layer.msg('请至少选择一个有效模板');
                 return;
             }
@@ -72,8 +72,8 @@ deleteBt.addEventListener("click", function () {
             var table = layui.table;
 
             checkStatus = table.checkStatus('idTest')
-            
-            if(checkStatus.data.length < 1) {
+
+            if (checkStatus.data.length < 1) {
                 layer.msg('请至少选择一个有效公众号信息');
                 return;
             }
@@ -104,8 +104,8 @@ deleteBt.addEventListener("click", function () {
             var table = layui.table;
 
             checkStatus = table.checkStatus('idTest')
-            
-            if(checkStatus.data.length < 1) {
+
+            if (checkStatus.data.length < 1) {
                 layer.msg('请至少选择一个用户信息');
                 return;
             }
@@ -124,11 +124,11 @@ deleteBt.addEventListener("click", function () {
                 yes: function (index, layero) {
                     console.log('确定删除');
 
-                    api.user.delete({id: arr}, function(res) {
-                        if(res.code == "000") {
-                            setTimeout(()=>{
+                    api.user.delete({ id: arr }, function (res) {
+                        if (res.code == "000") {
+                            
                                 reloadTable();
-                            }, 1500)
+
                         } else {
                             layer.msg(res.msg);
                         }
@@ -149,8 +149,8 @@ deleteBt.addEventListener("click", function () {
             var table = layui.table;
 
             checkStatus = table.checkStatus('idTest')
-            
-            if(checkStatus.data.length < 1) {
+
+            if (checkStatus.data.length < 1) {
                 layer.msg('请至少选择一个角色信息');
                 return;
             }
@@ -169,11 +169,11 @@ deleteBt.addEventListener("click", function () {
                 yes: function (index, layero) {
                     console.log('确定删除');
 
-                    api.role.delete({id: arr}, function(res) {
-                        if(res.code == "000") {
-                            setTimeout(()=>{
+                    api.role.delete({ id: arr }, function (res) {
+                        if (res.code == "000") {
+                            
                                 reloadTable();
-                            }, 1500)
+
                         } else {
                             layer.msg(res.msg);
                         }
@@ -194,12 +194,16 @@ deleteBt.addEventListener("click", function () {
             var table = layui.table;
 
             checkStatus = table.checkStatus('idTest')
-            
-            if(checkStatus.data.length < 1) {
+
+            if (checkStatus.data.length < 1) {
                 layer.msg('请至少选择一个学校信息');
                 return;
             }
             validate = true;
+
+            let arr = checkStatus.data.map(item => {
+                return item.id
+            })
 
             layer.open({
                 type: 1,
@@ -209,7 +213,15 @@ deleteBt.addEventListener("click", function () {
                 btn: ['确定', '取消'],
                 yes: function (index, layero) {
                     console.log('确定删除');
-                    reloadTable();
+                    api.school.delete({ id: arr }, function (res) {
+                        if (res.code == "000") {
+
+                            reloadTable();
+
+                        } else {
+                            layer.msg(res.msg);
+                        }
+                    })
                     layer.close(index);
                 },
                 btn2: function (index, layero) {

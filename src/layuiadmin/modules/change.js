@@ -73,11 +73,11 @@ changeBt.addEventListener("click", function () {
 
             let checkStatus = table.checkStatus('idTest');
 
-            if(checkStatus.data.length < 1) {
+            if (checkStatus.data.length < 1) {
                 layer.msg("请至少选择一个有效模板");
                 return;
             }
-            if(checkStatus.data.length > 1) {
+            if (checkStatus.data.length > 1) {
                 layer.msg("每次只能修改一个有效模板");
                 return;
             }
@@ -89,7 +89,7 @@ changeBt.addEventListener("click", function () {
 
             changeTemplateInfo = checkStatus.data[0];
             // 这里要写一段数据写入，把明细部分数据写入detailData
-            
+
             let changeInfo = {
                 name: changeTemplateInfo.name,
                 sum: changeTemplateInfo.sum,
@@ -108,11 +108,11 @@ changeBt.addEventListener("click", function () {
 
             let checkStatus = table.checkStatus('idTest');
 
-            if(checkStatus.data.length < 1) {
+            if (checkStatus.data.length < 1) {
                 layer.msg("请至少选择一个有效公众号信息");
                 return;
             }
-            if(checkStatus.data.length > 1) {
+            if (checkStatus.data.length > 1) {
                 layer.msg("每次只能修改一个有效公众号信息");
                 return;
             }
@@ -131,11 +131,11 @@ changeBt.addEventListener("click", function () {
 
             let checkStatus = table.checkStatus('idTest');
 
-            if(checkStatus.data.length < 1) {
+            if (checkStatus.data.length < 1) {
                 layer.msg("请至少选择一个有效使用者信息");
                 return;
             }
-            if(checkStatus.data.length > 1) {
+            if (checkStatus.data.length > 1) {
                 layer.msg("每次只能修改一个有效使用者信息");
                 return;
             }
@@ -154,11 +154,11 @@ changeBt.addEventListener("click", function () {
 
             let checkStatus = table.checkStatus('idTest');
 
-            if(checkStatus.data.length < 1) {
+            if (checkStatus.data.length < 1) {
                 layer.msg("请至少选择一个有效角色信息");
                 return;
             }
-            if(checkStatus.data.length > 1) {
+            if (checkStatus.data.length > 1) {
                 layer.msg("每次只能修改一个有效角色信息");
                 return;
             }
@@ -182,17 +182,18 @@ changeBt.addEventListener("click", function () {
 
             let checkStatus = table.checkStatus('idTest');
 
-            if(checkStatus.data.length < 1) {
+            if (checkStatus.data.length < 1) {
                 layer.msg("请至少选择一个有效学校信息");
                 return;
             }
-            if(checkStatus.data.length > 1) {
+            if (checkStatus.data.length > 1) {
                 layer.msg("每次只能修改一个有效学校信息");
                 return;
             }
 
             changeInfo = checkStatus.data[0];
-            console.log(changeInfo);
+
+            changeInfo.area = changeInfo.areaid;
 
             // 打卡changeBox，关闭addBox
             cbox.style.display = 'block';
@@ -291,7 +292,7 @@ function changeUser() {
                 return
             }
 
-            if(key == 'phone' && newInfo[key].length != 11) {
+            if (key == 'phone' && newInfo[key].length != 11) {
                 layer.msg("请输入有效手机号");
                 return
             }
@@ -306,9 +307,9 @@ function changeUser() {
             type_id: newInfo.role
         }
 
-        api.user.change(reqData, function(res) {
-            if(res.code == '000') {
-                setTimeout(()=>{
+        api.user.change(reqData, function (res) {
+            if (res.code == '000') {
+                setTimeout(() => {
                     cbox.style.display = "none";
                     reloadTable();
                 }, 1500);
@@ -329,7 +330,7 @@ function changeRole() {
 
         newInfo = form.val("changeRoleForm");
         for (let key in newInfo) {
-            if(key == 'nav') {
+            if (key == 'nav') {
                 continue;
             }
             if (!newInfo[key]) {
@@ -347,13 +348,57 @@ function changeRole() {
             menu_auth: navsId
         }
 
-        api.role.change(data, function(res){
-            if(res.code == '000') {
-                setTimeout(()=>{
+        api.role.change(data, function (res) {
+            if (res.code == '000') {
+                setTimeout(() => {
                     cbox.style.display = "none";
                     reloadTable();
                 }, 1500);
                 layer.msg("成功修改原ID为 " + newInfo.id + " 的使用者信息");
+            } else {
+                layer.msg(res.msg);
+            }
+        })
+    })
+}
+
+function changeSc() {
+    let newInfo = {};
+    let validate = false;
+    layui.use(['form', 'layer'], async function () {
+        var form = layui.form;
+        var layer = layui.layer;
+
+        newInfo = form.val("changeSchoolForm");
+        for (let key in newInfo) {
+
+            if (!newInfo[key]) {
+                layer.msg("有必填数据为空");
+                validate = false;
+                return
+            }
+        }
+
+        validate = true;
+
+        let point = await getPoint(newInfo.name, '昭通市')
+
+        let data = {
+            id: newInfo.id,
+            schoolname: newInfo.name,
+            areaid: newInfo.area,
+            address: newInfo.address,
+            longitude: point.lng,
+            latitude: point.lat
+        }
+
+        api.school.change(data, function (res) {
+            if (res.code == '000') {
+                setTimeout(() => {
+                    cbox.style.display = "none";
+                    reloadTable();
+                }, 1500);
+                layer.msg("成功修改原ID为 " + newInfo.id + " 的学校信息");
             } else {
                 layer.msg(res.msg);
             }

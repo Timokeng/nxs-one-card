@@ -179,3 +179,25 @@ function searchRole() {
         reloadTable(data);
     }
 }
+
+
+function searchSc() {
+    let conditionData = {};
+    let validate = false;
+    let name = '', areaid = '';
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        var layer = layui.layer;
+
+        conditionData = form.val("conditionForm");
+
+        validate = true;
+
+        name = conditionData.name;
+        areaid = conditionData.area;
+    })
+
+    if(validate) {
+        reloadTable(name, areaid);
+    }
+}
