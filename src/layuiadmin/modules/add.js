@@ -2,9 +2,6 @@ const addBt = document.getElementById("addBt");
 let abox = document.getElementById("addBox");
 
 addBt.addEventListener("click", function () {
-    abox.style.display = "block";
-    cbox.style.display = "none";
-
     // 重置数据
     if (addBt.innerText.indexOf("模板") != -1) {
         pb.innerHTML = "";
@@ -27,6 +24,13 @@ addBt.addEventListener("click", function () {
     if (addBt.innerText.indexOf("学校") != -1) {
         clearForm("addSchoolForm");
     }
+
+    if (addBt.innerText.indexOf("公众号") != -1) {
+        clearForm("addSWxForm");
+    }
+
+    abox.style.display = "block";
+    cbox.style.display = "none";
 })
 
 // 新增学生
@@ -140,12 +144,25 @@ function addWx() {
             }
         }
         validate = true;
-        layer.msg("成功添加公开ID为 " + addInfo.wxid + " 的微信公众号信息")
-        console.log(addInfo);
+
+        let reqData = {
+            school_id: addInfo.school,
+            wxid: addInfo.wxid,
+            token: addInfo.token
+        }
+
+        api.wx.add(reqData, function(res) {
+            if(res.code == '000') {
+                layer.msg("成功添加公开ID为 " + addInfo.wxid + " 的微信公众号信息");
+                setTimeout(() => {
+                    abox.style.display = 'none';
+                    reloadTable();
+                }, 500);
+            } else {
+                layer.msg(res.msg);
+            }
+        })
     });
-    if (validate) {
-        reloadTable();
-    }
 }
 
 // 新增用户

@@ -65,8 +65,14 @@ const api = {
     },
     class: {
         add: (data, suc) => req.post(baseUrl + '/classApi/classAdd', suc, data),
-        getList: (data, suc) => req.post(baseUrl + '/schoolApi/schoolList', suc, data),
-        change: (data, suc) => req.post(baseUrl + '/schoolApi/schoolUpdate', suc, data),
-        delete: (data, suc) => req.post(baseUrl + '/schoolApi/schoolDel', suc, data),
-    }
+        getList: (data, suc) => req.post(baseUrl + '/classApi/classList', suc, data),
+        change: (data, suc) => req.post(baseUrl + '/classApi/classUpdate', suc, data),
+        delete: (data, suc) => req.post(baseUrl + '/classApi/classDel', suc, data),
+    },
+    wx: {
+        add: (data, suc) => req.post(baseUrl + '/wx_schoolApi/wxSchoolAdd', suc, data),
+        getList: (data, suc) => req.post(baseUrl + '/wx_schoolApi/wxSchoolList', suc, data),
+        change: (data, suc) => req.post(baseUrl + '/wx_schoolApi/wxSchoolUpdate', suc, data),
+        delete: (data, suc) => req.post(baseUrl + '/wx_schoolApi/wxSchoolDel', suc, data),
+    },
 }

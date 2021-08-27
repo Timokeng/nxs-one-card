@@ -118,7 +118,7 @@ changeBt.addEventListener("click", function () {
             }
 
             changeWxInfo = checkStatus.data[0];
-            console.log(changeWxInfo);
+            changeWxInfo.school = changeWxInfo.schoolid;
 
             cbox.style.display = 'block';
             form.val("changeWxForm", changeWxInfo);
@@ -261,7 +261,7 @@ function changeWx() {
         var form = layui.form;
         var layer = layui.layer;
 
-        newInfo = form.val("changeTeForm");
+        newInfo = form.val("changeWxForm");
         for (let key in newInfo) {
             if (!newInfo[key]) {
                 layer.msg("有必填数据为空");
@@ -269,13 +269,28 @@ function changeWx() {
                 return
             }
         }
-        validate = true;
-        layer.msg("成功修改原公开id为 " + changeWxInfo.wxid + " 的公众号信息")
-    })
 
-    if (validate) {
-        reloadTable();
-    }
+        validate = true;
+
+        let reqData = {
+            id: newInfo.id,
+            school_id: newInfo.school,
+            wxid: newInfo.wxid,
+            token: newInfo.token
+        }
+
+        api.wx.change(reqData, function(res) {
+            if (res.code == '000') {
+                layer.msg("成功修改原id为 " + changeWxInfo.id + " 的公众号信息")
+                setTimeout(() => {
+                    cbox.style.display = "none";
+                    reloadTable();
+                }, 500);
+            } else {
+                layer.msg(res.msg)
+            }
+        })
+    })
 }
 
 function changeUser() {
@@ -309,11 +324,11 @@ function changeUser() {
 
         api.user.change(reqData, function (res) {
             if (res.code == '000') {
+                layer.msg("成功修改原ID为 " + newInfo.id + " 的使用者信息");
                 setTimeout(() => {
                     cbox.style.display = "none";
                     reloadTable();
-                }, 1500);
-                layer.msg("成功修改原ID为 " + newInfo.id + " 的使用者信息");
+                }, 500);
             } else {
                 layer.msg(res.msg)
             }
@@ -350,11 +365,11 @@ function changeRole() {
 
         api.role.change(data, function (res) {
             if (res.code == '000') {
+                layer.msg("成功修改原ID为 " + newInfo.id + " 的使用者信息");
                 setTimeout(() => {
                     cbox.style.display = "none";
                     reloadTable();
-                }, 1500);
-                layer.msg("成功修改原ID为 " + newInfo.id + " 的使用者信息");
+                }, 500);
             } else {
                 layer.msg(res.msg);
             }
@@ -394,11 +409,11 @@ function changeSc() {
 
         api.school.change(data, function (res) {
             if (res.code == '000') {
+                layer.msg("成功修改原ID为 " + newInfo.id + " 的学校信息");
                 setTimeout(() => {
                     cbox.style.display = "none";
                     reloadTable();
-                }, 1500);
-                layer.msg("成功修改原ID为 " + newInfo.id + " 的学校信息");
+                }, 500);
             } else {
                 layer.msg(res.msg);
             }

@@ -34,13 +34,10 @@
       </div>
       <div class="form-box layui-form" lay-filter="addWxForm">
         <div class="layui-form-item input-box">
-          <label class="layui-form-label">绑定机构</label>
+          <label class="layui-form-label">所属学校</label>
           <div class="layui-input-block">
-            <select id="orgSelect" name="organization" lay-verify="required">
+            <select class="scSelect" name="school" lay-verify="required">
               <option value=""></option>
-              <option value="0">网融科技</option>
-              <option value="1">晋宁一中</option>
-              <option value="2">昆明二中</option>
             </select>
           </div>
         </div>
@@ -68,17 +65,14 @@
         <div class="layui-form-item input-box">
           <label class="layui-form-label">ID</label>
           <div class="layui-input-block">
-            <input type="text" name="id" placeholder="请输入" autocomplete="off" class="layui-input">
+            <input type="text" disabled name="id" placeholder="请输入" autocomplete="off" class="layui-input">
           </div>
         </div>
         <div class="layui-form-item input-box">
-          <label class="layui-form-label">绑定机构</label>
+          <label class="layui-form-label">所属学校</label>
           <div class="layui-input-block">
-            <select id="orgSelect" name="organization" lay-verify="required">
+            <select class="scSelect" name="school" lay-verify="required">
               <option value=""></option>
-              <option value="0">网融科技</option>
-              <option value="1">晋宁一中</option>
-              <option value="2">昆明二中</option>
             </select>
           </div>
         </div>
@@ -104,32 +98,9 @@
       </div>
       <div class="form-box layui-form" lay-filter="conditionForm">
         <div class="layui-form-item input-box">
-          <label class="layui-form-label">ID</label>
-          <div class="layui-input-block">
-            <input type="text" name="id" placeholder="请输入" autocomplete="off" class="layui-input">
-          </div>
-        </div>
-        <div class="layui-form-item input-box">
-          <label class="layui-form-label">绑定机构</label>
-          <div class="layui-input-block">
-            <select id="orgSelect" name="organization" lay-verify="required">
-              <option value=""></option>
-              <option value="0">网融科技</option>
-              <option value="1">晋宁一中</option>
-              <option value="2">昆明二中</option>
-            </select>
-          </div>
-        </div>
-        <div class="layui-form-item input-box">
           <label class="layui-form-label">公开ID</label>
           <div class="layui-input-block">
             <input type="text" name="wxid" placeholder="请输入" autocomplete="off" class="layui-input">
-          </div>
-        </div>
-        <div class="layui-form-item input-box">
-          <label class="layui-form-label">Token</label>
-          <div class="layui-input-block">
-            <input type="text" name="token" placeholder="请输入" autocomplete="off" class="layui-input">
           </div>
         </div>
       </div>
@@ -143,6 +114,7 @@
     </div>
   </div>
 
+  <script src="../../layuiadmin/modules/api.js"></script>
   <script src="../../layuiadmin/layui/layui.js"></script>
   <script>
     layui.config({
@@ -152,71 +124,97 @@
     }).use(['index', 'console']);
 
 
-
-    // ----------table组件相关------------------
-    var tableDate = [
-      { id: 1, organization: "晋宁一中", wxid: "gh_12311136322", token: "zvwjdkaj3131313" },
-      { id: 2, organization: "昆明三中", wxid: "gh_12311136322", token: "zvwjdkaj3131313" },
-      { id: 3, organization: "师大附中", wxid: "gh_12311136322", token: "zvwjdkaj3131313" },
-      { id: 4, organization: "网融科技", wxid: "gh_12311136322", token: "zvwjdkaj3131313" },
-    ]
-    //  初始化table
-    layui.use(['table', 'layer', 'form'], function () {
-      var table = layui.table;
-      var layer = layui.layer;
-      var form = layui.form;
-
-      //第一个实例
-      table.render({
-        elem: '#wx'
-        , id: 'idTest'
-        , height: 475
-        , data: tableDate
-        , page: true //开启分页
-        , cols: [[ //表头
-          { checkbox: true, width: "5%" }
-          , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
-          , { field: 'organization', title: '绑定机构', width: "30%", minWidth: 200 }
-          , { field: 'wxid', title: '公开ID', width: "30%", minWidth: 200 }
-          , { field: 'token', title: 'Token', width: "30%", minWidth: 200 }
-        ]]
-      });
-    })
-    // ----------table组件相关（结束）------------------
+    let scMap = {};
 
 
+    getScList();
+    reloadTable();
 
 
     // ----------------------部分独立方法---------------------------
-    function reloadTable() {
-      var tableDate = [
-        { id: 1, organization: "晋宁一中", wxid: "gh_12311136322", token: "zvwjdkaj3131313" },
-        { id: 2, organization: "昆明三中", wxid: "gh_12311136322", token: "zvwjdkaj3131313" },
-        { id: 3, organization: "师大附中", wxid: "gh_12311136322", token: "zvwjdkaj3131313" },
-        { id: 4, organization: "网融科技", wxid: "gh_12311136322", token: "zvwjdkaj3131313" },
-        { id: 5, organization: "网融科技", wxid: "gh_12311136322", token: "zvwjdkaj3131313" },
-      ]
-      //  初始化table
+    function reloadTable(wxid = '') {
       layui.use(['table', 'layer', 'form'], function () {
         var table = layui.table;
         var layer = layui.layer;
         var form = layui.form;
 
-        //第一个实例
-        table.render({
-          elem: '#wx'
-          , id: 'idTest'
-          , height: 475
-          , data: tableDate
-          , page: true //开启分页
-          , cols: [[ //表头
-            { checkbox: true, width: "5%" }
-            , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
-            , { field: 'organization', title: '绑定机构', width: "30%", minWidth: 200 }
-            , { field: 'wxid', title: '公开ID', width: "30%", minWidth: 200 }
-            , { field: 'token', title: 'Token', width: "30%", minWidth: 200 }
-          ]]
-        });
+        api.wx.getList({ wxid }, function (res) {
+          if (res.code == '000') {
+            let tabData = [];
+
+            res.rows.forEach(item => {
+              let one = {
+                id: item.id,
+                school: scMap[item.school_id],
+                schoolid: item.school_id,
+                wxid: item.wxid,
+                token: item.token
+              }
+
+              tabData.push(one);
+            })
+
+            table.render({
+              elem: '#wx'
+              , id: 'idTest'
+              , height: 475
+              , data: tabData
+              , page: true //开启分页
+              , cols: [[ //表头
+                { checkbox: true, width: "5%" }
+                , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
+                , { field: 'school', title: '绑定机构', width: "30%", minWidth: 200 }
+                , { field: 'wxid', title: '公开ID', width: "30%", minWidth: 200 }
+                , { field: 'token', title: 'Token', width: "30%", minWidth: 200 }
+              ]]
+            });
+          } else {
+            layer.msg(res.msg);
+          }
+        })
+      })
+    }
+
+
+    function getScList() {
+      let reqData = {
+        schoolname: '',
+        areaid: '',
+        page: '1',
+        epage: '100'
+      }
+
+      api.school.getList(reqData, function (res) {
+        layui.use(['form', 'layer'], function () {
+          let form = layui.form, layer = layui.layer;
+
+          if (res.code == '000') {
+            let selects = document.getElementsByClassName("scSelect");
+
+            res.rows.list.forEach(item => {
+              let option = document.createElement("option");
+
+              option.value = item.id;
+              option.innerHTML = item.schoolname;
+
+              scMap[item.id] = item.schoolname;
+
+              selects[0].appendChild(option);
+            })
+
+            for (let i = 1; i < selects.length; i++) {
+              selects[i].innerHTML = selects[0].innerHTML;
+            }
+
+            layui.use('form', function () {
+              let form = layui.form;
+
+              form.render("select");
+            })
+          } else {
+            layer.msg(res.msg);
+          }
+        })
       })
     }
     // ----------------------部分独立方法（结束）---------------------------

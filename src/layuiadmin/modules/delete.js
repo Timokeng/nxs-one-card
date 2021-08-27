@@ -79,6 +79,10 @@ deleteBt.addEventListener("click", function () {
             }
             validate = true;
 
+            let arr = checkStatus.data.map(item => {
+                return item.id
+            })
+
             layer.open({
                 type: 1,
                 content: '确定删除选中的 ' + checkStatus.data.length + '个公众号信息吗？',
@@ -87,7 +91,15 @@ deleteBt.addEventListener("click", function () {
                 btn: ['确定', '取消'],
                 yes: function (index, layero) {
                     console.log('确定删除');
-                    reloadTable();
+                    api.wx.delete({ id: arr }, function (res) {
+                        if (res.code == "000") {
+                            
+                                reloadTable();
+
+                        } else {
+                            layer.msg(res.msg);
+                        }
+                    })
                     layer.close(index);
                 },
                 btn2: function (index, layero) {

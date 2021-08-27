@@ -81,6 +81,7 @@ function searchTe() {
 function searchWx() {
     let conditionData = {};
     let validate = false;
+    let wxid = '';
     layui.use(['form', 'layer'], function () {
         var form = layui.form;
         var layer = layui.layer;
@@ -89,10 +90,10 @@ function searchWx() {
 
         validate = true;
 
-        console.log(conditionData);
+        wxid = conditionData.wxid
     })
     if(validate) {
-        reloadTable();
+        reloadTable(wxid);
     }
 }
 
