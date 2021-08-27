@@ -234,10 +234,10 @@
             let res = new Promise((reject, resolve) => {
                 myGeo.getPoint(str, function (point) {
                     if (point) {
-                        reject(point);
+                        resolve(point);
                     } else {
                         console.log('解析失败');
-                        reject({lng: '0', lat: '0'});
+                        resolve({lng: '0', lat: '0'});
                     }
                 }, area);
             });
