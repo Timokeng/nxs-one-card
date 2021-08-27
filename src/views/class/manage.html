@@ -30,13 +30,14 @@
       <div class="func-box">
         <div class="header">操作</div>
         <div class="article">
-          <button id="addBt" class="layui-btn"><i class="layui-icon layui-icon-add-circle"></i>增加班级</button>
+          <button id="addBt" class="layui-btn"><i class="layui-icon layui-icon-add-circle"></i>新增班级</button>
           <button id="deleteBt" class="layui-btn"><i class="layui-icon layui-icon-delete"></i>删除班级</button>
           <button id="changeBt" class="layui-btn"><i class="layui-icon layui-icon-edit"></i>修改班级</button>
           <button id="uploadClBt" class="layui-btn"><i class="layui-icon layui-icon-upload-drag"></i>导入班级信息</button>
           <button onclick="exportClTe()" class="layui-btn"><i class="layui-icon layui-icon-form"></i>下载班级信息导入模板</button>
           <button onclick="exportCl()" class="layui-btn"><i class="layui-icon layui-icon-export"></i>导出班级信息</button>
-          <button onclick="sub.style.display = 'block'" class="layui-btn"><i class="layui-icon layui-icon-cols"></i>打开下载列表</button>
+          <button onclick="sub.style.display = 'block'" class="layui-btn"><i
+              class="layui-icon layui-icon-cols"></i>打开下载列表</button>
         </div>
       </div>
       <div class="add-box layui-anim layui-anim-scale" id="addBox">
@@ -48,19 +49,32 @@
           <div class="layui-form-item input-box">
             <label class="layui-form-label">学校</label>
             <div class="layui-input-block">
-              <input type="text" name="school" placeholder="请输入" autocomplete="off" class="layui-input">
+              <select class="scSelect" name="school" lay-verify="required">
+                <option value=""></option>
+              </select>
             </div>
           </div>
           <div class="layui-form-item input-box">
             <label class="layui-form-label">年级</label>
             <div class="layui-input-block">
-              <input type="text" name="grade" placeholder="请输入" autocomplete="off" class="layui-input">
+              <select class="gradeSelect" name="grade" lay-verify="required">
+                <option value=""></option>
+                <option value="G1">高一</option>
+                <option value="G2">高二</option>
+                <option value="G3">高三</option>
+              </select>
             </div>
           </div>
           <div class="layui-form-item input-box">
-            <label class="layui-form-label">班级</label>
+            <label class="layui-form-label">班级名称</label>
             <div class="layui-input-block">
               <input type="text" name="class" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">班级编号</label>
+            <div class="layui-input-block">
+              <input type="text" name="classNo" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
           </div>
         </div>
@@ -113,6 +127,7 @@
     </div>
   </div>
 
+  <script src="../../layuiadmin/modules/api.js"></script>
   <script src="../../layuiadmin/layui/layui.js"></script>
   <script>
     layui.config({
@@ -120,6 +135,9 @@
     }).extend({
       index: 'lib/index' //主入口模块
     }).use(['index', 'console']);
+
+
+    getScList();
 
 
     // --------------dtree相关----------------
@@ -241,72 +259,7 @@
 
 
 
-    // ----------table组件相关------------------
-    var tableDate = [
-      { id: 1, name: "2021年下学期高三学费", date: "2021-8-31", end: "2021-9-10", sum: 7000 },
-      { id: 2, name: "2021年下学期高三书费", date: "2021-8-31", end: "2021-9-10", sum: 1000 },
-      { id: 3, name: "2021年下学期高三住宿费", date: "2021-8-31", end: "2021-9-10", sum: 2000 },
-      { id: 4, name: "2021年下学期高二学费", date: "2021-8-31", end: "2021-9-10", sum: 7000 },
-      { id: 5, name: "2021年下学期高二书费", date: "2021-8-31", end: "2021-9-10", sum: 800 },
-    ]
-    layui.use(['table', 'layer'], function () {
-      var table = layui.table;
-      var layer = layui.layer;
-
-      //第一个实例
-      table.render({
-        elem: '#payment-template'
-        , id: 'idTest'
-        , height: 475
-        , data: tableDate
-        , page: true //开启分页
-        , cols: [[ //表头
-          { checkbox: true, width: "5%" }
-          , { field: 'id', title: 'ID', width: "10%" }
-          , { field: 'name', title: '收费项目', width: "30%", minWidth: 200 }
-          , { field: 'date', title: '创建日期', width: "20%", minWidth: 100, sort: true }
-          , { field: 'end', title: '结束日期', width: "20%", minWidth: 100, sort: true }
-          , { field: 'sum', title: '金额', width: "15%", minWidth: 100 }
-        ]]
-      });
-    });
-    // ----------table组件相关（结束）------------------
-
-
-
     // --------------------部分独立方法-----------------------
-    //  刷新table
-    function reloadTable() {
-      layui.use('table', function () {
-        var table = layui.table;
-
-        var tableDate2 = [
-          { id: 1, name: "2021年下学期高三学费", date: "2021-8-31", end: "2021-9-10", sum: 7000 },
-          { id: 2, name: "2021年下学期高三书费", date: "2021-8-31", end: "2021-9-10", sum: 1000 },
-          { id: 3, name: "2021年下学期高三住宿费", date: "2021-8-31", end: "2021-9-10", sum: 2000 },
-          { id: 4, name: "2021年下学期高二学费", date: "2021-8-31", end: "2021-9-10", sum: 7000 },
-          { id: 5, name: "2021年下学期高二书费", date: "2021-8-31", end: "2021-9-10", sum: 800 },
-          { id: 6, name: "2021年下学期高一书费", date: "2021-8-31", end: "2021-9-10", sum: 1200 },
-        ]
-
-        table.render({
-          elem: '#payment-template'
-          , id: 'idTest'
-          , height: 475
-          , data: tableDate2
-          , page: true //开启分页
-          , cols: [[ //表头
-            { checkbox: true, width: "5%" }
-            , { field: 'id', title: 'ID', width: "10%" }
-            , { field: 'name', title: '收费项目', width: "30%", minWidth: 200 }
-            , { field: 'date', title: '创建日期', width: "20%", minWidth: 100, sort: true }
-            , { field: 'end', title: '结束日期', width: "20%", minWidth: 100, sort: true }
-            , { field: 'sum', title: '金额', width: "15%", minWidth: 100 }
-          ]]
-        });
-      })
-    }
-
     // 刷新tree
     function reloadTree() {
 
@@ -395,6 +348,46 @@
         //   layer.msg(JSON.stringify(obj.param));
         // });
       });
+    }
+
+    function getScList() {
+      let reqData = {
+        schoolname: '',
+        areaid: '',
+        page: '1',
+        epage: '100'
+      }
+
+      api.school.getList(reqData, function (res) {
+        layui.use(['form', 'layer'], function () {
+          let form = layui.form, layer = layui.layer;
+
+          if (res.code == '000') {
+            let selects = document.getElementsByClassName("scSelect");
+
+            res.rows.list.forEach(item => {
+              let option = document.createElement("option");
+
+              option.value = item.id;
+              option.innerHTML = item.schoolname;
+
+              selects[0].appendChild(option);
+            })
+
+            for (let i = 1; i < selects.length; i++) {
+              selects[i].innerHTML = selects[0].innerHTML;
+            }
+
+            layui.use('form', function () {
+              let form = layui.form;
+
+              form.render("select");
+            })
+          } else {
+            layer.msg(res.msg);
+          }
+        })
+      })
     }
     // --------------------部分独立方法（结束）-----------------------
   </script>

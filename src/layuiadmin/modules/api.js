@@ -62,5 +62,11 @@ const api = {
         getList: (data, suc) => req.post(baseUrl + '/schoolApi/schoolList', suc, data),
         change: (data, suc) => req.post(baseUrl + '/schoolApi/schoolUpdate', suc, data),
         delete: (data, suc) => req.post(baseUrl + '/schoolApi/schoolDel', suc, data),
+    },
+    class: {
+        add: (data, suc) => req.post(baseUrl + '/classApi/classAdd', suc, data),
+        getList: (data, suc) => req.post(baseUrl + '/schoolApi/schoolList', suc, data),
+        change: (data, suc) => req.post(baseUrl + '/schoolApi/schoolUpdate', suc, data),
+        delete: (data, suc) => req.post(baseUrl + '/schoolApi/schoolDel', suc, data),
     }
 }

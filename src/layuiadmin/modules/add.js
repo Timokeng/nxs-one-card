@@ -76,12 +76,26 @@ function addCl() {
             }
         }
         validate = true;
-        layer.msg("成功添加 " + addInfo.school + addInfo.grade + addInfo.class + " 的班级")
-        console.log(addInfo);
+
+        let reqData = {
+            school_id: addInfo.school,
+            grade_no: addInfo.grade,
+            class_name: addInfo.class,
+            class_no: addInfo.classNo
+        }
+
+        api.class.add(reqData, function(res) {
+            if(res.code == "200") {
+                layer.msg("成功添加 " + addInfo.school + addInfo.grade + addInfo.class);
+                setTimeout(() => {
+                    reloadTree();
+                    abox.style.display = 'none';
+                }, 500);
+            } else {
+                layer.msg(res.msg)
+            }
+        })
     });
-    if (validate) {
-        reloadTree();
-    }
 }
 
 // 新增模板
@@ -164,11 +178,11 @@ function addUser() {
 
         api.user.add(data, function (res) {
             if (res.code == '000') {
+                layer.msg("成功添加名为 " + addInfo.name + " 的用户信息");
                 setTimeout(() => {
                     abox.style.display = 'none';
                     reloadTable();
                 }, 500);
-                layer.msg("成功添加名为 " + addInfo.name + " 的用户信息");
             } else {
                 layer.msg(res.msg);
             }
@@ -205,11 +219,11 @@ function addRole() {
 
         api.role.add(data, function (res) {
             if (res.code == '000') {
+                layer.msg("成功添加名为 " + addInfo.name + " 的角色信息");
                 setTimeout(() => {
                     abox.style.display = 'none';
                     reloadTable();
                 }, 500);
-                layer.msg("成功添加名为 " + addInfo.name + " 的角色信息")
             } else {
                 layer.msg(res.msg);
             }
@@ -247,11 +261,11 @@ function addSc() {
 
         api.school.add(reqData, function (res) {
             if (res.code == "000") {
+                layer.msg("成功添加名为 " + addInfo.name + " 的学校信息");
                 setTimeout(() => {
                     abox.style.display = 'none';
                     reloadTable();
                 }, 500);
-                layer.msg("成功添加名为 " + addInfo.name + " 的学校信息")
             } else {
                 layer.msg(res.msg)
             }
