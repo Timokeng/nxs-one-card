@@ -231,7 +231,7 @@
         function getPoint(str, area) {
             var myGeo = new BMapGL.Geocoder();
 
-            let res = new Promise((reject, resolve) => {
+            let res = new Promise((resolve, reject) => {
                 myGeo.getPoint(str, function (point) {
                     if (point) {
                         resolve(point);
