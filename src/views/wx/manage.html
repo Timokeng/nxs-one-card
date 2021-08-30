@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../../layuiadmin/style/admin.css">
   <link rel="stylesheet" href="../../layuiadmin/style/wx.css">
   <link rel="stylesheet" href="../../layuiadmin/style/formBox.css">
+  <link rel="stylesheet" href="../../layuiadmin/style/table.css">
 </head>
 
 <body>
@@ -110,6 +111,7 @@
       <div class="header">公众号信息</div>
       <div class="article">
         <table id="wx" lay-filter="test"></table>
+        <div id="page-box"></div>
       </div>
     </div>
   </div>
@@ -131,9 +133,8 @@
       table.render({
         elem: '#wx'
         , id: 'idTest'
-        , height: 475
+        , height: 450
         , data: []
-        , page: true
         , cols: [[ //表头
           { checkbox: true, width: "5%" }
           , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
@@ -152,17 +153,24 @@
 
 
     // ----------------------部分独立方法---------------------------
-    function reloadTable(wxid = '') {
+    function reloadTable(wxid = '', page = '1') {
       layui.use(['table', 'layer', 'form'], function () {
         var table = layui.table;
         var layer = layui.layer;
         var form = layui.form;
+        var laypage = layui.laypage;
 
-        api.wx.getList({ wxid }, function (res) {
+        let data = {
+          wxid,
+          page,
+          epage: '10'
+        }
+
+        api.wx.getList(data, function (res) {
           if (res.code == '000') {
             let tabData = [];
 
-            res.rows.forEach(item => {
+            res.rows.list.forEach(item => {
               let one = {
                 id: item.id,
                 school: scMap[item.school_id],
@@ -177,9 +185,8 @@
             table.render({
               elem: '#wx'
               , id: 'idTest'
-              , height: 475
+              , height: 450
               , data: tabData
-              , page: true
               , cols: [[ //表头
                 { checkbox: true, width: "5%" }
                 , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
@@ -187,6 +194,23 @@
                 , { field: 'wxid', title: '公开ID', width: "30%", minWidth: 200 }
                 , { field: 'token', title: 'Token', width: "30%", minWidth: 200 }
               ]]
+            });
+
+
+            laypage.render({
+              elem: 'page-box'
+              , limit: 10
+              , curr: page
+              , count: res.rows.total
+              , layout: ['prev', 'page', 'next', 'count', 'skip']
+              , jump: function (obj, first) {
+                //obj包含了当前分页的所有参数，比如：
+
+                //首次不执行
+                if (!first) {
+                  reloadTable(wxid, String(obj.curr));
+                }
+              }
             });
           } else {
             layer.msg(res.msg);

@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="../../layuiadmin/style/wx.css">
     <link rel="stylesheet" href="../../layuiadmin/style/formBox.css">
     <link rel="stylesheet" href="../../layuiadmin/style/dialog.css">
+    <link rel="stylesheet" href="../../layuiadmin/style/table.css">
 </head>
 
 <body>
@@ -103,6 +104,7 @@
             <div class="header">角色信息</div>
             <div class="article">
                 <table id="users-table" lay-filter="test"></table>
+                <div id="page-box"></div>
             </div>
         </div>
         <div id="dialong-box" class="dialog-box">
@@ -153,9 +155,8 @@
             table.render({
                 elem: '#users-table'
                 , id: 'idTest'
-                , height: 475
+                , height: 450
                 , data: []
-                , page: true
                 , cols: [[ // 表头
                     { checkbox: true, width: "5%" }
                     , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
@@ -175,6 +176,7 @@
                 var table = layui.table;
                 var layer = layui.layer;
                 var form = layui.form;
+                var laypage = layui.laypage;
 
 
                 let reqData = {
@@ -211,9 +213,8 @@
                         table.render({
                             elem: '#users-table'
                             , id: 'idTest'
-                            , height: 475
+                            , height: 450
                             , data: data
-                            , page: true // 开启分页
                             , cols: [[ // 表头
                                 { checkbox: true, width: "5%" }
                                 , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
@@ -222,7 +223,21 @@
                             ]]
                         });
 
+                        laypage.render({
+                            elem: 'page-box'
+                            , limit: 10
+                            , curr: page
+                            , count: res.rows.total
+                            , layout: ['prev', 'page', 'next', 'count', 'skip']
+                            , jump: function (obj, first) {
+                                //obj包含了当前分页的所有参数，比如：
 
+                                //首次不执行
+                                if (!first) {
+                                    reloadTable(name, String(obj.curr));
+                                }
+                            }
+                        });
                     } else {
                         layer.msg(res.msg)
                     }

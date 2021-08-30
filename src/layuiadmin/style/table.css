@@ -1,0 +1,14 @@
+.table-box .article {
+    position: relative;
+    box-sizing: border-box;
+    min-width: 800px;
+}
+
+#page-box {
+    position: absolute;
+    bottom: 12px;
+    box-sizing: border-box;
+    padding-left: 7px;
+    width: calc(100% - 20px);
+    /* border-top: 1px solid #e6e6e6; */
+}
