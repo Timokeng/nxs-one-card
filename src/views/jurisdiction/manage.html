@@ -166,6 +166,30 @@
       index: 'lib/index' //主入口模块
     }).use(['index', 'console']);
 
+
+    layui.use(['table', 'layer', 'form'], function () {
+      var table = layui.table;
+      var layer = layui.layer;
+      var form = layui.form;
+
+      table.render({
+        elem: '#users-table'
+        , id: 'idTest'
+        , height: 475
+        , data: []
+        , page: true
+        , cols: [[ //表头
+          { checkbox: true, width: "5%" }
+          , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
+          , { field: 'name', title: '姓名', width: "10%", minWidth: 120 }
+          , { field: 'phone', title: '号码', width: "20%", minWidth: 240 }
+          , { field: 'roleName', title: '角色', width: "20%", minWidth: 120 }
+          , { field: 'jurisdiction', title: '管理院校', width: "40%", minWidth: 600 }
+        ]]
+      });
+    })
+
+
     reloadTable();
     getRoleList();
 
@@ -241,7 +265,7 @@
             selects[0].appendChild(option);
           })
 
-          for(let i = 1; i < selects.length; i++) {
+          for (let i = 1; i < selects.length; i++) {
             selects[i].innerHTML = selects[0].innerHTML;
           }
 

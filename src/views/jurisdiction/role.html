@@ -144,6 +144,28 @@
             index: 'lib/index', //主入口模块
         }).use(['index', 'console']);
 
+
+        layui.use(['table', 'layer', 'form'], function () {
+            var table = layui.table;
+            var layer = layui.layer;
+            var form = layui.form;
+
+            table.render({
+                elem: '#users-table'
+                , id: 'idTest'
+                , height: 475
+                , data: []
+                , page: true
+                , cols: [[ // 表头
+                    { checkbox: true, width: "5%" }
+                    , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
+                    , { field: 'name', title: '角色名', width: "15%", minWidth: 180 }
+                    , { field: 'navs', title: '菜单权限', width: "75%" }
+                ]]
+            });
+        })
+
+
         reloadTable();
 
         // ----------------------部分独立方法---------------------------

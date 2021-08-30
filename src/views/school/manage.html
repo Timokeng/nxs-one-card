@@ -123,8 +123,6 @@
     </div>
 
     <script src="../../layuiadmin/modules/api.js"></script>
-    <script type="text/javascript"
-        src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=6BpgZvZ5E6HCaDRcXDE18cDWsuNmpOwp"></script>
     <script src="../../layuiadmin/layui/layui.js"></script>
     <script>
         layui.config({
@@ -133,12 +131,34 @@
             index: 'lib/index' //主入口模块
         }).use(['index', 'console']);
 
+
+        layui.use(['table', 'layer', 'form'], function () {
+            var table = layui.table;
+            var layer = layui.layer;
+            var form = layui.form;
+
+            table.render({
+                elem: '#sc'
+                , id: 'idTest'
+                , height: 475
+                , data: []
+                , page: true
+                , cols: [[ //表头
+                    { checkbox: true, width: "5%" }
+                    , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
+                    , { field: 'name', title: '学校名', width: "15%", minWidth: 180 }
+                    , { field: 'area', title: '县/区/市', width: "15%" }
+                    , { field: 'address', title: '详细地址', width: "60%" }
+                ]]
+            });
+        })
+
         var areaMap = {};
-  
+
         getAreaList('530601');
 
         // 手动延迟
-        setTimeout(()=>{
+        setTimeout(() => {
             reloadTable();
         }, 500)
 
@@ -237,7 +257,7 @@
                         resolve(point);
                     } else {
                         console.log('解析失败');
-                        resolve({lng: '0', lat: '0'});
+                        resolve({ lng: '0', lat: '0' });
                     }
                 }, area);
             });
@@ -246,6 +266,8 @@
         }
     // ----------------------部分独立方法（结束）---------------------------
     </script>
+    <script type="text/javascript"
+        src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=6BpgZvZ5E6HCaDRcXDE18cDWsuNmpOwp"></script>
     <script src="../../layuiadmin/modules/add.js"></script>
     <script src="../../layuiadmin/modules/delete.js"></script>
     <script src="../../layuiadmin/modules/search.js"></script>
