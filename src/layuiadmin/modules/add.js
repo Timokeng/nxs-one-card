@@ -89,8 +89,8 @@ function addCl() {
         }
 
         api.class.add(reqData, function(res) {
-            if(res.code == "200") {
-                layer.msg("成功添加 " + addInfo.school + addInfo.grade + addInfo.class);
+            if(res.code == "000") {
+                layer.msg("成功添加 " + addInfo.classNo + addInfo.class);
                 setTimeout(() => {
                     reloadTree();
                     abox.style.display = 'none';

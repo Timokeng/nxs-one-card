@@ -10,10 +10,10 @@ changeBt.addEventListener("click", function () {
     if (changeBt.innerText.indexOf('班级') >= 0) {
         // 数据预处理
         let onlyClass = classData.filter(function (item) {
-            return item.leaf;
+            return item.level === '3';
         })
 
-        layui.use(['dtree', 'layer', 'form'], function () {
+        layui.use(['dtree', 'layer', 'form'], async function () {
             var dtree = layui.dtree;
             var layer = layui.layer;
             var form = layui.form;
@@ -28,42 +28,34 @@ changeBt.addEventListener("click", function () {
                 return;
             }
 
-            // 解析数据，通过班级id倒推出年级id和学校id
-            let changeClassId = onlyClass[0].nodeId;
+            // let grade = '', school = '';
 
-            let len = changeClassId.length,
-                grid = changeClassId.slice(0, len - 1),
-                scid = changeClassId.slice(0, len - 2);
+            // classData.forEach(item => {
+            //     if(item.nodeId === onlyClass.parentId) {
+            //         grade = 'G' + item.nodeId.charAt(item.nodeId.length - 1);
+            //         school = item.parentId;
+            //     }
+            // });
+            let classId = onlyClass[0].nodeId.slice(1);
 
-            let clnode = onlyClass[0],
-                grnode = dtree.getParam("demoTree", grid),
-                scnode = dtree.getParam("demoTree", scid);
+            api.class.getDetail({ id: classId }, (res) => {
+                if (res.code === '000') {
+                    let data = {
+                        id: res.result.id,
+                        school: res.result.school_id,
+                        grade: res.result.grade_no,
+                        class: res.result.class_name,
+                        classNo: res.result.class_no
+                    }
 
-            changeClassInfo = {
-                class: {
-                    name: clnode.context,
-                    id: clnode.nodeId,
-                },
-                grade: {
-                    name: grnode.context,
-                    id: grnode.nodeId,
-                },
-                school: {
-                    name: scnode.context,
-                    id: scnode.nodeId,
-                },
-            };
-            changeClassInfo.totalName = changeClassInfo.school.name + " " + changeClassInfo.grade.name + " " + changeClassInfo.class.name;
+                    form.val("changeClForm", data);
+                    cbox.style.display = 'block';
+                    abox.style.display = "none";
+                } else {
+                    layer.msg(res.msg);
+                }
+            })
 
-            let changeInfo = {
-                school: changeClassInfo.school.name,
-                grade: changeClassInfo.grade.name,
-                class: changeClassInfo.class.name,
-            }
-
-            cbox.style.display = 'block';
-            abox.style.display = "none";
-            form.val("changeClForm", changeInfo);
         })
     } else if (changeBt.innerText.indexOf('模板') >= 0) {
         layui.use(['layer', 'table', 'form'], function () {
@@ -222,12 +214,27 @@ function changeCl() {
             }
         }
         validate = true;
-        layer.msg("成功修改原 " + changeClassInfo.totalName + " 的班级信息")
-    })
 
-    if (validate) {
-        reloadTree();
-    }
+        let reqData = {
+            id: newInfo.id,
+            school_id: newInfo.school,
+            grade_no: newInfo.grade,
+            class_name: newInfo.class,
+            class_no: newInfo.classNo
+        }
+
+        api.class.change(reqData, (res)=>{
+            if(res.code === '000') {
+                layer.msg("成功修改原 " + newInfo.id + " 的班级信息");
+                setTimeout(() => {
+                    cbox.style.display = "none";
+                    reloadTree();
+                }, 500);
+            } else {
+                layer.msg(res.msg);
+            }
+        })
+    })
 }
 
 function changeTe() {
@@ -279,7 +286,7 @@ function changeWx() {
             token: newInfo.token
         }
 
-        api.wx.change(reqData, function(res) {
+        api.wx.change(reqData, function (res) {
             if (res.code == '000') {
                 layer.msg("成功修改原id为 " + changeWxInfo.id + " 的公众号信息")
                 setTimeout(() => {

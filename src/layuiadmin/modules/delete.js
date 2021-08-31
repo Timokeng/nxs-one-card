@@ -10,20 +10,34 @@ deleteBt.addEventListener("click", function () {
                 return;
             }
 
+            let arr = [];
+
             // 对班级信息数据做预处理，只留下班级
-            let onlyClass = classData.filter(function (item) {
-                return item.leaf
+            classData.forEach(function (item) {
+                if(item.level === '3') {
+                    arr.push(item.nodeId.slice(1));
+                }
             })
+
 
             layer.open({
                 type: 1,
-                content: '确定删除选中的 ' + onlyClass.length + '个班级吗？',
+                content: '确定删除选中的 ' + arr.length + '个班级吗？',
                 skin: 'delete-confirm',
                 area: ['300px', '200px'],
                 btn: ['确定', '取消'],
                 yes: function (index, layero) {
                     console.log('确定删除');
-                    reloadTree();
+
+                    api.class.delete({id: arr}, (res)=>{
+                        if(res.code === '000'){
+                            layer.msg(res.msg)
+                            reloadTree();
+                        } else {
+                            layer.msg(res.msg)
+                        }
+                    })
+
                     layer.close(index);
                 },
                 btn2: function (index, layero) {

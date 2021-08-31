@@ -83,26 +83,45 @@
       <div class="change-box layui-anim layui-anim-scale" id="changeBox">
         <div class="header">
           <div>修改班级信息</div>
-          <div onclick="document.getElementById('changeBox').style.display = 'none'"><i
+          <div onclick="cbox.style.display = 'none'"><i
               class="layui-icon layui-icon-close"></i></div>
         </div>
         <div class="form-box layui-form" lay-filter="changeClForm">
           <div class="layui-form-item input-box">
+            <label class="layui-form-label">ID</label>
+            <div class="layui-input-block">
+              <input type="text" disabled name="id" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
             <label class="layui-form-label">学校</label>
             <div class="layui-input-block">
-              <input type="text" name="school" placeholder="请输入" autocomplete="off" class="layui-input">
+              <select class="scSelect" name="school" lay-verify="required">
+                <option value=""></option>
+              </select>
             </div>
           </div>
           <div class="layui-form-item input-box">
             <label class="layui-form-label">年级</label>
             <div class="layui-input-block">
-              <input type="text" name="grade" placeholder="请输入" autocomplete="off" class="layui-input">
+              <select class="gradeSelect" name="grade" lay-verify="required">
+                <option value=""></option>
+                <option value="G1">高一</option>
+                <option value="G2">高二</option>
+                <option value="G3">高三</option>
+              </select>
             </div>
           </div>
           <div class="layui-form-item input-box">
-            <label class="layui-form-label">班级</label>
+            <label class="layui-form-label">班级名称</label>
             <div class="layui-input-block">
               <input type="text" name="class" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">班级编号</label>
+            <div class="layui-input-block">
+              <input type="text" name="classNo" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
           </div>
         </div>
@@ -133,221 +152,48 @@
     layui.config({
       base: '../../layuiadmin/' //静态资源所在路径
     }).extend({
-      index: 'lib/index' //主入口模块
+      index: 'lib/index', //主入口模块
+      dtree: '{/}../../layuiadmin/style/dtree/dtree'
     }).use(['index', 'console']);
 
 
-    getScList();
-
-
-    // --------------dtree相关----------------
     var classData = [];//重要数据，tree选中的班级信息
 
-    var demoTree = [
-      {
-        id: "1",
-        title: '一中',
-        checkArr: "0",
-        children: [
-          {
-            id: "11",
-            parentId: "1",
-            title: '高一',
-            checkArr: "0",
-            children: [
-              {
-                id: '111',
-                parentId: '11',
-                title: '一班',
-                checkArr: '0'
-              }
-            ]
-          },
-          {
-            id: "12",
-            parentId: "1",
-            title: '高二',
-            checkArr: "0",
-          },
-          {
-            id: "13",
-            parentId: "1",
-            title: '高三',
-            checkArr: "0",
-          },
-        ]
-      },
-      {
-        id: '2',
-        title: '二中',
-        checkArr: "0",
-        children: [
-          {
-            id: "21",
-            parentId: "2",
-            title: '高一',
-            checkArr: "0",
-          },
-          {
-            id: "22",
-            parentId: "2",
-            title: '高二',
-            checkArr: "0",
-          },
-          {
-            id: "23",
-            parentId: "2",
-            title: '高三',
-            checkArr: "0",
-          },
-        ]
-      },
-      {
-        id: '3',
-        title: '三中',
-        checkArr: "0",
-        children: [
-          {
-            id: "31",
-            parentId: "3",
-            title: '高一',
-            checkArr: "0",
-          },
-          {
-            id: "32",
-            parentId: "3",
-            title: '高二',
-            checkArr: "0",
-          },
-          {
-            id: "33",
-            parentId: "3",
-            title: '高三',
-            checkArr: "0",
-          },
-        ]
-      },
-    ]
 
-    layui.extend({
-      dtree: 'style/dtree/dtree'
-    }).use(['dtree', 'layer', 'jquery'], function () {
-      var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
-
-      // 初始化树
-      var DemoTree = dtree.render({
-        elem: "#demoTree",
-        data: demoTree, // 使用data加载
-        checkbar: true,
-        checkbarType: "no-all",
-        checkbarFun: {
-          chooseDone: function (checkbarNodesParam) {
-            classData = checkbarNodesParam;
-            console.log(classData);
-            return;
-          }
-        },
-      });
-
-      // // 绑定节点点击
-      // dtree.on("node('demoTree')", function (obj) {
-      //   layer.msg(JSON.stringify(obj.param));
-      // });
-    });
-    // ------------dtree相关（结束）--------------
-
-
+    getScList();
+    reloadTree();
 
 
     // --------------------部分独立方法-----------------------
-    // 刷新tree
     function reloadTree() {
+      api.class.getTree('', (res) => {
 
-      var demoTree2 = [
-        {
-          id: "1",
-          title: '一中',
-          checkArr: "0",
-          children: [
-            {
-              id: "12",
-              parentId: "1",
-              title: '高二',
-              checkArr: "0",
-            },
-            {
-              id: "13",
-              parentId: "1",
-              title: '高三',
-              checkArr: "0",
-            },
-          ]
-        },
-        {
-          id: '2',
-          title: '二中',
-          checkArr: "0",
-          children: [
-            {
-              id: "22",
-              parentId: "2",
-              title: '高二',
-              checkArr: "0",
-            },
-            {
-              id: "23",
-              parentId: "2",
-              title: '高三',
-              checkArr: "0",
-            },
-          ]
-        },
-        {
-          id: '3',
-          title: '三中',
-          checkArr: "0",
-          children: [
-            {
-              id: "32",
-              parentId: "3",
-              title: '高二',
-              checkArr: "0",
-            },
-            {
-              id: "33",
-              parentId: "3",
-              title: '高三',
-              checkArr: "0",
-            },
-          ]
-        },
-      ]
+        layui.use(['dtree', 'layer', 'jquery'], function () {
+          var dtree = layui.dtree,
+            layer = layui.layer,
+            $ = layui.jquery;
 
-      layui.use(['dtree', 'layer', 'jquery'], function () {
-        var dtree = layui.dtree,
-          layer = layui.layer,
-          $ = layui.jquery;
+          if (res.code === "000") {
 
-        // 初始化树
-        var DemoTree = dtree.render({
-          elem: "#demoTree",
-          data: demoTree2, // 使用data加载
-          checkbar: true,
-          checkbarType: "no-all",
-          checkbarFun: {
-            chooseDone: function (checkbarNodesParam) {
-              classData = checkbarNodesParam;
-              console.log(classData);
-              return;
-            }
-          },
-        });
+            var DemoTree = dtree.render({
+              elem: "#demoTree",
+              data: res.result, // 使用data加载
+              checkbar: true,
+              checkbarType: "no-all",
+              checkbarData: "halfChoose",
+              checkbarFun: {
+                chooseDone: function (checkbarNodesParam) {
+                  classData = checkbarNodesParam;
+                  return;
+                }
+              },
+            });
 
-        // // 绑定节点点击
-        // dtree.on("node('demoTree')", function (obj) {
-        //   layer.msg(JSON.stringify(obj.param));
-        // });
-      });
+          } else {
+            layer.msg(res.msg);
+          }
+        })
+      })
     }
 
     function getScList() {

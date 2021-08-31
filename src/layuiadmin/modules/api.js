@@ -68,6 +68,8 @@ const api = {
         getList: (data, suc) => req.post(baseUrl + '/classApi/classList', suc, data),
         change: (data, suc) => req.post(baseUrl + '/classApi/classUpdate', suc, data),
         delete: (data, suc) => req.post(baseUrl + '/classApi/classDel', suc, data),
+        getTree: (data, suc) => req.post(baseUrl + '/classApi/getClassTree', suc, data),
+        getDetail: (data, suc) => req.post(baseUrl + '/classApi//getClassOne', suc, data),
     },
     wx: {
         add: (data, suc) => req.post(baseUrl + '/wx_schoolApi/wxSchoolAdd', suc, data),
