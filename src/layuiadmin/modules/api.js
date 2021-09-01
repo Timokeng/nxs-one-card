@@ -25,6 +25,9 @@ const req = {
     },
 
     post:(url, suc, data = null)=>{
+        let sid = sessionStorage.getItem("sid");
+        data.sid = sid;
+
         layui.use("jquery",function(){
             var $ = layui.$;
 
@@ -76,5 +79,11 @@ const api = {
         getList: (data, suc) => req.post(baseUrl + '/wx_schoolApi/wxSchoolList', suc, data),
         change: (data, suc) => req.post(baseUrl + '/wx_schoolApi/wxSchoolUpdate', suc, data),
         delete: (data, suc) => req.post(baseUrl + '/wx_schoolApi/wxSchoolDel', suc, data),
+    },
+    template: {
+        add: (data, suc) => req.post(baseUrl + '/itemsApi/itemsAdd', suc, data),
+        getList: (data, suc) => req.post(baseUrl + '/itemsApi/itemsList', suc, data),
+        change: (data, suc) => req.post(baseUrl + '/itemsApi/itemsUpdate', suc, data),
+        delete: (data, suc) => req.post(baseUrl + '/itemsApi/itemsDel', suc, data),
     },
 }

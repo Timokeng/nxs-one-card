@@ -30,9 +30,7 @@ function login() {
     api.login({ phone, code }, function (res) {
         if (res.code == '000') {
             sessionStorage.setItem('userid', res.result.id);
-            sessionStorage.setItem('username', res.result.username);
-            sessionStorage.setItem('phone', res.result.phone);
-            sessionStorage.setItem('role', res.result.type_id);
+            sessionStorage.setItem('sid', res.result.sid);
 
             window.location = '/nxs-one-card/src/views/index.html'
         } else {
