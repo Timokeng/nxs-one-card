@@ -81,16 +81,28 @@ changeBt.addEventListener("click", function () {
 
             changeTemplateInfo = checkStatus.data[0];
             // 这里要写一段数据写入，把明细部分数据写入detailData
+            // 这个数据还是假的
+            changeTemplateInfo.detail.split(",").forEach((item, index, arr) => {
+                let one = {
+                    name: item,
+                    sum: Number(changeTemplateInfo.sum) / arr.length
+                }
+
+                detailData.push(one);
+            })
 
             let changeInfo = {
+                id: changeTemplateInfo.id,
                 name: changeTemplateInfo.name,
                 sum: changeTemplateInfo.sum,
-                endDate: changeTemplateInfo.end,
+                school: changeTemplateInfo.school,
+                grade: changeTemplateInfo.grade,
+                templateNo: changeTemplateInfo.templateNo
             }
 
+            form.val("changeTeForm", changeInfo)
             cbox.style.display = 'block';
             abox.style.display = "none";
-            form.val("changeTeForm", changeInfo);
         })
     } else if (changeBt.innerText.indexOf('公众号') >= 0) {
         layui.use(['layer', 'table', 'form'], function () {
@@ -253,12 +265,33 @@ function changeTe() {
             }
         }
         validate = true;
-        layer.msg("成功修改原 " + changeTemplateInfo.name + " 的模板信息")
-    })
 
-    if (validate) {
-        reloadTable();
-    }
+        let detail = detailData.map(item => {
+            return item.name;
+        })
+        
+        let reqData = {
+            id: newInfo.id,
+            school_id: newInfo.school,
+            grade_no: newInfo.grade,
+            item_name: newInfo.name,
+            item_no: newInfo.templateNo,
+            amt: newInfo.sum,
+            remark: detail
+        }
+
+        api.template.change(reqData, function (res) {
+            if (res.code == '000') {
+                layer.msg("成功修改原id为 " + newInfo.id + " 的缴费模板")
+                setTimeout(() => {
+                    cbox.style.display = "none";
+                    reloadTable();
+                }, 500);
+            } else {
+                layer.msg(res.msg)
+            }
+        })
+    })
 }
 
 function changeWx() {

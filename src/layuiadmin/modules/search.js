@@ -62,19 +62,17 @@ function searchTe() {
 
         conditionData = form.val("conditionForm");
 
-        let sdate = Date.parse(conditionData.startDate),
-            edate = Date.parse(conditionData.endDate);
-        if(sdate > edate) {
-            layer.msg("结束时间要在开始时间之后");
-            return;
-        }
+        // let sdate = Date.parse(conditionData.startDate),
+        //     edate = Date.parse(conditionData.endDate);
+        // if(sdate > edate) {
+        //     layer.msg("结束时间要在开始时间之后");
+        //     return;
+        // }
 
         validate = true;
-
-        console.log(conditionData);
     })
     if(validate) {
-        reloadTable();
+        reloadTable(conditionData.name, conditionData.templateNo, conditionData.school);
     }
 }
 

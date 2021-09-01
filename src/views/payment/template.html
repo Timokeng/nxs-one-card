@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="../../layuiadmin/style/payment.css">
   <link rel="stylesheet" href="../../layuiadmin/style/formBox.css">
   <link rel="stylesheet" href="../../layuiadmin/style/dialog.css">
+  <link rel="stylesheet" href="../../layuiadmin/style/table.css">
 </head>
 
 <body>
@@ -38,24 +39,50 @@
       </div>
       <div class="form-box layui-form" lay-filter="addTeForm">
         <div class="layui-form-item input-box">
+          <label class="layui-form-label">学校</label>
+          <div class="layui-input-block">
+            <select class="scSelect" name="school" lay-verify="required">
+              <option value=""></option>
+            </select>
+          </div>
+        </div>
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">年级</label>
+          <div class="layui-input-block">
+            <select class="gradeSelect" name="grade" lay-verify="required">
+              <option value=""></option>
+              <option value="G1">高一</option>
+              <option value="G2">高二</option>
+              <option value="G3">高三</option>
+            </select>
+          </div>
+        </div>
+        <div class="layui-form-item input-box">
           <label class="layui-form-label">模板名称</label>
           <div class="layui-input-block">
             <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
           </div>
         </div>
         <div class="layui-form-item input-box">
-          <label class="layui-form-label">金额</label>
+          <label class="layui-form-label">模板编号</label>
           <div class="layui-input-block">
-            <input id="addSum" type="text" disabled name="sum" placeholder="点击配置金额按钮设置" autocomplete="off" class="layui-input">
+            <input type="text" name="templateNo" placeholder="请输入" autocomplete="off" class="layui-input">
           </div>
         </div>
         <div class="layui-form-item input-box">
+          <label class="layui-form-label">金额</label>
+          <div class="layui-input-block">
+            <input id="addSum" type="text" disabled name="sum" placeholder="点击配置金额按钮设置" autocomplete="off"
+              class="layui-input">
+          </div>
+        </div>
+        <!-- <div class="layui-form-item input-box">
           <label class="layui-form-label">结束日期</label>
           <div class="layui-input-block">
             <input id="endDate1" type="text" name="endDate" placeholder="点击设置" autocomplete="off"
               class="layui-input">
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="btn-box">
         <button class="layui-btn" onclick="handleSetDetail(0)">配置金额</button>
@@ -69,40 +96,23 @@
       </div>
       <div class="form-box layui-form" lay-filter="conditionForm">
         <div class="layui-form-item input-box">
+          <label class="layui-form-label">学校</label>
+          <div class="layui-input-block">
+            <select class="scSelect" name="school" lay-verify="required">
+              <option value=""></option>
+            </select>
+          </div>
+        </div>
+        <div class="layui-form-item input-box">
           <label class="layui-form-label">模板名称</label>
           <div class="layui-input-block">
             <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
           </div>
         </div>
         <div class="layui-form-item input-box">
-          <label class="layui-form-label">金额</label>
+          <label class="layui-form-label">模板编号</label>
           <div class="layui-input-block">
-            <input type="text" name="sum" placeholder="请输入" autocomplete="off" class="layui-input">
-          </div>
-        </div>
-        <div class="layui-form-item input-box">
-          <label class="layui-form-label">开始日期</label>
-          <div class="layui-input-block">
-            <input id="startDate2" type="text" name="startDate" placeholder="数据格式:xx-xx-xx" autocomplete="off"
-              class="layui-input">
-          </div>
-        </div>
-        <div class="layui-form-item input-box">
-          <label class="layui-form-label">结束日期</label>
-          <div class="layui-input-block">
-            <input id="endDate2" type="text" name="endDate" placeholder="数据格式:xx-xx-xx" autocomplete="off"
-              class="layui-input">
-          </div>
-        </div>
-        <div class="layui-form-item input-box">
-          <label class="layui-form-label">状态</label>
-          <div class="layui-input-block">
-            <select name="status" lay-verify="required">
-              <option value=""></option>
-              <option value="0">过期</option>
-              <option value="1">可用</option>
-              <option value="2">全部</option>
-            </select>
+            <input type="text" name="templateNo" placeholder="请输入" autocomplete="off" class="layui-input">
           </div>
         </div>
       </div>
@@ -115,28 +125,53 @@
       </div>
       <div class="form-box layui-form" lay-filter="changeTeForm">
         <div class="layui-form-item input-box">
+          <label class="layui-form-label">ID</label>
+          <div class="layui-input-block">
+            <input type="text" disabled name="id" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">学校</label>
+          <div class="layui-input-block">
+            <select class="scSelect" name="school" lay-verify="required">
+              <option value=""></option>
+            </select>
+          </div>
+        </div>
+        <div class="layui-form-item input-box">
+          <label class="layui-form-label">年级</label>
+          <div class="layui-input-block">
+            <select class="gradeSelect" name="grade" lay-verify="required">
+              <option value=""></option>
+              <option value="G1">高一</option>
+              <option value="G2">高二</option>
+              <option value="G3">高三</option>
+            </select>
+          </div>
+        </div>
+        <div class="layui-form-item input-box">
           <label class="layui-form-label">模板名称</label>
           <div class="layui-input-block">
             <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
           </div>
         </div>
         <div class="layui-form-item input-box">
-          <label class="layui-form-label">金额</label>
+          <label class="layui-form-label">模板编号</label>
           <div class="layui-input-block">
-            <input id="changeSum" type="text" name="sum" disabled placeholder="请输入" autocomplete="off" class="layui-input">
+            <input type="text" name="templateNo" placeholder="请输入" autocomplete="off" class="layui-input">
           </div>
         </div>
         <div class="layui-form-item input-box">
-          <label class="layui-form-label">结束日期</label>
+          <label class="layui-form-label">金额</label>
           <div class="layui-input-block">
-            <input id="endDate3" type="text" name="endDate" placeholder="数据格式:xx-xx-xx" autocomplete="off"
+            <input id="changeSum" type="text" disabled name="sum" placeholder="点击配置金额按钮设置" autocomplete="off"
               class="layui-input">
           </div>
         </div>
       </div>
       <div class="btn-box">
         <button class="layui-btn" onclick="handleSetDetail(1)">配置金额</button>
-        <button class="layui-btn" onclick="addTe()">确定</button>
+        <button class="layui-btn" onclick="changeTe()">确定</button>
       </div>
     </div>
     <div class="table-box">
@@ -212,6 +247,7 @@
   </div>
 
   <script src="../../layuiadmin/layui/layui.js"></script>
+  <script src="../../layuiadmin/modules/api.js"></script>
   <script>
     layui.config({
       base: '../../layuiadmin/' //静态资源所在路径
@@ -219,34 +255,37 @@
       index: 'lib/index' //主入口模块
     }).use(['index', 'console']);
 
+    gradeMap = {
+      G1: '高一',
+      G2: '高二',
+      G3: '高三'
+    }
 
+    getScList();
+    reloadTable();
 
 
     // ------------------- table组件 -------------------------
-    var tableDate = [
-      { id: 1, name: "2021年下学期高三学费", date: "2021-8-31", end: "2021-9-10", sum: 7000, status: '可用' },
-      { id: 2, name: "2021年下学期高三书费", date: "2021-8-31", end: "2021-9-10", sum: 1000, status: '可用' },
-      { id: 3, name: "2021年下学期高三住宿费", date: "2021-8-31", end: "2021-9-10", sum: 2000, status: '可用' },
-      { id: 4, name: "2021年下学期高二学费", date: "2021-8-31", end: "2021-9-10", sum: 7000, status: '可用' },
-      { id: 5, name: "2021年下学期高二书费", date: "2021-8-31", end: "2021-9-10", sum: 800, status: '可用' },
-    ]
     layui.use('table', function () {
       var table = layui.table;
       //第一个实例
       table.render({
         elem: '#payment-template'
         , id: 'idTest'
-        , height: 475
-        , data: tableDate
+        , height: 470
+        , data: []
         , page: true //开启分页
         , cols: [[ //表头
           { checkbox: true, width: "5%" }
           , { field: 'id', title: 'ID', width: "10%" }
-          , { field: 'name', title: '收费项目', width: "30%", minWidth: 300 }
-          , { field: 'date', title: '创建日期', width: "15%", minWidth: 200 }
-          , { field: 'end', title: '结束日期', width: "15%", minWidth: 200 }
-          , { field: 'sum', title: '金额', width: "15%", minWidth: 150 }
-          , { field: 'status', title: '状态', width: "10%", minWidth: 150 }
+          , { field: 'name', title: '收费项目', width: "10%" }
+          , { field: 'templateNo', title: '收费项目', width: "10%" }
+          , { field: 'date', title: '创建日期', width: "10%" }
+          , { field: 'end', title: '结束日期', width: "10%" }
+          , { field: 'schoolname', title: '学校', width: "10%" }
+          , { field: 'gradename', title: '年级', width: "10%" }
+          , { field: 'sum', title: '金额', width: "10%", minWidth: 150 }
+          , { field: 'detail', title: '详细', width: "15%" }
         ]]
       });
     });
@@ -288,36 +327,123 @@
 
     // --------------------部分独立方法-----------------------
     // 刷新table
-    function reloadTable() {
-      let tableDate = [
-        { id: 1, name: "2021年下学期高三学费", date: "2021-8-31", end: "2021-9-10", sum: 7000, status: '可用' },
-        { id: 2, name: "2021年下学期高三书费", date: "2021-8-31", end: "2021-9-10", sum: 1000, status: '可用' },
-        { id: 3, name: "2021年下学期高三住宿费", date: "2021-8-31", end: "2021-9-10", sum: 2000, status: '可用' },
-        { id: 4, name: "2021年下学期高二学费", date: "2021-8-31", end: "2021-9-10", sum: 7000, status: '可用' },
-        { id: 5, name: "2021年下学期高二书费", date: "2021-8-31", end: "2021-9-10", sum: 800, status: '可用' },
-        { id: 6, name: "2021年下学期高一书费", date: "2021-8-31", end: "2021-9-10", sum: 1200, status: '可用' },
-        { id: 7, name: "2021年下学期高一书费", date: "2021-8-31", end: "2021-9-10", sum: 800, status: '可用' },
-      ]
-      layui.use('table', function () {
-        var table = layui.table;
-        //第一个实例
-        table.render({
-          elem: '#payment-template'
-          , id: 'idTest'
-          , height: 475
-          , data: tableDate
-          , page: true //开启分页
-          , cols: [[ //表头
-            { checkbox: true, width: "5%" }
-            , { field: 'id', title: 'ID', width: "10%" }
-            , { field: 'name', title: '收费项目', width: "30%", minWidth: 300 }
-            , { field: 'date', title: '创建日期', width: "15%", minWidth: 200 }
-            , { field: 'end', title: '结束日期', width: "15%", minWidth: 200 }
-            , { field: 'sum', title: '金额', width: "15%", minWidth: 150 }
-            , { field: 'status', title: '状态', width: "10%", minWidth: 150 }
-          ]]
-        });
-      });
+    function reloadTable(item_name = '', item_no = '', school_id = '', page = '1') {
+      let reqData = {
+        item_name,
+        item_no,
+        school_id,
+        page,
+        epage: '10'
+      }
+
+      api.template.getList(reqData, (res) => {
+        layui.use(['table', 'layer'], function () {
+          let table = layui.table,
+            layer = layui.layer,
+            laypage = layui.laypage;
+
+          if (res.code === '000') {
+            let tabData = [];
+
+            res.rows.list.forEach(item => {
+              let time = new Date(parseInt(item.addtime) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
+
+              let one = {
+                id: item.id,
+                name: item.item_name,
+                templateNo: item.item_no,
+                date: time,
+                schoolname: item.schoolname,
+                school: item.school_id,
+                gradename: gradeMap[item.grade_no],
+                grade: item.grade_no,
+                sum: item.amt,
+                detail: item.remark
+              };
+
+              tabData.push(one);
+            });
+
+
+            table.render({
+              elem: '#payment-template'
+              , id: 'idTest'
+              , height: 470
+              , data: tabData
+              , page: true //开启分页
+              , cols: [[ //表头
+                { checkbox: true, width: "5%" }
+                , { field: 'id', title: 'ID', width: "5%" }
+                , { field: 'name', title: '收费项目', width: "15%" }
+                , { field: 'templateNo', title: '收费项目', width: "15%" }
+                , { field: 'date', title: '创建日期', width: "15%" }
+                , { field: 'schoolname', title: '学校', width: "10%" }
+                , { field: 'gradename', title: '年级', width: "10%", minWidth: 100}
+                , { field: 'sum', title: '金额', width: "10%" }
+                , { field: 'detail', title: '详细', width: "15%" }
+              ]]
+            });
+          } else {
+            layer.msg(res.msg);
+          }
+
+          laypage.render({
+            elem: 'page-box'
+            , limit: 10
+            , curr: page
+            , count: res.rows.total
+            , layout: ['prev', 'page', 'next', 'count', 'skip']
+            , jump: function (obj, first) {
+              //obj包含了当前分页的所有参数，比如：
+
+              //首次不执行
+              if (!first) {
+                reloadTable(item_name, item_no, school_id, String(obj.curr));
+              }
+            }
+          });
+        })
+      })
+    }
+
+    function getScList() {
+      let reqData = {
+        schoolname: '',
+        areaid: '',
+        page: '1',
+        epage: '100'
+      }
+
+      api.school.getList(reqData, function (res) {
+        layui.use(['form', 'layer'], function () {
+          let form = layui.form, layer = layui.layer;
+
+          if (res.code == '000') {
+            let selects = document.getElementsByClassName("scSelect");
+
+            res.rows.list.forEach(item => {
+              let option = document.createElement("option");
+
+              option.value = item.id;
+              option.innerHTML = item.schoolname;
+
+              selects[0].appendChild(option);
+            })
+
+            for (let i = 1; i < selects.length; i++) {
+              selects[i].innerHTML = selects[0].innerHTML;
+            }
+
+            layui.use('form', function () {
+              let form = layui.form;
+
+              form.render("select");
+            })
+          } else {
+            layer.msg(res.msg);
+          }
+        })
+      })
     }
     // --------------------部分独立方法（结束）-----------------------
   </script>

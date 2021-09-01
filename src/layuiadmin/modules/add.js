@@ -4,10 +4,10 @@ let abox = document.getElementById("addBox");
 addBt.addEventListener("click", function () {
     // 重置数据
     if (addBt.innerText.indexOf("模板") != -1) {
+        clearForm("addTeForm");
         pb.innerHTML = "";
         detailData = [];
         detailDataTo = -1;
-        document.getElementById("addSum").value = '';
     }
 
     if (addBt.innerText.indexOf("角色") != -1) {
@@ -88,8 +88,8 @@ function addCl() {
             class_no: addInfo.classNo
         }
 
-        api.class.add(reqData, function(res) {
-            if(res.code == "000") {
+        api.class.add(reqData, function (res) {
+            if (res.code == "000") {
                 layer.msg("成功添加 " + addInfo.classNo + addInfo.class);
                 setTimeout(() => {
                     reloadTree();
@@ -119,12 +119,32 @@ function addTe() {
             }
         }
         validate = true;
-        layer.msg("成功添加 " + addInfo.name + " 模板")
-        console.log(addInfo);
+
+        let detail = detailData.map(item => {
+            return item.name;
+        })
+
+        let reqData = {
+            school_id: addInfo.school,
+            grade_no: addInfo.grade,
+            item_name: addInfo.name,
+            item_no: addInfo.templateNo,
+            amt: addInfo.sum,
+            remark: detail
+        }
+
+        api.template.add(reqData, (res) => {
+            if (res.code === '000') {
+                layer.msg("成功添加名为 " + addInfo.name + " 的缴费模板");
+                setTimeout(() => {
+                    abox.style.display = 'none';
+                    reloadTable();
+                }, 500);
+            } else {
+                layer.msg(res.msg);
+            }
+        })
     });
-    if (validate) {
-        reloadTable();
-    }
 }
 
 // 新增微信公众号
@@ -151,8 +171,8 @@ function addWx() {
             token: addInfo.token
         }
 
-        api.wx.add(reqData, function(res) {
-            if(res.code == '000') {
+        api.wx.add(reqData, function (res) {
+            if (res.code == '000') {
                 layer.msg("成功添加公开ID为 " + addInfo.wxid + " 的微信公众号信息");
                 setTimeout(() => {
                     abox.style.display = 'none';
@@ -295,9 +315,9 @@ function clearForm(str) {
     layui.use('form', function () {
         let form = layui.form;
 
-        let data =  form.val(str);
+        let data = form.val(str);
 
-        for(let key in data) {
+        for (let key in data) {
             data[key] = '';
         }
 
