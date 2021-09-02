@@ -1,4 +1,4 @@
-let dlb = document.getElementById("dialong-box");
+let dlb = document.getElementById("dialog-box");
 let dla = document.getElementById("dialog-article");
 let dlt = document.getElementById("dialog-tree-fuc-box");
 let dld = document.getElementById("dialog-detail-fuc-box");
@@ -90,10 +90,10 @@ function handleSetDetail(num) {
     }
     dls.style.display = 'block';
     ma.style.overflow = 'hidden';
-    if(detailDataTo == -1 && detailData.length > 0) {
+    if (detailDataTo == -1 && detailData.length > 0) {
         rewriteDetailProject();
     }
-    if(pb.children.length < 1) {
+    if (pb.children.length < 1) {
         addDetailProject();
     }
     detailDataTo = num;
@@ -104,6 +104,69 @@ function handleSetNav(num) {
     dlb.style.display = 'flex';
     dlt.style.display = 'flex';
     ma.style.overflow = 'hidden';
+}
+
+function handlePaymentDetail() {
+    layui.use(['layer', 'table'], function () {
+        var layer = layui.layer;
+        var table = layui.table;
+
+        let checkStatus = {},
+            validate = false,
+            titleName = '';
+
+
+        checkStatus = table.checkStatus('idTest');
+
+        if (checkStatus.data.length < 1) {
+            layer.msg('请至少选择一条记录');
+            return;
+        } else if (checkStatus.data.length > 1) {
+            layer.msg('每次只能查看一个记录的缴费明细');
+            return;
+        }
+        titleName = "订单编号为 " + checkStatus.data[0].order_id + " 的缴费记录的缴费明细";
+        validate = true;
+
+
+        if (validate) {
+            let ddt = document.getElementById("dialog-detai-table");
+
+            ddt.getElementsByClassName('title')[0].innerHTML = titleName;
+
+            let reqData = {
+                order_id: checkStatus.data[0].order_id,
+                page: '1',
+                epage: '100'
+            }
+
+            api.list.getDetail(reqData, (res) => {
+                if (res.code === '000') {
+                    table.render({
+                        elem: '#detail-list'
+                        , id: 'detail-table'
+                        , height: 530
+                        , data: res.rows
+                        , page: true
+                        , cols: [[ //表头
+                            // { checkbox: true, width: "5%" }
+                            { field: 'id', title: 'ID', width: "10%", minWidth: 60 }
+                            , { field: 'item_name', title: '姓名', width: "30%", minWidth: 60 }
+                            , { field: 'item_id', title: '身份证号', width: "30%", minWidth: 200 }
+                            , { field: 'amt', title: '金额', width: "30%", minWidth: 200 }
+                        ]]
+                    });
+                } else {
+                    layer.msg(res.msg);
+                }
+            })
+
+
+            dlb.style.display = 'flex';
+            ma.style.overflow = 'hidden';
+        }
+
+    })
 }
 
 

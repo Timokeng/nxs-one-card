@@ -117,3 +117,8 @@
 .dialog-box .dialog-article .dialog-set-detail-box .projects-box .form-box {
     border-bottom: none;
 }
+
+
+.dialog-box .dialog-article #dialog-detai-table .article {
+    padding: 0 10px;
+}
