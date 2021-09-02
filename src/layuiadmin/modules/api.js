@@ -40,7 +40,7 @@ const req = {
                     if (res.code === '001') {
                         sessionStorage.clear();
                         alert(res.msg);
-                        window.location = '../user/login2.html';
+                        window.parent.goLogin();
                         return;
                     }
                     suc(res);
