@@ -1,18 +1,18 @@
 const baseUrl = 'http://192.168.1.18/rcc_pay';
 
 const req = {
-    get:(url, suc, data = null, async = true)=>{
+    get: (url, suc, data = null, async = true) => {
         let xhr = new XMLHttpRequest();
 
-        xhr.onreadystatechange = function() {
-            if(this.readyState == 4 && this.status == 200) {
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
                 suc(JSON.parse(this.responseText));
             }
         }
 
-        if(data) {
+        if (data) {
             let params = '?';
-            for(let key in data) {
+            for (let key in data) {
                 params = params + `${key}=${data[key]}&`
             }
             params = params.slice(0, params.length - 1);
@@ -24,19 +24,21 @@ const req = {
         xhr.send();
     },
 
-    post:(url, suc, data = null)=>{
-        let sid = sessionStorage.getItem("sid");
-        data.sid = sid;
+    post: (url, suc, data = null, beforeLogin) => {
+        if (!beforeLogin) {
+            let sid = sessionStorage.getItem("sid");
+            data.sid = sid;
+        }
 
-        layui.use("jquery",function(){
+        layui.use("jquery", function () {
             var $ = layui.$;
 
             $.post(
-                url, 
-                data, 
+                url,
+                data,
                 function (res) {
                     suc(res);
-                }, 
+                },
                 "json"
             );
         })
@@ -45,8 +47,8 @@ const req = {
 
 
 const api = {
-    getCode: (data, suc) => req.post(baseUrl + '/commonApi/sendSms', suc, data),
-    login: (data, suc) => req.post(baseUrl + '/commonApi/login', suc, data),
+    getCode: (data, suc) => req.post(baseUrl + '/commonApi/sendSms', suc, data, true),
+    login: (data, suc) => req.post(baseUrl + '/commonApi/login', suc, data, true),
     role: {
         add: (data, suc) => req.post(baseUrl + '/user_typeApi/userTypeAdd', suc, data),
         getList: (data, suc) => req.post(baseUrl + '/user_typeApi/userTypeList', suc, data),
