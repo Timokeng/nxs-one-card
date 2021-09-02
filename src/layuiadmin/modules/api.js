@@ -37,6 +37,12 @@ const req = {
                 url,
                 data,
                 function (res) {
+                    if (res.code === '001') {
+                        sessionStorage.clear();
+                        alert(res.msg);
+                        window.location = '../user/login2.html';
+                        return;
+                    }
                     suc(res);
                 },
                 "json"
@@ -87,5 +93,9 @@ const api = {
         getList: (data, suc) => req.post(baseUrl + '/itemsApi/itemsList', suc, data),
         change: (data, suc) => req.post(baseUrl + '/itemsApi/itemsUpdate', suc, data),
         delete: (data, suc) => req.post(baseUrl + '/itemsApi/itemsDel', suc, data),
+    },
+    list: {
+        getList: (data, suc) => req.post(baseUrl + '/pay_orderApi/orderList', suc, data),
+        getDetail: (data, suc) => req.post(baseUrl + '/pay_orderApi/getoderDetailsByOrderid', suc, data),
     },
 }

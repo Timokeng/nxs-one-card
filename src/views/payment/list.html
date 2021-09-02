@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="../../layuiadmin/style/student.css">
     <link rel="stylesheet" href="../../layuiadmin/style/formBox.css">
     <link rel="stylesheet" href="../../layuiadmin/style/sideUpaload.css">
+    <link rel="stylesheet" href="../../layuiadmin/style/table.css">
 </head>
 
 <body>
@@ -44,7 +45,7 @@
                 </div>
                 <div class="form-box layui-form" lay-filter="conditionForm">
                     <div class="layui-form-item input-box">
-                        <label class="layui-form-label">校内ID</label>
+                        <label class="layui-form-label">ID</label>
                         <div class="layui-input-block">
                             <input type="text" name="id" placeholder="请输入" autocomplete="off" class="layui-input">
                         </div>
@@ -55,26 +56,26 @@
                             <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
                         </div>
                     </div>
-                    <div class="layui-form-item input-box">
+                    <!-- <div class="layui-form-item input-box">
                         <label class="layui-form-label">性别</label>
                         <div class="layui-input-block">
                             <input type="checkbox" name="man" title="男">
                             <input type="checkbox" name="woman" title="女">
                         </div>
-                    </div>
+                    </div> -->
                     <div class="layui-form-item input-box">
                         <label class="layui-form-label">身份证号</label>
                         <div class="layui-input-block">
                             <input type="text" name="pid" placeholder="请输入" autocomplete="off" class="layui-input">
                         </div>
                     </div>
-                    <div class="layui-form-item input-box">
+                    <!-- <div class="layui-form-item input-box">
                         <label class="layui-form-label">费用名称</label>
                         <div class="layui-input-block">
                             <input type="text" name="project" placeholder="请输入" autocomplete="off" class="layui-input">
                         </div>
-                    </div>
-                    <div class="layui-form-item input-box">
+                    </div> -->
+                    <!-- <div class="layui-form-item input-box">
                         <label class="layui-form-label">金额</label>
                         <div class="layui-input-block">
                             <input type="text" name="sum" placeholder="请输入" autocomplete="off" class="layui-input">
@@ -86,7 +87,7 @@
                             <input id="date" type="text" name="date" placeholder="数据格式:xx-xx-xx" autocomplete="off"
                                 class="layui-input">
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="btn-box"><button class="layui-btn" onclick="searchLi()">确定</button></div>
             </div>
@@ -94,6 +95,7 @@
                 <div class="header">缴费记录</div>
                 <div class="article">
                     <table id="payment-list" lay-filter="test"></table>
+                    <div id="page-box"></div>
                 </div>
             </div>
         </div>
@@ -107,131 +109,24 @@
     </div>
 
     <script src="../../layuiadmin/layui/layui.js"></script>
+    <script src="../../layuiadmin/modules/api.js"></script>
     <script>
         layui.config({
             base: '../../layuiadmin/' //静态资源所在路径
         }).extend({
-            index: 'lib/index' //主入口模块
+            index: 'lib/index', //主入口模块
+            dtree: '{/}../../layuiadmin/style/dtree/dtree'
         }).use(['index', 'console']);
 
 
-        // -------------------dtree相关-------------------
-        var demoTree = [
-            {
-                id: "1",
-                title: '一中',
-                checkArr: "0",
-                children: [
-                    {
-                        id: "11",
-                        parentId: "1",
-                        title: '高一',
-                        checkArr: "0",
-                    },
-                    {
-                        id: "12",
-                        parentId: "1",
-                        title: '高二',
-                        checkArr: "0",
-                    },
-                    {
-                        id: "13",
-                        parentId: "1",
-                        title: '高三',
-                        checkArr: "0",
-                    },
-                ]
-            },
-            {
-                id: '2',
-                title: '二中',
-                checkArr: "0",
-                children: [
-                    {
-                        id: "21",
-                        parentId: "2",
-                        title: '高一',
-                        checkArr: "0",
-                    },
-                    {
-                        id: "22",
-                        parentId: "2",
-                        title: '高二',
-                        checkArr: "0",
-                    },
-                    {
-                        id: "23",
-                        parentId: "2",
-                        title: '高三',
-                        checkArr: "0",
-                    },
-                ]
-            },
-            {
-                id: '3',
-                title: '三中',
-                checkArr: "0",
-                children: [
-                    {
-                        id: "31",
-                        parentId: "3",
-                        title: '高一',
-                        checkArr: "0",
-                    },
-                    {
-                        id: "32",
-                        parentId: "3",
-                        title: '高二',
-                        checkArr: "0",
-                    },
-                    {
-                        id: "33",
-                        parentId: "3",
-                        title: '高三',
-                        checkArr: "0",
-                    },
-                ]
-            },
-        ]
+        getTree();
+        reloadTable();
 
-        layui.extend({
-            dtree: 'style/dtree/dtree'
-        }).use(['dtree', 'layer', 'jquery'], function () {
-            var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
-            // 初始化树
-            var DemoTree = dtree.render({
-                elem: "#demoTree",
-                data: demoTree, // 使用data加载
-                checkbar: true,
-                checkbarType: "no-all",
-                checkbarFun: {
-                    chooseDone: function (checkbarNodesParam) {
-                        classData = checkbarNodesParam;
-                        console.log(classData)
-                        return;
-                    }
-                },
-            });
 
-            // // 绑定节点点击
-            // dtree.on("node('demoTree')", function (obj) {
-            //   layer.msg(JSON.stringify(obj.param));
-            // });
-        });
-        // ------------dtree相关（结束）--------------
 
 
 
         // ----------table组件相关------------------
-        var tableDate = [
-            { id: 1, name: "张三", pid: "530302199701236322", sex: "男", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费", sum: 1000, date: '2021-7-1' },
-            { id: 2, name: "李四", pid: "530302199701236322", sex: "男", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费", sum: 1000, date: '2021-7-1' },
-            { id: 3, name: "王五", pid: "530302199701236322", sex: "女", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费", sum: 1000, date: '2021-7-1' },
-            { id: 4, name: "狗蛋", pid: "530302199701236322", sex: "男", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费", sum: 1000, date: '2021-7-1' },
-            { id: 5, name: "二妞", pid: "530302199701236322", sex: "女", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费", sum: 1000, date: '2021-7-1' },
-            { id: 6, name: "小六", pid: "530302199701236322", sex: "女", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费", sum: 1000, date: '2021-7-1' },
-            { id: 7, name: "来福", pid: "530302199701236322", sex: "男", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费", sum: 1000, date: '2021-7-1' },
-        ]
         //  初始化table
         layui.use(['table', 'layer', 'form'], function () {
             var table = layui.table;
@@ -242,21 +137,19 @@
             table.render({
                 elem: '#payment-list'
                 , id: 'idTest'
-                , height: 475
-                , data: tableDate
+                , height: 470
+                , data: []
                 , page: true //开启分页
                 , cols: [[ //表头
                     //   { checkbox: true, width: "5%" }
                     { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
-                    , { field: 'name', title: '姓名', width: "7%", minWidth: 60 }
-                    , { field: 'pid', title: '身份证号', width: "18%", minWidth: 200 }
-                    , { field: 'sex', title: '性别', width: "7%", minWidth: 60 }
-                    , { field: 'school', title: '学校', width: "12%", minWidth: 100 }
-                    , { field: 'grade', title: '年级', width: "7%", minWidth: 100 }
-                    , { field: 'class', title: '班级', width: "7%", minWidth: 100 }
-                    , { field: 'project', title: '费用名称', width: "15%", minWidth: 200 }
-                    , { field: 'sum', title: '金额', width: "10%", minWidth: 200 }
-                    , { field: 'date', title: '日期', width: "12%", minWidth: 200 }
+                    , { field: 'name', title: '姓名', width: "10%", minWidth: 60 }
+                    , { field: 'pid', title: '身份证号', width: "15%", minWidth: 200 }
+                    , { field: 'schoolname', title: '学校', width: "15%", minWidth: 100 }
+                    , { field: 'order_id', title: '订单ID', width: "10%", minWidth: 100 }
+                    , { field: 'student_id', title: '学生ID', width: "10%", minWidth: 100 }
+                    , { field: 'openid', title: '缴费人公开ID', width: "15%", minWidth: 100 }
+                    , { field: 'date', title: '日期', width: "20%", minWidth: 200 }
                 ]]
             });
         });
@@ -277,37 +170,110 @@
 
         // --------------------部分独立方法-----------------------
         //  刷新table
-        function reloadTable() {
-            layui.use('table', function () {
-                var table = layui.table;
+        function reloadTable(order_id = '', name = '', school_id = '', idnumber = '', page = '1') {
 
-                var tableDate2 = [
-                    { id: 1, name: "张三", pid: "530302199701236322", sex: "男", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费", sum: 1000, date: '2021-7-1' },
-                    { id: 2, name: "李四", pid: "530302199701236322", sex: "男", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费", sum: 1000, date: '2021-7-1' },
-                    { id: 3, name: "王五", pid: "530302199701236322", sex: "女", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费", sum: 1000, date: '2021-7-1' },
-                    { id: 4, name: "狗蛋", pid: "530302199701236322", sex: "男", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费", sum: 1000, date: '2021-7-1' },
-                    { id: 5, name: "二妞", pid: "530302199701236322", sex: "女", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费", sum: 1000, date: '2021-7-1' },
-                ]
+            let reqData = {
+                order_id,
+                name,
+                school_id,
+                idnumber,
+                page,
+                epage: '10'
+            }
 
-                table.render({
-                    elem: '#payment-list'
-                    , id: 'idTest'
-                    , height: 475
-                    , data: tableDate2
-                    , page: true //开启分页
-                    , cols: [[ //表头
-                        { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
-                        , { field: 'name', title: '姓名', width: "7%", minWidth: 60 }
-                        , { field: 'pid', title: '身份证号', width: "18%", minWidth: 200 }
-                        , { field: 'sex', title: '性别', width: "7%", minWidth: 60 }
-                        , { field: 'school', title: '学校', width: "12%", minWidth: 100 }
-                        , { field: 'grade', title: '年级', width: "7%", minWidth: 100 }
-                        , { field: 'class', title: '班级', width: "7%", minWidth: 100 }
-                        , { field: 'project', title: '费用名称', width: "15%", minWidth: 200 }
-                        , { field: 'sum', title: '金额', width: "10%", minWidth: 200 }
-                        , { field: 'date', title: '日期', width: "12%", minWidth: 200 }
-                    ]]
-                });
+            api.list.getList(reqData, (res) => {
+                layui.use(['table', 'layer', 'laypage'], function () {
+                    var table = layui.table, layer = layui.layer, laypage = layui.laypage
+
+                    if (res.code === '000') {
+                        let tabData = [];
+
+                        res.rows.list.forEach(item => {
+                            let time = new Date(parseInt(item.addtime) * 1000).toLocaleString().replace(/:\d{1,2}$/, ' ');
+
+                            let one = {
+                                id: item.id,
+                                name: item.name,
+                                pid: item.idnumber,
+                                school: item.school_id,
+                                schoolname: item.schoolname,
+                                order_id: item.order_id,
+                                student_id: item.student_id,
+                                openid: item.openid,
+                                date: time
+                            }
+
+                            tabData.push(one)
+                        })
+
+                        table.render({
+                            elem: '#payment-list'
+                            , id: 'idTest'
+                            , height: 470
+                            , data: tabData
+                            , cols: [[ //表头
+                                { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
+                                , { field: 'name', title: '姓名', width: "10%", minWidth: 60 }
+                                , { field: 'pid', title: '身份证号', width: "15%", minWidth: 200 }
+                                , { field: 'schoolname', title: '学校', width: "15%", minWidth: 100 }
+                                , { field: 'order_id', title: '订单ID', width: "10%", minWidth: 100 }
+                                , { field: 'student_id', title: '学生ID', width: "10%", minWidth: 100 }
+                                , { field: 'openid', title: '缴费人公开ID', width: "15%", minWidth: 100 }
+                                , { field: 'date', title: '日期', width: "20%", minWidth: 200 }
+                            ]]
+                        });
+
+                        laypage.render({
+                            elem: 'page-box'
+                            , limit: 10
+                            , curr: page
+                            , count: res.rows.total
+                            , layout: ['prev', 'page', 'next', 'count', 'skip']
+                            , jump: function (obj, first) {
+                                //obj包含了当前分页的所有参数，比如：
+
+                                //首次不执行
+                                if (!first) {
+                                    reloadTable(order_id, name, school_id, idnumber, String(obj.curr));
+                                }
+                            }
+                        });
+                    } else {
+                        layer.msg(res.msg)
+                    }
+                })
+            })
+        }
+
+
+        function getTree() {
+            api.class.getTree('', (res) => {
+
+                layui.use(['dtree', 'layer', 'jquery'], function () {
+                    var dtree = layui.dtree,
+                        layer = layui.layer,
+                        $ = layui.jquery;
+
+                    if (res.code === "000") {
+
+                        var DemoTree = dtree.render({
+                            elem: "#demoTree",
+                            data: res.result, // 使用data加载
+                            checkbar: true,
+                            checkbarType: "no-all",
+                            checkbarData: "halfChoose",
+                            checkbarFun: {
+                                chooseDone: function (checkbarNodesParam) {
+                                    classData = checkbarNodesParam;
+                                    return;
+                                }
+                            },
+                        });
+
+                    } else {
+                        layer.msg(res.msg);
+                    }
+                })
             })
         }
     // --------------------部分独立方法（结束）-----------------------
