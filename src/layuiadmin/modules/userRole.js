@@ -3,8 +3,8 @@ if (!sessionStorage.getItem("sid")) {
     goLogin();
 }
 
-function goLogin() {
-    if(window.location.indexOf('index.html') != -1){
+function goLogin(from) {
+    if(!from){
         window.location = './user/login2.html';
     } else {
         window.location = '../user/login2.html';

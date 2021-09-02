@@ -40,7 +40,7 @@ const req = {
                     if (res.code === '001') {
                         sessionStorage.clear();
                         alert(res.msg);
-                        window.parent.goLogin();
+                        window.parent.goLogin(true);
                         return;
                     }
                     suc(res);
