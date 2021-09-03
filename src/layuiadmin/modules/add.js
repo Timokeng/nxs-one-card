@@ -26,7 +26,11 @@ addBt.addEventListener("click", function () {
     }
 
     if (addBt.innerText.indexOf("公众号") != -1) {
-        clearForm("addSWxForm");
+        clearForm("addWxForm");
+    }
+
+    if (addBt.innerText.indexOf("学生") != -1) {
+        clearForm("addStForm");
     }
 
     abox.style.display = "block";
@@ -55,12 +59,31 @@ function addSt() {
             return;
         }
         validate = true;
-        layer.msg("成功添加 " + addInfo.name + " 的相关信息")
-        console.log(addInfo);
+
+        let reqData = {
+            school_id: addInfo.school,
+            grade: gradeMap[addInfo.grade],
+            grade_no: addInfo.grade,
+            class_id: addInfo.class,
+            class_no: clMap[addInfo.class].no,
+            class: clMap[addInfo.class].name,
+            name: addInfo.name,
+            idnumber: addInfo.pid,
+            sex: addInfo.sex
+        }
+
+        api.student.add(reqData, (res) => {
+            if (res.code === '000') {
+                layer.msg("成功添加 " + addInfo.name + " 的相关信息");
+                setTimeout(() => {
+                    reloadTable();
+                    abox.style.display = 'none';
+                }, 500);
+            } else {
+                layer.msg(res.msg);
+            }
+        })
     });
-    if (validate) {
-        reloadTable();
-    }
 }
 
 // 新增班级

@@ -37,7 +37,8 @@
           <button id="uploadStBt" class="layui-btn"><i class="layui-icon layui-icon-upload-drag"></i>导入学生信息</button>
           <button onclick="exportStTe()" class="layui-btn"><i class="layui-icon layui-icon-form"></i>下载学生信息导入模板</button>
           <button onclick="exportSt()" class="layui-btn"><i class="layui-icon layui-icon-export"></i>导出学生信息</button>
-          <button onclick="sub.style.display = 'block'" class="layui-btn"><i class="layui-icon layui-icon-cols"></i>打开下载列表</button>
+          <button onclick="sub.style.display = 'block'" class="layui-btn"><i
+              class="layui-icon layui-icon-cols"></i>打开下载列表</button>
         </div>
       </div>
       <div class="condition-box layui-anim layui-anim-scale" id="condition">
@@ -114,19 +115,28 @@
           <div class="layui-form-item input-box">
             <label class="layui-form-label">学校</label>
             <div class="layui-input-block">
-              <input type="text" name="school" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+              <select class="scSelect" name="school" lay-verify="required" lay-filter="addclass-sc">
+                <option value=""></option>
+              </select>
             </div>
           </div>
           <div class="layui-form-item input-box">
             <label class="layui-form-label">年级</label>
             <div class="layui-input-block">
-              <input type="text" name="grade" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+              <select class="gradeSelect" name="grade" lay-verify="required" lay-filter="addclass-gr">
+                <option value=""></option>
+                <option value="G1">高一</option>
+                <option value="G2">高二</option>
+                <option value="G3">高三</option>
+              </select>
             </div>
           </div>
           <div class="layui-form-item input-box">
             <label class="layui-form-label">班级</label>
             <div class="layui-input-block">
-              <input type="text" name="class" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+              <select class="clSelect" name="class" lay-verify="required">
+                <option value="">请先选择学校和年级</option>
+              </select>
             </div>
           </div>
           <div class="layui-form-item input-box">
@@ -208,131 +218,29 @@
   </div>
 
   <script src="../../layuiadmin/layui/layui.js"></script>
+  <script src="../../layuiadmin/modules/api.js"></script>
   <script>
     layui.config({
       base: '../../layuiadmin/' //静态资源所在路径
     }).extend({
-      index: 'lib/index' //主入口模块
+      index: 'lib/index', //主入口模块
+      dtree: '{/}../../layuiadmin/style/dtree/dtree'
     }).use(['index', 'console']);
 
+    getTree();
+    getScList();
+    reloadTable();
 
-    // -------------------dtree相关-------------------
-    var demoTree = [
-      {
-        id: "1",
-        title: '一中',
-        checkArr: "0",
-        children: [
-          {
-            id: "11",
-            parentId: "1",
-            title: '高一',
-            checkArr: "0",
-          },
-          {
-            id: "12",
-            parentId: "1",
-            title: '高二',
-            checkArr: "0",
-          },
-          {
-            id: "13",
-            parentId: "1",
-            title: '高三',
-            checkArr: "0",
-          },
-        ]
-      },
-      {
-        id: '2',
-        title: '二中',
-        checkArr: "0",
-        children: [
-          {
-            id: "21",
-            parentId: "2",
-            title: '高一',
-            checkArr: "0",
-          },
-          {
-            id: "22",
-            parentId: "2",
-            title: '高二',
-            checkArr: "0",
-          },
-          {
-            id: "23",
-            parentId: "2",
-            title: '高三',
-            checkArr: "0",
-          },
-        ]
-      },
-      {
-        id: '3',
-        title: '三中',
-        checkArr: "0",
-        children: [
-          {
-            id: "31",
-            parentId: "3",
-            title: '高一',
-            checkArr: "0",
-          },
-          {
-            id: "32",
-            parentId: "3",
-            title: '高二',
-            checkArr: "0",
-          },
-          {
-            id: "33",
-            parentId: "3",
-            title: '高三',
-            checkArr: "0",
-          },
-        ]
-      },
-    ]
-
-    layui.extend({
-      dtree: 'style/dtree/dtree'
-    }).use(['dtree', 'layer', 'jquery'], function () {
-      var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
-      // 初始化树
-      var DemoTree = dtree.render({
-        elem: "#demoTree",
-        data: demoTree, // 使用data加载
-        checkbar: true,
-        checkbarType: "no-all",
-        checkbarFun: {
-          chooseDone: function (checkbarNodesParam) {
-            classData = checkbarNodesParam;
-            console.log(classData)
-            return;
-          }
-        },
-      });
-
-      // // 绑定节点点击
-      // dtree.on("node('demoTree')", function (obj) {
-      //   layer.msg(JSON.stringify(obj.param));
-      // });
-    });
-    // ------------dtree相关（结束）--------------
+    let cbox;
+    let clMap = {},
+      gradeMap = {
+        G1: '高一',
+        G2: '高二',
+        G3: '高三',
+      };
 
 
-
-    // ----------table组件相关------------------
-    var tableDate = [
-      { id: 1, name: "张三", pid: "530302199701236322", sex: "男", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
-      { id: 2, name: "李四", pid: "530302199701236322", sex: "男", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
-      { id: 3, name: "王五", pid: "530302199701236322", sex: "女", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
-      { id: 4, name: "狗蛋", pid: "530302199701236322", sex: "男", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
-      { id: 5, name: "二妞", pid: "530302199701236322", sex: "女", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
-      { id: 6, name: "小六", pid: "530302199701236322", sex: "女", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
-      { id: 7, name: "来福", pid: "530302199701236322", sex: "男", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
-    ]
+    // ----------初始化页面------------------
     //  初始化table
     layui.use(['table', 'layer', 'form'], function () {
       var table = layui.table;
@@ -343,19 +251,17 @@
       table.render({
         elem: '#students'
         , id: 'idTest'
-        , height: 475
-        , data: tableDate
+        , height: 470
+        , data: []
         , page: true //开启分页
         , cols: [[ //表头
           { checkbox: true, width: "5%" }
-          , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
-          , { field: 'name', title: '姓名', width: "10%", minWidth: 60 }
-          , { field: 'pid', title: '身份证号', width: "18%", minWidth: 200 }
-          , { field: 'sex', title: '性别', width: "7%", minWidth: 60 }
-          , { field: 'school', title: '学校', width: "10%", minWidth: 100 }
-          , { field: 'grade', title: '年级', width: "10%", minWidth: 100 }
-          , { field: 'class', title: '班级', width: "10%", minWidth: 100 }
-          , { field: 'project', title: '已缴纳费用', width: "25%", minWidth: 200 }
+          , { field: 'id', title: 'ID', width: "10%", minWidth: 60 }
+          , { field: 'name', title: '姓名', width: "15%", minWidth: 60 }
+          , { field: 'pid', title: '身份证号', width: "20%", minWidth: 200 }
+          , { field: 'schoolname', title: '学校', width: "20%", minWidth: 100 }
+          , { field: 'gradename', title: '年级', width: "15%", minWidth: 100 }
+          , { field: 'classname', title: '班级', width: "15%", minWidth: 100 }
         ]]
       });
 
@@ -390,6 +296,7 @@
 
       // 修改学生信息
       let changeBt = document.getElementById("changeBt");
+      cbox = changeBt;
       changeBt.addEventListener("click", function () {
         // 选中学生有效性判断
         let checkStatus = table.checkStatus('idTest');
@@ -417,8 +324,68 @@
         cbox.style.display = 'block';
         form.val("changeStForm", changeInfo);
       })
+
+
+
+
+
+      // 当所需学校和年级发生变化时为，修改班级选择框信息
+      form.on('select(addclass-sc)', function () {
+        let data = form.val("addStForm");
+
+
+        if (data.school && data.grade) {
+          getClList(data.school, data.grade, 0)
+        } else {
+          let selects = document.getElementsByClassName("clSelect");
+
+          selects[0].innerHTML = '<option value="">请先选择学校和年级</option>';
+          form.render();
+        }
+      });
+
+      form.on('select(addclass-gr)', function () {
+        let data = form.val("addStForm");
+
+        if (data.school && data.grade) {
+          getClList(data.school, data.grade, 0)
+        } else {
+          let selects = document.getElementsByClassName("clSelect");
+
+          selects[0].innerHTML = '<option value="">请先选择学校和年级</option>';
+          form.render();
+        }
+      });
+
+      form.on('select(changeclass-sc)', function () {
+        let data = form.val("addStForm");
+
+
+        if (data.school && data.grade) {
+          getClList(data.school, data.grade, 1)
+        } else {
+          let selects = document.getElementsByClassName("clSelect");
+
+          selects[1].innerHTML = '<option value="">请先选择学校和年级</option>';
+          form.render();
+        }
+      });
+
+      form.on('select(changeclass-gr)', function () {
+        let data = form.val("addStForm");
+
+
+        if (data.school && data.grade) {
+          getClList(data.school, data.grade, 1)
+        } else {
+          let selects = document.getElementsByClassName("clSelect");
+
+          selects[1].innerHTML = '<option value="">请先选择学校和年级</option>';
+          form.render();
+        }
+      });
     });
-    // ----------table组件相关（结束）------------------
+    // ----------初始化页面（结束）------------------
 
 
 
@@ -452,37 +419,194 @@
         reLoadTable();
       }
     }
+
+
+
+
     //  刷新table
-    function reloadTable() {
-      layui.use('table', function () {
-        var table = layui.table;
+    function reloadTable(name = '', class_id = '', page = '1') {
+      let reqData = {
+        name,
+        school_id: '',
+        grade_no: '',
+        class_no: '',
+        class_id,
+        page,
+        epage: '10'
+      }
 
-        var tableDate2 = [
-          { id: 1, name: "张三", pid: "530302199701236322", sex: "男", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
-          { id: 2, name: "李四", pid: "530302199701236322", sex: "男", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
-          { id: 3, name: "王五", pid: "530302199701236322", sex: "女", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
-          { id: 4, name: "狗蛋", pid: "530302199701236322", sex: "男", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
-          { id: 5, name: "二妞", pid: "530302199701236322", sex: "女", school: "一中", grade: "高一", class: "一班", project: "高三上学期学费，高三上学期住宿费" },
-        ]
 
-        table.render({
-          elem: '#students'
-          , id: 'idTest'
-          , height: 475
-          , data: tableDate2
-          , page: true //开启分页
-          , cols: [[ //表头
-            { checkbox: true, width: "5%" }
-            , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
-            , { field: 'name', title: '姓名', width: "10%", minWidth: 60 }
-            , { field: 'pid', title: '身份证号', width: "18%", minWidth: 200 }
-            , { field: 'sex', title: '性别', width: "7%", minWidth: 60 }
-            , { field: 'school', title: '学校', width: "10%", minWidth: 100 }
-            , { field: 'grade', title: '年级', width: "10%", minWidth: 100 }
-            , { field: 'class', title: '班级', width: "10%", minWidth: 100 }
-            , { field: 'project', title: '已缴纳费用', width: "25%", minWidth: 200 }
-          ]]
+      layui.use(['table', 'layer'], function () {
+        var table = layui.table, layer = layui.layer;
+
+        api.student.getList(reqData, (res) => {
+          if (res.code === '000') {
+            let tabData = [];
+
+            res.rows.list.forEach(item => {
+              let one = {
+                id: item.id,
+                name: item.name,
+                schoolname: item.schoolname,
+                classname: item.class,
+                gradename: item.grade,
+                pid: item.idnumber
+              }
+
+              tabData.push(one);
+            });
+
+            table.render({
+              elem: '#students'
+              , id: 'idTest'
+              , height: 470
+              , data: tabData
+              , cols: [[ //表头
+                { checkbox: true, width: "5%" }
+                , { field: 'id', title: 'ID', width: "10%", minWidth: 60 }
+                , { field: 'name', title: '姓名', width: "15%", minWidth: 60 }
+                , { field: 'pid', title: '身份证号', width: "20%", minWidth: 200 }
+                , { field: 'schoolname', title: '学校', width: "20%", minWidth: 100 }
+                , { field: 'gradename', title: '年级', width: "15%", minWidth: 100 }
+                , { field: 'classname', title: '班级', width: "15%", minWidth: 100 }
+              ]]
+            });
+          } else {
+            layer.msg(res.msg);
+          }
         });
+      })
+    }
+
+
+
+
+
+    function getTree() {
+      api.class.getTree({}, (res) => {
+
+        layui.use(['dtree', 'layer', 'jquery'], function () {
+          var dtree = layui.dtree,
+            layer = layui.layer,
+            $ = layui.jquery;
+
+          if (res.code === "000") {
+
+            var DemoTree = dtree.render({
+              elem: "#demoTree",
+              data: res.result, // 使用data加载
+              checkbar: true,
+              checkbarType: "no-all",
+              checkbarData: "halfChoose",
+              checkbarFun: {
+                chooseDone: function (checkbarNodesParam) {
+                  classData = checkbarNodesParam;
+                  return;
+                }
+              },
+            });
+
+          } else {
+            layer.msg(res.msg);
+          }
+        })
+      })
+    }
+
+
+
+
+
+    function getScList() {
+      let reqData = {
+        schoolname: '',
+        areaid: '',
+        page: '1',
+        epage: '100'
+      }
+
+      api.school.getList(reqData, function (res) {
+        layui.use(['form', 'layer'], function () {
+          let form = layui.form, layer = layui.layer;
+
+          if (res.code == '000') {
+            let selects = document.getElementsByClassName("scSelect");
+
+            res.rows.list.forEach(item => {
+              let option = document.createElement("option");
+
+              option.value = item.id;
+              option.innerHTML = item.schoolname;
+
+              // scMap[item.id] = item.schoolname;
+
+              selects[0].appendChild(option);
+            })
+
+            for (let i = 1; i < selects.length; i++) {
+              selects[i].innerHTML = selects[0].innerHTML;
+            }
+
+            layui.use('form', function () {
+              let form = layui.form;
+
+              form.render("select");
+            })
+          } else {
+            layer.msg(res.msg);
+          }
+        })
+      })
+    }
+
+
+
+    
+
+    function getClList(school_id, grade_no, num) {
+      clMap = {};
+
+      let reqData = {
+        class_name: '',
+        class_no: '',
+        grade_no,
+        school_id,
+        page: '1',
+        epage: '100'
+      }
+
+      api.class.getList(reqData, function (res) {
+        layui.use(['form', 'layer'], function () {
+          let form = layui.form, layer = layui.layer;
+
+          if (res.code == '000') {
+            let selects = document.getElementsByClassName("clSelect");
+
+            selects[num].innerHTML = '<option value=""></option';
+
+            res.rows.list.forEach(item => {
+              let option = document.createElement("option");
+
+              option.value = item.class_id;
+              option.innerHTML = item.class_name;
+
+              clMap[item.class_id] = {
+                name: item.class_name,
+                no: item.class_no
+              };
+
+              selects[num].appendChild(option);
+            });
+
+            layui.use('form', function () {
+              let form = layui.form;
+
+              form.render("select");
+            })
+          } else {
+            layer.msg(res.msg);
+          }
+        })
       })
     }
     // --------------------部分独立方法（结束）-----------------------
