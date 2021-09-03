@@ -7,7 +7,6 @@ html, body {
     padding: 15px;
     color: black;
     width: 100%;
-    min-width: 1000px;
     overflow: auto;
     height: 100%;
     box-sizing: border-box;
@@ -26,8 +25,8 @@ html, body {
 }
 
 .main-article .left {
-    width: 350px;
-    min-width: 350px;
+    width: 320px;
+    min-width: 320px;
     height: 100%;
     margin-right: 15px;
     background-color: #fff;
