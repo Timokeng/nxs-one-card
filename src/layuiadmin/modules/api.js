@@ -37,7 +37,7 @@ const req = {
                 url,
                 data,
                 function (res) {
-                    if (res.code === '001') {
+                    if (res.code === '001' && sessionStorage.getItem("sid")) {
                         sessionStorage.clear();
                         alert(res.msg);
                         window.parent.goLogin(true);

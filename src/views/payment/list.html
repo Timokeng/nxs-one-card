@@ -48,9 +48,9 @@
                 </div>
                 <div class="form-box layui-form" lay-filter="conditionForm">
                     <div class="layui-form-item input-box">
-                        <label class="layui-form-label">ID</label>
+                        <label class="layui-form-label">订单ID</label>
                         <div class="layui-input-block">
-                            <input type="text" name="id" placeholder="请输入" autocomplete="off" class="layui-input">
+                            <input type="text" name="order_id" placeholder="请输入" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item input-box">
@@ -261,7 +261,27 @@
 
 
         function getTree() {
-            api.class.getTree({} , (res) => {
+            let reqData = {
+                schoolname: '',
+                areaid: '',
+                page: '1',
+                epage: '100'
+            }
+
+            api.school.getList(reqData , (res) => {
+
+                let treeData = [];
+
+                res.rows.list.forEach(item => {
+                    let one = {
+                        id: item.id,
+                        title: item.schoolname,
+                        parentId: '0',
+                        checkArr: '0'
+                    }
+
+                    treeData.push(one);
+                })
 
                 layui.use(['dtree', 'layer', 'jquery'], function () {
                     var dtree = layui.dtree,
@@ -272,7 +292,7 @@
 
                         var DemoTree = dtree.render({
                             elem: "#demoTree",
-                            data: res.result, // 使用data加载
+                            data: treeData, // 使用data加载
                             checkbar: true,
                             checkbarType: "no-all",
                             checkbarData: "halfChoose",

@@ -112,7 +112,6 @@ function searchUser() {
 }
 
 function searchLi() {
-    let conditionData = {};
 
     layui.use(['form', 'layer'], function () {
         var form = layui.form;
@@ -120,44 +119,23 @@ function searchLi() {
 
         let data = form.val("conditionForm");
 
-        // 处理性别数据
-        if(data.woman && data.man) {
-            conditionData.sex = "all"
-        } else if (data.woman) {
-            conditionData.sex = "woman"
-        } else if (data.man) {
-            conditionData.sex = "man"
-        } else {
-            conditionData.sex = "all"
-        }
+        // 处理性别数据（暂时不需要了）
+        // if(data.woman && data.man) {
+        //     conditionData.sex = "all"
+        // } else if (data.woman) {
+        //     conditionData.sex = "woman"
+        // } else if (data.man) {
+        //     conditionData.sex = "man"
+        // } else {
+        //     conditionData.sex = "all"
+        // }
 
         // 处理学校、年级、班级数据
-        if(classData.length > 0) {
-            classData.forEach(function(item) {
-                // if(item.level == 1) {
-                //     conditionData.schoool.push(item.id);
-                // } else if(item.level == 2) {
-                //     conditionData.grade.push(item.id);
-                // } else if(item.level == 3) {
-                //     conditionData.class.push(item.id);
-                // }
-                if(item.leaf) {
-                    conditionData.class.push(item.nodeId);
-                }
-            })
-        }
+        
+        reloadTable(data.order_id, data.name, classData[0].nodeId, data.pid);
 
-        // 填入其他数据
-        for(let key in data) {
-            if(key == 'man' || key == 'woman') {
-                continue;
-            }
-            conditionData[key] = data[key];
-        } 
-        console.log(conditionData);
     });
 
-    reloadTable();
 }
 
 
