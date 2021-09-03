@@ -166,7 +166,7 @@
 
     // --------------------部分独立方法-----------------------
     function reloadTree() {
-      api.class.getTree('', (res) => {
+      api.class.getTree({}, (res) => {
 
         layui.use(['dtree', 'layer', 'jquery'], function () {
           var dtree = layui.dtree,

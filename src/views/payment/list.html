@@ -261,7 +261,7 @@
 
 
         function getTree() {
-            api.class.getTree('', (res) => {
+            api.class.getTree({} , (res) => {
 
                 layui.use(['dtree', 'layer', 'jquery'], function () {
                     var dtree = layui.dtree,
