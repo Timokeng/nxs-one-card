@@ -233,7 +233,7 @@
     getScList();
     reloadTable();
 
-    let cbox;
+    let cbox = document.getElementById("changeBox");
     let clMap = {},
       gradeMap = {
         G1: '高一',
@@ -311,7 +311,6 @@
         }
 
         // 展示修改表单，并把相关数据填入表单
-        cbox = document.getElementById("changeBox");
         let changeInfo = {
           id: checkStatus.data[0].id,
           name: checkStatus.data[0].name,
