@@ -587,10 +587,10 @@
             res.rows.list.forEach(item => {
               let option = document.createElement("option");
 
-              option.value = item.class_id;
+              option.value = item.id;
               option.innerHTML = item.class_name;
 
-              clMap[item.class_id] = {
+              clMap[item.id] = {
                 name: item.class_name,
                 no: item.class_no
               };
