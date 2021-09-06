@@ -111,7 +111,6 @@ html{background-color: #f2f2f2; color: #666;}
 .layui-form-item .layui-input-company{width: auto; padding-right: 10px; line-height: 38px;}
 
 /* 辅助 */
-.layadmin-flexible{}
 .layui-bg-white{background-color: #fff;}
 .layadmin-loading{position: absolute; left: 50%; top: 50%; margin: -16px -15px; font-size: 30px; color: #c2c2c2;}
 .layadmin-fixed{position: fixed; left: 0; top: 0; z-index: 999;}
@@ -138,7 +137,6 @@ html{background-color: #f2f2f2; color: #666;}
 .layui-layout-admin .layui-layout-left a{padding: 0;}
 .layui-layout-admin .layui-layout-right{padding: 0;}
 .layui-header .layui-nav-item .layui-icon{position: relative; top: 1px; font-size: 16px;}
-.layui-header .layui-nav-item:hover{}
 .layui-header .layui-layout-right .layui-badge-dot{margin-left: 0px;}
 .layui-header .layui-nav .layui-this:after,
 .layui-layout-admin .layui-header .layui-nav-bar{top: 0 !important; bottom: auto; height: 3px; background-color: #fff; background-color: rgba(255,255,255,.3);}
