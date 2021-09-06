@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="../../layuiadmin/style/student.css">
   <link rel="stylesheet" href="../../layuiadmin/style/formBox.css">
   <link rel="stylesheet" href="../../layuiadmin/style/sideUpaload.css">
+  <link rel="stylesheet" href="../../layuiadmin/style/table.css">
 </head>
 
 <body>
@@ -205,6 +206,7 @@
         <div class="header">学生信息</div>
         <div class="article">
           <table id="students" lay-filter="test"></table>
+          <div id="page-box"></div>
         </div>
       </div>
     </div>
@@ -322,6 +324,7 @@
         };
 
         cbox.style.display = 'block';
+        abox.style.display = 'none';
         form.val("changeStForm", changeInfo);
       })
 
@@ -436,8 +439,8 @@
       }
 
 
-      layui.use(['table', 'layer'], function () {
-        var table = layui.table, layer = layui.layer;
+      layui.use(['table', 'layer', 'laypage'], function () {
+        var table = layui.table, layer = layui.layer, laypage = layui.laypage;
 
         api.student.getList(reqData, (res) => {
           if (res.code === '000') {
@@ -470,6 +473,22 @@
                 , { field: 'gradename', title: '年级', width: "15%", minWidth: 100 }
                 , { field: 'classname', title: '班级', width: "15%", minWidth: 100 }
               ]]
+            });
+
+            laypage.render({
+              elem: 'page-box'
+              , limit: 10
+              , curr: page
+              , count: res.rows.total
+              , layout: ['prev', 'page', 'next', 'count', 'skip']
+              , jump: function (obj, first) {
+                //obj包含了当前分页的所有参数，比如：
+
+                //首次不执行
+                if (!first) {
+                  reloadTable(wxid, String(obj.curr));
+                }
+              }
             });
           } else {
             layer.msg(res.msg);
@@ -561,7 +580,7 @@
 
 
 
-    
+
 
     function getClList(school_id, grade_no, num) {
       clMap = {};

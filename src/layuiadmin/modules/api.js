@@ -103,5 +103,6 @@ const api = {
         getList: (data, suc) => req.post(baseUrl + '/studentsApi/studentsList', suc, data),
         change: (data, suc) => req.post(baseUrl + '/studentsApi/studentsUpdate', suc, data),
         delete: (data, suc) => req.post(baseUrl + '/studentsApi/studentsDel', suc, data),
+        getDetail: (data, suc) => req.post(baseUrl + '/studentsApi/studentsOne', suc, data),
     }
 }
