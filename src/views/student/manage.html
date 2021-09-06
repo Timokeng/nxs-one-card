@@ -298,7 +298,6 @@
 
       // 修改学生信息
       let changeBt = document.getElementById("changeBt");
-      cbox = changeBt;
       changeBt.addEventListener("click", function () {
         // 选中学生有效性判断
         let checkStatus = table.checkStatus('idTest');
@@ -312,7 +311,7 @@
         }
 
         // 展示修改表单，并把相关数据填入表单
-        let cbox = document.getElementById("changeBox");
+        cbox = document.getElementById("changeBox");
         let changeInfo = {
           id: checkStatus.data[0].id,
           name: checkStatus.data[0].name,
