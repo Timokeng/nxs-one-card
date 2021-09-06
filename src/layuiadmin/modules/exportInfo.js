@@ -40,6 +40,20 @@ function exportStTe() {
   `;
 
   list.appendChild(item);
+
+  setTimeout(() => {
+    let item = document.getElementById(id);
+    let status = item.children[1];
+    status.className = 'item-status ok';
+    status.innerHTML = '可下载';
+
+    item.addEventListener('click', () => {
+      let url = 'http://192.168.1.18/rcc_pay/Upexcel/批量信息导入模板.xlsx',
+      filename = '批量信息导入模板.xlsx';
+      downloadFile(url, filename);
+    });
+
+  }, 3000)
 }
 
 function exportSt() {
@@ -190,4 +204,16 @@ function exportLi() {
   `;
 
   list.appendChild(item);
+}
+
+
+function downloadFile(url, filename) {
+  let link = document.createElement('a');
+  link.style.display = 'none';
+  link.href = url;
+  link.setAttribute('download', filename);
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }

@@ -13,6 +13,11 @@
     box-sizing: border-box;
     width: 320px;
 }
+.form-box .input-box.hint {
+    text-align: center;
+    color: rgb(202, 199, 199);
+}
+
 .form-box .input-box .layui-input, .layui-textarea {
     width: 180px;
 }

@@ -49,24 +49,27 @@
         </div>
         <div class="form-box layui-form" lay-filter="conditionForm">
           <div class="layui-form-item input-box">
-            <label class="layui-form-label">校内ID</label>
-            <div class="layui-input-block">
-              <input type="text" name="id" placeholder="请输入" autocomplete="off" class="layui-input">
-            </div>
-          </div>
-          <div class="layui-form-item input-box">
             <label class="layui-form-label">姓名</label>
             <div class="layui-input-block">
               <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
           </div>
-          <div class="layui-form-item input-box">
+          <div class="layui-form-item input-box hint">
+            请在左侧机构树选择查询范围
+          </div>
+          <!-- <div class="layui-form-item input-box">
+            <label class="layui-form-label">班级编号</label>
+            <div class="layui-input-block">
+              <input type="text" name="class_no" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+          </div> -->
+          <!-- <div class="layui-form-item input-box">
             <label class="layui-form-label">性别</label>
             <div class="layui-input-block">
               <input type="checkbox" name="man" title="男">
               <input type="checkbox" name="woman" title="女">
             </div>
-          </div>
+          </div> -->
           <!-- <div class="layui-form-item input-box">
             <label class="layui-form-label">学校</label>
             <div class="layui-input-block">
@@ -85,12 +88,12 @@
               <input type="text" name="class" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
             </div>
           </div> -->
-          <div class="layui-form-item input-box">
+          <!-- <div class="layui-form-item input-box">
             <label class="layui-form-label">身份证号</label>
             <div class="layui-input-block">
               <input type="text" name="pid" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
-          </div>
+          </div> -->
         </div>
         <div class="btn-box"><button class="layui-btn" onclick="searchSt()">确定</button></div>
       </div>
@@ -103,14 +106,14 @@
           <div class="layui-form-item input-box">
             <label class="layui-form-label">姓名</label>
             <div class="layui-input-block">
-              <input type="text" name="name" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+              <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
           </div>
           <div class="layui-form-item input-box">
             <label class="layui-form-label">性别</label>
             <div class="layui-input-block">
-              <input type="radio" name="sex" value="男" title="男">
-              <input type="radio" name="sex" value="女" title="女" checked>
+              <input type="radio" name="sex" value="1" title="男">
+              <input type="radio" name="sex" value="0" title="女" checked>
             </div>
           </div>
           <div class="layui-form-item input-box">
@@ -143,7 +146,7 @@
           <div class="layui-form-item input-box">
             <label class="layui-form-label">身份证号</label>
             <div class="layui-input-block">
-              <input type="text" name="pid" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+              <input type="text" name="pid" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
           </div>
         </div>
@@ -152,51 +155,59 @@
       <div class="change-box layui-anim layui-anim-scale" id="changeBox">
         <div class="header">
           <div>修改学生信息</div>
-          <div onclick="document.getElementById('changeBox').style.display = 'none'"><i
-              class="layui-icon layui-icon-close"></i></div>
+          <div onclick="cbox.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
         </div>
         <div class="form-box layui-form" lay-filter="changeStForm">
           <div class="layui-form-item input-box">
-            <label class="layui-form-label">校内ID</label>
+            <label class="layui-form-label">ID</label>
             <div class="layui-input-block">
-              <input type="text" name="id" disabled placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+              <input type="text" disabled name="id" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
           </div>
           <div class="layui-form-item input-box">
             <label class="layui-form-label">姓名</label>
             <div class="layui-input-block">
-              <input type="text" name="name" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+              <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
           </div>
           <div class="layui-form-item input-box">
             <label class="layui-form-label">性别</label>
             <div class="layui-input-block">
-              <input type="radio" name="sex" value="男" title="男">
-              <input type="radio" name="sex" value="女" title="女" checked>
+              <input type="radio" name="sex" value="1" title="男">
+              <input type="radio" name="sex" value="0" title="女" checked>
             </div>
           </div>
           <div class="layui-form-item input-box">
             <label class="layui-form-label">学校</label>
             <div class="layui-input-block">
-              <input type="text" name="school" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+              <select class="scSelect" name="school" lay-verify="required" lay-filter="changeclass-sc">
+                <option value=""></option>
+              </select>
             </div>
           </div>
           <div class="layui-form-item input-box">
             <label class="layui-form-label">年级</label>
             <div class="layui-input-block">
-              <input type="text" name="grade" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+              <select class="gradeSelect" name="grade" lay-verify="required" lay-filter="changeclass-gr">
+                <option value=""></option>
+                <option value="G1">高一</option>
+                <option value="G2">高二</option>
+                <option value="G3">高三</option>
+              </select>
             </div>
           </div>
           <div class="layui-form-item input-box">
             <label class="layui-form-label">班级</label>
             <div class="layui-input-block">
-              <input type="text" name="class" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+              <select class="clSelect" name="class" lay-verify="required">
+                <option value="">请先选择学校和年级</option>
+              </select>
             </div>
           </div>
           <div class="layui-form-item input-box">
             <label class="layui-form-label">身份证号</label>
             <div class="layui-input-block">
-              <input type="text" name="pid" placeholder="请输入至少一项" autocomplete="off" class="layui-input">
+              <input type="text" name="pid" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
           </div>
         </div>
@@ -258,8 +269,9 @@
         , page: true //开启分页
         , cols: [[ //表头
           { checkbox: true, width: "5%" }
-          , { field: 'id', title: 'ID', width: "10%", minWidth: 60 }
-          , { field: 'name', title: '姓名', width: "15%", minWidth: 60 }
+          , { field: 'id', title: 'ID', width: "7%", minWidth: 60 }
+          , { field: 'name', title: '姓名', width: "10%", minWidth: 60 }
+          , { field: 'sex', title: '性别', width: "8%", minWidth: 100 }
           , { field: 'pid', title: '身份证号', width: "20%", minWidth: 200 }
           , { field: 'schoolname', title: '学校', width: "20%", minWidth: 100 }
           , { field: 'gradename', title: '年级', width: "15%", minWidth: 100 }
@@ -278,6 +290,10 @@
           return;
         }
 
+        let arr = checkStatus.data.map(item => {
+          return item.id
+        })
+
         layer.open({
           type: 1,
           content: '确定删除选中的 ' + checkStatus.data.length + '条信息吗？',
@@ -286,7 +302,15 @@
           btn: ['确定', '取消'],
           yes: function (index, layero) {
             console.log('确定删除');
-            reloadTable();
+
+            api.student.delete({ id: arr }, (res) => {
+              if (res.code == "000") {
+                reloadTable();
+              } else {
+                layer.msg(res.msg);
+              }
+            })
+
             layer.close(index);
           },
           btn2: function (index, layero) {
@@ -311,19 +335,36 @@
         }
 
         // 展示修改表单，并把相关数据填入表单
-        let changeInfo = {
-          id: checkStatus.data[0].id,
-          name: checkStatus.data[0].name,
-          sex: checkStatus.data[0].sex,
-          pid: checkStatus.data[0].pid,
-          school: checkStatus.data[0].school,
-          grade: checkStatus.data[0].grade,
-          class: checkStatus.data[0].class
-        };
+        api.student.getDetail({ id: checkStatus.data[0].id }, async (res) => {
+          if (res.code === "000") {
 
-        cbox.style.display = 'block';
-        abox.style.display = 'none';
-        form.val("changeStForm", changeInfo);
+            let a = await new Promise((resolve, reject) => {
+              getClList(res.result.school_id, res.result.grade_no, 1);
+
+              setTimeout(() => {
+                resolve('ok');
+              }, 300);
+            })
+
+            let changeInfo = {
+              id: res.result.id,
+              school: res.result.school_id,
+              grade: res.result.grade_no,
+              class: res.result.class_id,
+              name: res.result.name,
+              sex: res.result.sex,
+              pid: res.result.idnumber
+            };
+
+            cbox.style.display = 'block';
+            abox.style.display = 'none';
+            form.val("changeStForm", changeInfo);
+
+          } else {
+            layer.msg(res.msg);
+          }
+        })
+
       })
 
 
@@ -359,7 +400,7 @@
       });
 
       form.on('select(changeclass-sc)', function () {
-        let data = form.val("addStForm");
+        let data = form.val("changeStForm");
 
 
         if (data.school && data.grade) {
@@ -373,7 +414,7 @@
       });
 
       form.on('select(changeclass-gr)', function () {
-        let data = form.val("addStForm");
+        let data = form.val("changeStForm");
 
 
         if (data.school && data.grade) {
@@ -414,11 +455,34 @@
           return;
         }
         validate = true;
-        layer.msg("成功修改校内ID为 " + changeInfo.id + " 的学生相关信息")
+
+        let reqData = {
+          id: changeInfo.id,
+          school_id: changeInfo.school,
+          grade_no: changeInfo.grade,
+          grade: gradeMap[changeInfo.grade],
+          class_id: changeInfo.class,
+          class_no: clMap[changeInfo.class].no,
+          class: clMap[changeInfo.class].name,
+          name: changeInfo.name,
+          idnumber: changeInfo.pid,
+          sex: changeInfo.sex
+        }
+
+        api.student.change(reqData, (res) => {
+          if (res.code === '000') {
+            layer.msg("成功修改 " + changeInfo.name + " 的相关信息");
+
+            setTimeout(() => {
+              reloadTable();
+              cbox.style.display = 'none';
+            }, 500)
+
+          } else {
+            layer.msg(res.msg)
+          }
+        })
       });
-      if (validate) {
-        reLoadTable();
-      }
     }
 
 
@@ -448,6 +512,7 @@
               let one = {
                 id: item.id,
                 name: item.name,
+                sex: item.sex == '0' ? '女' : '男',
                 schoolname: item.schoolname,
                 classname: item.class,
                 gradename: item.grade,
@@ -464,8 +529,9 @@
               , data: tabData
               , cols: [[ //表头
                 { checkbox: true, width: "5%" }
-                , { field: 'id', title: 'ID', width: "10%", minWidth: 60 }
-                , { field: 'name', title: '姓名', width: "15%", minWidth: 60 }
+                , { field: 'id', title: 'ID', width: "7%", minWidth: 60 }
+                , { field: 'name', title: '姓名', width: "10%", minWidth: 60 }
+                , { field: 'sex', title: '性别', width: "8%", minWidth: 100 }
                 , { field: 'pid', title: '身份证号', width: "20%", minWidth: 200 }
                 , { field: 'schoolname', title: '学校', width: "20%", minWidth: 100 }
                 , { field: 'gradename', title: '年级', width: "15%", minWidth: 100 }
@@ -514,7 +580,7 @@
               data: res.result, // 使用data加载
               checkbar: true,
               checkbarType: "no-all",
-              checkbarData: "halfChoose",
+              // checkbarData: "halfChoose",
               checkbarFun: {
                 chooseDone: function (checkbarNodesParam) {
                   classData = checkbarNodesParam;
