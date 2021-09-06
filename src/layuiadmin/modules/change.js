@@ -405,7 +405,7 @@ function changeRole() {
 
         api.role.change(data, function (res) {
             if (res.code == '000') {
-                layer.msg("成功修改原ID为 " + newInfo.id + " 的使用者信息");
+                layer.msg("成功修改原ID为 " + newInfo.id + " 的角色信息");
                 setTimeout(() => {
                     cbox.style.display = "none";
                     reloadTable();

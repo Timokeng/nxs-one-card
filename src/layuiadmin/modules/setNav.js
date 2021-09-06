@@ -30,6 +30,11 @@ var navTreeData = [
         title: '微信管理',
         checkArr: "0",
     },
+    {
+        id: '7',
+        title: '学校管理',
+        checkArr: "0",
+    },
 ];
 
 var navTreeData2 = [];

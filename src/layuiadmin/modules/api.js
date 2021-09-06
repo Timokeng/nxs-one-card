@@ -60,6 +60,7 @@ const api = {
         getList: (data, suc) => req.post(baseUrl + '/user_typeApi/userTypeList', suc, data),
         change: (data, suc) => req.post(baseUrl + '/user_typeApi/userTypeUpdate', suc, data),
         delete: (data, suc) => req.post(baseUrl + '/user_typeApi/userTypeDel', suc, data),
+        getDetail: (data, suc) => req.post(baseUrl + '/user_typeApi/getUserTypeOne', suc, data),
     },
     user: {
         add: (data, suc) => req.post(baseUrl + '/userApi/userAdd', suc, data),

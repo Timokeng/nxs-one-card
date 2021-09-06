@@ -72,7 +72,7 @@
             <span>一卡通管理系统</span>
           </div>
           
-          <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
+          <ul id="navs-main" class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
             <li data-name="home" class="layui-nav-item layui-nav-itemed">
               <a href="javascript:;" lay-href="home/console.html" lay-tips="主页" lay-direction="2">
                 <i class="layui-icon layui-icon-chart"></i>
@@ -179,6 +179,7 @@
     index: 'lib/index' //主入口模块
   }).use('index');
   </script>
+  <script src="../layuiadmin/modules/api.js"></script>
   <script src="../layuiadmin/modules/userRole.js"></script>
 </body>
 </html>

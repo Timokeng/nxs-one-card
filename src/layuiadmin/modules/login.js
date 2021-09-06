@@ -31,6 +31,7 @@ function login() {
         if (res.code == '000') {
             sessionStorage.setItem('userid', res.result.id);
             sessionStorage.setItem('sid', res.result.sid);
+            sessionStorage.setItem('typeid', res.result.type_id);
 
             window.location = '/nxs-one-card/src/views/index.html'
         } else {
