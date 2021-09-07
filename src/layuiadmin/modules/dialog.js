@@ -170,6 +170,44 @@ function handlePaymentDetail() {
 }
 
 
+function handleConfigUserPower() {
+    let checkStatus = {},
+        validate = false;
+
+    layui.use(['layer', 'table'], function () {
+        var layer = layui.layer;
+        var table = layui.table;
+
+        checkStatus = table.checkStatus('idTest')
+
+        if (checkStatus.data.length < 1) {
+            layer.msg('请至少选择一个用户');
+            return;
+        } else if (checkStatus.data.length > 1) {
+            layer.msg('每次只能配置一个用户');
+            return;
+        }
+        validate = true;
+    })
+
+    if (validate) {
+        user = checkStatus.data[0];
+        console.log(user);
+        if(user.power) {
+            setTree2(user.power.split(','));
+        }
+
+
+        dlb.style.display = 'flex';
+        ma.style.overflow = 'hidden';
+        for (let i = 0; i < dla.children.length; i++) {
+            dla.children[i].style.display = 'none';
+        }
+        dlt.style.display = 'flex';
+    }
+}
+
+
 function closeDialog() {
     dlb.style.display = 'none';
     ma.style.overflow = 'auto';

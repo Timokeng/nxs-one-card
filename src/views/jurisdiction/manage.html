@@ -27,7 +27,7 @@
         <button id="deleteBt" class="layui-btn"><i class="layui-icon layui-icon-delete"></i>删除用户</button>
         <button id="changeBt" class="layui-btn"><i class="layui-icon layui-icon-edit"></i>修改用户</button>
         <button id="searchBt" class="layui-btn"><i class="layui-icon layui-icon-search"></i>查找用户</button>
-        <button id="bindBt" class="layui-btn"><i class="layui-icon layui-icon-template-1"></i>配置学校</button>
+        <button class="layui-btn" onclick="handleConfigUserPower()"><i class="layui-icon layui-icon-template-1"></i>配置学校</button>
       </div>
     </div>
     <div class="add-box layui-anim layui-anim-scale" id="addBox">
@@ -141,10 +141,10 @@
           </div>
           <div class="center">
             <div class="dialog-btn-box">
-              <button id="bindCl" class="layui-btn" onclick="bindCl(0)">启用班级<i
+              <button id="bindCl" class="layui-btn" onclick="configUserPower()">启用班级<i
                   class="layui-icon layui-icon-next"></i></button>
-              <button id="unboundCl" class="layui-btn"><i class="layui-icon layui-icon-prev"></i>禁用班级</button>
-              <button id="close-bind-dialog" class="layui-btn" onclick="dlb.style.display = 'none'"><i
+              <button id="unboundCl" class="layui-btn" onclick="deleteUserPower()"><i class="layui-icon layui-icon-prev"></i>禁用班级</button>
+              <button id="close-bind-dialog" class="layui-btn" onclick="closeDialog()"><i
                   class="layui-icon layui-icon-close"></i>关闭</button>
             </div>
           </div>
@@ -165,7 +165,8 @@
     layui.config({
       base: '../../layuiadmin/' //静态资源所在路径
     }).extend({
-      index: 'lib/index' //主入口模块
+      index: 'lib/index', //主入口模块
+      dtree: '{/}../../layuiadmin/style/dtree/dtree'
     }).use(['index', 'console']);
 
 
@@ -185,7 +186,7 @@
           , { field: 'name', title: '姓名', width: "10%", minWidth: 120 }
           , { field: 'phone', title: '号码', width: "20%", minWidth: 240 }
           , { field: 'roleName', title: '角色', width: "20%", minWidth: 120 }
-          , { field: 'jurisdiction', title: '管理院校', width: "40%", minWidth: 600 }
+          , { field: 'power', title: '管理院校', width: "40%", minWidth: 600 }
         ]]
       });
     })
@@ -218,7 +219,8 @@
                 name: item.username,
                 role: item.type_id,
                 roleName: item.type_name,
-                phone: item.phone
+                phone: item.phone,
+                power: item.opt_auth
               }
 
               tabData.push(one);
@@ -235,7 +237,7 @@
                 , { field: 'name', title: '姓名', width: "10%", minWidth: 120 }
                 , { field: 'phone', title: '号码', width: "20%", minWidth: 240 }
                 , { field: 'roleName', title: '角色', width: "20%", minWidth: 120 }
-                , { field: 'jurisdiction', title: '管理院校', width: "40%", minWidth: 600 }
+                , { field: 'power', title: '管理院校', width: "40%", minWidth: 600 }
               ]]
             });
 
