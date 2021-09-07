@@ -48,7 +48,7 @@ function exportStTe() {
     status.innerHTML = '可下载';
 
     item.addEventListener('click', () => {
-      let url = 'http://192.168.1.18/rcc_pay/Upexcel/批量信息导入模板.xlsx',
+      let url = 'http://test.rcc.ynwrkj.com/Upexcel/批量信息导入模板.xlsx',
       filename = '批量信息导入模板.xlsx';
       downloadFile(url, filename);
     });

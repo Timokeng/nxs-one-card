@@ -5,7 +5,7 @@ layui.use(['upload', 'layer'], function () {
   if (document.getElementById("uploadStBt")) {
     var uploadSt = upload.render({
       elem: '#uploadStBt' //绑定元素
-      , url: 'http://192.168.1.18/rcc_pay/studentsApi/upExcel' //上传接口
+      , url: 'http://test.rcc.ynwrkj.com/studentsApi/upExcel' //上传接口
       , accept: 'file'
       , acceptMime: 'application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       , exts: 'xlsx|xls'
