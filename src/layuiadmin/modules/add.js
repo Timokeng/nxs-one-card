@@ -33,6 +33,10 @@ addBt.addEventListener("click", function () {
         clearForm("addStForm");
     }
 
+    if (addBt.innerText.indexOf("班级") != -1) {
+        clearForm("addClForm");
+    }
+
     abox.style.display = "block";
     cbox.style.display = "none";
 })
