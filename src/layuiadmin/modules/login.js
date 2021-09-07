@@ -30,6 +30,7 @@ function login() {
     api.login({ phone, code }, function (res) {
         if (res.code == '000') {
             sessionStorage.setItem('userid', res.result.id);
+            sessionStorage.setItem('username', res.result.username);
             sessionStorage.setItem('sid', res.result.sid);
             sessionStorage.setItem('typeid', res.result.type_id);
 

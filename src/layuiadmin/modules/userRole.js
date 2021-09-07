@@ -3,6 +3,10 @@ if (!sessionStorage.getItem("sid")) {
     goLogin();
 } else {
     let id = sessionStorage.getItem("typeid");
+    let username = sessionStorage.getItem("username");
+
+    document.getElementById("index-username-box").innerHTML = username;
+
     api.role.getDetail({id}, (res)=>{
         if(res.code === '000') {
             let menu = res.result.menu_auth.split(',');
@@ -17,9 +21,18 @@ if (!sessionStorage.getItem("sid")) {
 }
 
 function goLogin(from) {
+    sessionStorage.clear();
     if(!from){
         window.location = './user/login2.html';
     } else {
         window.location = '../user/login2.html';
     }
+}
+
+function goOut() {
+    let id = sessionStorage.getItem('userid');
+
+    api.out({id}, (res)=>{
+        goLogin();
+    })
 }

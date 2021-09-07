@@ -1,4 +1,4 @@
-const baseUrl = 'http://192.168.1.18/rcc_pay';
+const baseUrl = 'http://test.rcc.ynwrkj.com';
 
 const req = {
     get: (url, suc, data = null, async = true) => {
@@ -38,7 +38,6 @@ const req = {
                 data,
                 function (res) {
                     if (res.code === '001' && sessionStorage.getItem("sid")) {
-                        sessionStorage.clear();
                         alert(res.msg);
                         window.parent.goLogin(true);
                         return;
@@ -55,6 +54,7 @@ const req = {
 const api = {
     getCode: (data, suc) => req.post(baseUrl + '/commonApi/sendSms', suc, data, true),
     login: (data, suc) => req.post(baseUrl + '/commonApi/login', suc, data, true),
+    out: (data, suc) => req.post(baseUrl + '/commonApi/logout', suc, data, true),
     role: {
         add: (data, suc) => req.post(baseUrl + '/user_typeApi/userTypeAdd', suc, data),
         getList: (data, suc) => req.post(baseUrl + '/user_typeApi/userTypeList', suc, data),
