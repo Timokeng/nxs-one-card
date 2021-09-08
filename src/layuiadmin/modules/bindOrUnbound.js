@@ -8,6 +8,9 @@ let treeData1 = [],
     powerMap = {};
 
 
+let scMap = {};
+
+
 function getScTree() {
     layui.use(['dtree', 'layer', 'jquery'], function () {
         var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
@@ -29,6 +32,8 @@ function getScTree() {
                         parentId: '0',
                         checkArr: '0'
                     }
+
+                    scMap[item.id] = item.schoolname;
 
                     treeData1.push(one);
                 })

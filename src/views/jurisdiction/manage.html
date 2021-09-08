@@ -27,7 +27,8 @@
         <button id="deleteBt" class="layui-btn"><i class="layui-icon layui-icon-delete"></i>删除用户</button>
         <button id="changeBt" class="layui-btn"><i class="layui-icon layui-icon-edit"></i>修改用户</button>
         <button id="searchBt" class="layui-btn"><i class="layui-icon layui-icon-search"></i>查找用户</button>
-        <button class="layui-btn" onclick="handleConfigUserPower()"><i class="layui-icon layui-icon-template-1"></i>配置学校</button>
+        <button class="layui-btn" onclick="handleConfigUserPower()"><i
+            class="layui-icon layui-icon-template-1"></i>配置学校</button>
       </div>
     </div>
     <div class="add-box layui-anim layui-anim-scale" id="addBox">
@@ -143,7 +144,8 @@
             <div class="dialog-btn-box">
               <button id="bindCl" class="layui-btn" onclick="configUserPower()">启用学校<i
                   class="layui-icon layui-icon-next"></i></button>
-              <button id="unboundCl" class="layui-btn" onclick="deleteUserPower()"><i class="layui-icon layui-icon-prev"></i>禁用学校</button>
+              <button id="unboundCl" class="layui-btn" onclick="deleteUserPower()"><i
+                  class="layui-icon layui-icon-prev"></i>禁用学校</button>
               <button id="close-bind-dialog" class="layui-btn" onclick="closeDialog()"><i
                   class="layui-icon layui-icon-close"></i>关闭</button>
             </div>
@@ -195,9 +197,9 @@
     getScTree();
     getRoleList();
 
-    setTimeout(()=>{
+    setTimeout(() => {
       reloadTable();
-    }, 500)
+    }, 500);
 
     // ----------------------部分独立方法---------------------------
     function reloadTable(name = '', phone = '', page = '1') {
@@ -218,13 +220,31 @@
           if (res.code == '000') {
             let tabData = [];
             res.rows.list.forEach(item => {
+              let str = '',
+                arr = item.opt_auth.split(",");
+
+              let strs = [];
+
+              arr.forEach(id => {
+                if (scMap[id]) {
+                  strs.push(scMap[id]);
+                }
+              })
+
+              str = strs.join(",");
+
+              if (arr.length != strs.length) {
+                str += '（部分该用户管理院校已失效）';
+              }
+
               let one = {
                 id: item.id,
                 name: item.username,
                 role: item.type_id,
                 roleName: item.type_name,
                 phone: item.phone,
-                power: item.opt_auth
+                power: item.opt_auth,
+                schools: str
               }
 
               tabData.push(one);
@@ -241,7 +261,7 @@
                 , { field: 'name', title: '姓名', width: "10%", minWidth: 120 }
                 , { field: 'phone', title: '号码', width: "20%", minWidth: 240 }
                 , { field: 'roleName', title: '角色', width: "20%", minWidth: 120 }
-                , { field: 'power', title: '管理院校', width: "40%", minWidth: 600 }
+                , { field: 'schools', title: '管理院校', width: "40%", minWidth: 600 }
               ]]
             });
 
@@ -253,7 +273,7 @@
               , layout: ['prev', 'page', 'next', 'count', 'skip']
               , jump: function (obj, first) {
                 //obj包含了当前分页的所有参数，比如：
-              
+
                 //首次不执行
                 if (!first) {
                   reloadTable(name, phone, String(obj.curr));
