@@ -1,3 +1,4 @@
+// 用户管理页面所需变量
 let user = {};
 
 let treeData1 = [],
@@ -7,10 +8,21 @@ let treeData1 = [],
     opt_auth = [],
     powerMap = {};
 
-
 let scMap = {};
 
 
+// 缴费模板页面所需变量
+let temp = {};
+
+let treeGr1 = [],
+    treeGr2 = [],
+    grChoose1 = [],
+    grChoose2 = [],
+    grades = [],
+    grMap = {};
+
+
+// 用户管理页面配置学校相关函数
 function getScTree() {
     layui.use(['dtree', 'layer', 'jquery'], function () {
         var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
@@ -46,7 +58,7 @@ function getScTree() {
                     checkbarFun: {
                         chooseDone: function (checkbarNodesParam) {
                             scChoose1 = checkbarNodesParam;
-                            console.log(scChoose1);
+
                             return;
                         }
                     },
@@ -61,7 +73,7 @@ function getScTree() {
                     checkbarFun: {
                         chooseDone: function (checkbarNodesParam) {
                             scChoose2 = checkbarNodesParam;
-                            console.log(scChoose2);
+
                             return;
                         }
                     },
@@ -73,36 +85,13 @@ function getScTree() {
     })
 }
 
-
-// num用来判断是那个页面的业务，从而对应正确接口
-// 一个是模板界面，一个是权限界面
-function bindCl(num) {
-    layui.use(['dtree', 'layer', 'jquery'], function () {
-        var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
-
-        var param = dtree.getCheckbarNodesParam("cskTree1");  // 获取选中数据
-        if (param.length == 0) {
-            layer.msg("请至少选择一个节点");
-        }
-
-        param.forEach(item => {
-            if (item.parentId == "undefined") {
-                item.parentId = '-1';
-            }
-        })
-
-        dtree.reload("cskTree2", { data: param });
-
-    })
-}
-
 function configUserPower() {
     layui.use(['dtree', 'layer', 'jquery'], async function () {
         var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
 
 
         scChoose1.forEach(item => {
-            if (!powerMap[item.nodeId]) {
+            if (powerMap[item.nodeId] === undefined) {
                 let one = {
                     id: item.nodeId,
                     title: item.context,
@@ -139,7 +128,6 @@ function configUserPower() {
         }
     })
 }
-
 
 function deleteUserPower() {
     layui.use(['dtree', 'layer', 'jquery'], async function () {
@@ -182,9 +170,9 @@ function deleteUserPower() {
     })
 }
 
-
 function setTree2(arr) {
-    let map = {}, treeData2 = [];
+    let map = {}; 
+    treeData2 = [];
     powerMap = {};
 
     arr.forEach(item => {
@@ -220,7 +208,6 @@ function setTree2(arr) {
     })
 }
 
-
 function changePower() {
 
     let reqData = {
@@ -234,6 +221,212 @@ function changePower() {
     return new Promise((resolve, reject) => {
         console.log(reqData)
         api.user.change(reqData, (res) => {
+            setTimeout(() => {
+                reloadTable();
+            }, 500)
+
+            resolve(res);
+        })
+    })
+}
+
+
+
+// 缴费模板页面配置班级相关函数
+function getGrTree() {
+    treeGr1 = [
+        {
+            id: "G1",
+            title: "高一年级",
+            parentId: '0',
+            checkArr: '0'
+        },
+        {
+            id: "G2",
+            title: "高二年级",
+            parentId: '0',
+            checkArr: '0'
+        },
+        {
+            id: "G3",
+            title: "高三年级",
+            parentId: '0',
+            checkArr: '0'
+        },
+    ];
+
+    layui.use(['dtree', 'layer', 'jquery'], function () {
+        var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
+
+        dtree.render({
+            elem: "#cskTree1",
+            data: treeGr1, // 使用data加载
+            checkbar: true,
+            checkbarType: "no-all",
+            checkbarFun: {
+                chooseDone: function (checkbarNodesParam) {
+                    grChoose1 = checkbarNodesParam;
+
+                    return;
+                }
+            },
+        });
+
+
+        dtree.render({
+            elem: "#cskTree2",
+            data: [], // 使用data加载
+            checkbar: true,
+            checkbarType: "no-all",
+            checkbarFun: {
+                chooseDone: function (checkbarNodesParam) {
+                    grChoose2 = checkbarNodesParam;
+
+                    return;
+                }
+            },
+        });
+    })
+}
+
+function congfigTemGr() {
+    layui.use(['dtree', 'layer', 'jquery'], async function () {
+        var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
+
+        
+        grChoose1.forEach(item => {
+            if (grMap[item.nodeId] === undefined) {
+                let one = {
+                    id: item.nodeId,
+                    title: item.context,
+                    parentId: '0',
+                    checkArr: '0'
+                }
+
+                treeGr2.push(one);
+                grades.push(item.nodeId);
+
+                grMap[item.nodeId] = treeGr2.length - 1;
+            }
+        })
+
+        // 发送请求
+        let res = await changeGr();
+
+        if (res.code === '000') {
+            dtree.render({
+                elem: "#cskTree2",
+                data: treeGr2, // 使用data加载
+                checkbar: true,
+                checkbarType: "no-all",
+                checkbarFun: {
+                    chooseDone: function (checkbarNodesParam) {
+                        scChoose2 = checkbarNodesParam;
+                        console.log(scChoose2);
+                        return;
+                    }
+                },
+            });
+        } else {
+            layer.msg(res.msg);
+        }
+    })
+}
+
+function deleteTemGr() {
+    layui.use(['dtree', 'layer', 'jquery'], async function () {
+        var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
+
+        grChoose2.forEach(item => {
+            let index = grMap[item.nodeId];
+            treeGr2[index] = -1;
+            grades[index] = -1;
+        })
+
+        treeGr2 = treeGr2.filter(item => {
+            return item != -1;
+        })
+
+        grades = grades.filter(item => {
+            return item != -1;
+        })
+
+
+        // 发送请求
+        let res = await changeGr();
+
+        if (res.code === '000') {
+            dtree.render({
+                elem: "#cskTree2",
+                data: treeGr2, // 使用data加载
+                checkbar: true,
+                checkbarType: "no-all",
+                checkbarFun: {
+                    chooseDone: function (checkbarNodesParam) {
+                        grChoose2 = checkbarNodesParam;
+                        console.log(scChoose2);
+                        return;
+                    }
+                },
+            });
+        } else {
+            layer.msg(res.msg);
+        }
+    })
+}
+
+function setGr2(arr) {
+    let map = {};
+    treeGr2 = [];
+    grMap = {};
+
+    arr.forEach(item => {
+        map[item] = 1;
+    })
+
+    treeGr1.forEach(item => {
+        if (map[item.id]) {
+            treeGr2.push(item);
+            grades.push(item.id);
+
+            grMap[item.id] = treeGr2.length - 1;
+        }
+    })
+
+
+    layui.use(['dtree', 'layer', 'jquery'], function () {
+        var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
+
+        dtree.render({
+            elem: "#cskTree2",
+            data: treeGr2, // 使用data加载
+            checkbar: true,
+            checkbarType: "no-all",
+            checkbarFun: {
+                chooseDone: function (checkbarNodesParam) {
+                    grChoose2 = checkbarNodesParam;
+                    console.log(grChoose2);
+                    return;
+                }
+            },
+        });
+
+    })
+}
+
+function changeGr() {
+    let reqData = {
+        id: temp.id,
+        school_id: temp.school,
+        grade_no: grades.length > 0? grades:'',
+        item_no: temp.templateNo,
+        item_name: temp.name,
+        amt: temp.sum,
+        remark: temp.detail
+    }
+
+    return new Promise((resolve, reject) => {
+        api.template.change(reqData, (res) => {
             setTimeout(() => {
                 reloadTable();
             }, 500)

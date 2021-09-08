@@ -5,7 +5,6 @@ let dld = document.getElementById("dialog-detail-fuc-box");
 let dls = document.getElementById("dialog-set-detail-box");
 let ma = document.getElementsByClassName("main-article")[0];
 
-const bb = document.getElementById("bindBt");
 const db = document.getElementById("detailBt");
 
 let detailDataTo = -1;
@@ -17,36 +16,6 @@ dlb.addEventListener("click", function (e) {
 dla.addEventListener("click", function (e) {
     e.stopPropagation();
 })
-
-if (bb) {
-    bb.addEventListener("click", function () {
-        let checkStatus = {},
-            validate = false;
-        layui.use(['layer', 'table'], function () {
-            var layer = layui.layer;
-            var table = layui.table;
-
-            checkStatus = table.checkStatus('idTest')
-
-            if (checkStatus.data.length < 1) {
-                layer.msg('请至少选择一个模板');
-                return;
-            } else if (checkStatus.data.length > 1) {
-                layer.msg('每次只能配置一个模板');
-                return;
-            }
-            validate = true;
-        })
-        if (validate) {
-            dlb.style.display = 'flex';
-            ma.style.overflow = 'hidden';
-            for (let i = 0; i < dla.children.length; i++) {
-                dla.children[i].style.display = 'none';
-            }
-            dlt.style.display = 'flex';
-        }
-    });
-}
 
 if (db) {
     db.addEventListener("click", function () {
@@ -192,11 +161,48 @@ function handleConfigUserPower() {
 
     if (validate) {
         user = checkStatus.data[0];
-        console.log(user);
-        if(user.power) {
+
+        if (user.power) {
             setTree2(user.power.split(','));
         }
 
+
+        dlb.style.display = 'flex';
+        ma.style.overflow = 'hidden';
+        for (let i = 0; i < dla.children.length; i++) {
+            dla.children[i].style.display = 'none';
+        }
+        dlt.style.display = 'flex';
+    }
+}
+
+
+function handleConfigTemGr() {
+    let checkStatus = {},
+        validate = false;
+    layui.use(['layer', 'table'], function () {
+        var layer = layui.layer;
+        var table = layui.table;
+
+        checkStatus = table.checkStatus('idTest')
+
+        if (checkStatus.data.length < 1) {
+            layer.msg('请至少选择一个模板');
+            return;
+        } else if (checkStatus.data.length > 1) {
+            layer.msg('每次只能配置一个模板');
+            return;
+        }
+        validate = true;
+    })
+    if (validate) {
+        temp = checkStatus.data[0];
+
+        console.log(temp);
+
+        if (temp.grade) {
+            setGr2(temp.grade.split(','));
+        }
 
         dlb.style.display = 'flex';
         ma.style.overflow = 'hidden';
