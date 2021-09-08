@@ -8,63 +8,65 @@ let treeData1 = [],
     powerMap = {};
 
 
-layui.use(['dtree', 'layer', 'jquery'], function () {
-    var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
+function getScTree() {
+    layui.use(['dtree', 'layer', 'jquery'], function () {
+        var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
 
-    let reqData = {
-        schoolname: '',
-        areaid: '',
-        page: '1',
-        epage: '100'
-    }
-
-    api.school.getList(reqData, (res) => {
-        if (res.code === '000') {
-
-            res.rows.list.forEach(item => {
-                let one = {
-                    id: item.id,
-                    title: item.schoolname,
-                    parentId: '0',
-                    checkArr: '0'
-                }
-
-                treeData1.push(one);
-            })
-
-            dtree.render({
-                elem: "#cskTree1",
-                data: treeData1, // 使用data加载
-                checkbar: true,
-                checkbarType: "no-all",
-                checkbarFun: {
-                    chooseDone: function (checkbarNodesParam) {
-                        scChoose1 = checkbarNodesParam;
-                        console.log(scChoose1);
-                        return;
-                    }
-                },
-            });
-
-
-            dtree.render({
-                elem: "#cskTree2",
-                data: [], // 使用data加载
-                checkbar: true,
-                checkbarType: "no-all",
-                checkbarFun: {
-                    chooseDone: function (checkbarNodesParam) {
-                        scChoose2 = checkbarNodesParam;
-                        console.log(scChoose2);
-                        return;
-                    }
-                },
-            });
-        } else {
-            layer.msg(res.msg);
+        let reqData = {
+            schoolname: '',
+            areaid: '',
+            page: '1',
+            epage: '100'
         }
+
+        api.school.getList(reqData, (res) => {
+            if (res.code === '000') {
+
+                res.rows.list.forEach(item => {
+                    let one = {
+                        id: item.id,
+                        title: item.schoolname,
+                        parentId: '0',
+                        checkArr: '0'
+                    }
+
+                    treeData1.push(one);
+                })
+
+                dtree.render({
+                    elem: "#cskTree1",
+                    data: treeData1, // 使用data加载
+                    checkbar: true,
+                    checkbarType: "no-all",
+                    checkbarFun: {
+                        chooseDone: function (checkbarNodesParam) {
+                            scChoose1 = checkbarNodesParam;
+                            console.log(scChoose1);
+                            return;
+                        }
+                    },
+                });
+
+
+                dtree.render({
+                    elem: "#cskTree2",
+                    data: [], // 使用data加载
+                    checkbar: true,
+                    checkbarType: "no-all",
+                    checkbarFun: {
+                        chooseDone: function (checkbarNodesParam) {
+                            scChoose2 = checkbarNodesParam;
+                            console.log(scChoose2);
+                            return;
+                        }
+                    },
+                });
+            } else {
+                layer.msg(res.msg);
+            }
+        })
     })
-})
+}
 
 
 // num用来判断是那个页面的业务，从而对应正确接口
@@ -90,7 +92,7 @@ function bindCl(num) {
 }
 
 function configUserPower() {
-    layui.use(['dtree', 'layer', 'jquery'],async function () {
+    layui.use(['dtree', 'layer', 'jquery'], async function () {
         var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
 
 
@@ -135,7 +137,7 @@ function configUserPower() {
 
 
 function deleteUserPower() {
-    layui.use(['dtree', 'layer', 'jquery'],async function () {
+    layui.use(['dtree', 'layer', 'jquery'], async function () {
         var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
 
         scChoose2.forEach(item => {
@@ -221,13 +223,13 @@ function changePower() {
         username: user.name,
         type_id: user.role,
         phone: user.phone,
-        opt_auth: opt_auth.length > 0 ? opt_auth:''
+        opt_auth: opt_auth.length > 0 ? opt_auth : ''
     }
 
     return new Promise((resolve, reject) => {
         console.log(reqData)
         api.user.change(reqData, (res) => {
-            setTimeout(()=>{
+            setTimeout(() => {
                 reloadTable();
             }, 500)
 
