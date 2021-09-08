@@ -12,6 +12,9 @@ layui.use(['upload', 'layer'], function () {
       , done: function (res) {
         //上传完毕回调
         layer.msg(res.msg);
+        setTimeout(()=>{
+          reloadTable()
+        }, 500);
       }
       , error: function () {
         //请求异常回调

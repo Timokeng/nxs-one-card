@@ -34,7 +34,7 @@ function login() {
             sessionStorage.setItem('sid', res.result.sid);
             sessionStorage.setItem('typeid', res.result.type_id);
 
-            window.location = '/nxs-one-card/src/views/index.html'
+            window.location = '/rcc/views/index.html'
         } else {
             msg(res.msg);
         }

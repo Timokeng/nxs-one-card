@@ -173,8 +173,8 @@
           <div class="layui-form-item input-box">
             <label class="layui-form-label">性别</label>
             <div class="layui-input-block">
-              <input type="radio" name="sex" value="1" title="男">
-              <input type="radio" name="sex" value="0" title="女" checked>
+              <input type="radio" name="sex" value="0" title="男">
+              <input type="radio" name="sex" value="1" title="女">
             </div>
           </div>
           <div class="layui-form-item input-box">
@@ -466,7 +466,7 @@
           class: clMap[changeInfo.class].name,
           name: changeInfo.name,
           idnumber: changeInfo.pid,
-          sex: changeInfo.sex
+          sex: changeInfo.sex == '男' ? '1':'0'
         }
 
         api.student.change(reqData, (res) => {
@@ -512,7 +512,7 @@
               let one = {
                 id: item.id,
                 name: item.name,
-                sex: item.sex == '0' ? '女' : '男',
+                sex: item.sex == '1' ? '女' : '男',
                 schoolname: item.schoolname,
                 classname: item.class,
                 gradename: item.grade,
