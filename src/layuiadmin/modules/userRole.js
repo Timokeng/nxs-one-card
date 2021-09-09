@@ -20,9 +20,12 @@ if (!sessionStorage.getItem("sid")) {
     })
 }
 
-function goLogin(from) {
+function goLogin() {
     sessionStorage.clear();
-    if(!from){
+
+    let str = window.location.href;
+    
+    if(str.indexOf('/views/index.html' >= 0)) {
         window.location = './user/login2.html';
     } else {
         window.location = '../user/login2.html';
