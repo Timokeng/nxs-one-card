@@ -99,8 +99,8 @@ function searchLi() {
 
         let t1 = data.start, t2 = data.end;
 
-        t1 = Math.floor((new Date(t1).getTime()) / 100);
-        t2 = Math.floor((new Date(t2).getTime()) / 100);
+        t1 = Math.floor((new Date(t1).getTime()) / 1000);
+        t2 = Math.floor((new Date(t2).getTime()) / 1000);
 
         if(t1 >= t2) {
             layer.msg("开始时间必须在结束时间之前");

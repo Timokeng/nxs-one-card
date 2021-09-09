@@ -184,8 +184,8 @@ function exportLi() {
     let cd = form.val("exportForm");
     let school = classData.length > 0 ? classData[0].nodeId : '';
 
-    let t1 = cd.start ? Math.floor((new Date(cd.start).getTime()) / 100):'',
-        t2 = cd.end ? Math.floor((new Date(cd.end).getTime()) / 100):'';
+    let t1 = cd.start ? Math.floor((new Date(cd.start).getTime()) / 1000):'',
+        t2 = cd.end ? Math.floor((new Date(cd.end).getTime()) / 1000):'';
 
     if(t1 >= t2 && t2) {
       layer.msg("开始时间必须在结束时间之前");
