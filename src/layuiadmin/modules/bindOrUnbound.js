@@ -118,7 +118,7 @@ function configUserPower() {
                 checkbarFun: {
                     chooseDone: function (checkbarNodesParam) {
                         scChoose2 = checkbarNodesParam;
-                        console.log(scChoose2);
+
                         return;
                     }
                 },
@@ -137,6 +137,7 @@ function deleteUserPower() {
             let index = powerMap[item.nodeId];
             treeData2[index] = -1;
             opt_auth[index] = -1;
+            powerMap[item.nodeId] = undefined;
         })
 
         treeData2 = treeData2.filter(item => {
@@ -159,7 +160,7 @@ function deleteUserPower() {
                 checkbarFun: {
                     chooseDone: function (checkbarNodesParam) {
                         scChoose2 = checkbarNodesParam;
-                        console.log(scChoose2);
+
                         return;
                     }
                 },
@@ -172,15 +173,17 @@ function deleteUserPower() {
 
 function setTree2(arr) {
     let map = {}; 
+
     treeData2 = [];
     powerMap = {};
+    opt_auth = [];
 
     arr.forEach(item => {
         map[item] = 1;
     })
 
     treeData1.forEach(item => {
-        if (map[item.id]) {
+        if (map[item.id] !== undefined) {
             treeData2.push(item);
             opt_auth.push(item.id);
 
@@ -199,7 +202,7 @@ function setTree2(arr) {
             checkbarFun: {
                 chooseDone: function (checkbarNodesParam) {
                     scChoose2 = checkbarNodesParam;
-                    console.log(scChoose2);
+
                     return;
                 }
             },
@@ -219,7 +222,6 @@ function changePower() {
     }
 
     return new Promise((resolve, reject) => {
-        console.log(reqData)
         api.user.change(reqData, (res) => {
             setTimeout(() => {
                 reloadTable();
@@ -322,7 +324,7 @@ function congfigTemGr() {
                 checkbarFun: {
                     chooseDone: function (checkbarNodesParam) {
                         scChoose2 = checkbarNodesParam;
-                        console.log(scChoose2);
+
                         return;
                     }
                 },
@@ -341,6 +343,7 @@ function deleteTemGr() {
             let index = grMap[item.nodeId];
             treeGr2[index] = -1;
             grades[index] = -1;
+            grMap[item.nodeId] = undefined;
         })
 
         treeGr2 = treeGr2.filter(item => {
@@ -364,7 +367,7 @@ function deleteTemGr() {
                 checkbarFun: {
                     chooseDone: function (checkbarNodesParam) {
                         grChoose2 = checkbarNodesParam;
-                        console.log(scChoose2);
+
                         return;
                     }
                 },
@@ -379,6 +382,7 @@ function setGr2(arr) {
     let map = {};
     treeGr2 = [];
     grMap = {};
+    grades = [];
 
     arr.forEach(item => {
         map[item] = 1;
@@ -405,7 +409,7 @@ function setGr2(arr) {
             checkbarFun: {
                 chooseDone: function (checkbarNodesParam) {
                     grChoose2 = checkbarNodesParam;
-                    console.log(grChoose2);
+
                     return;
                 }
             },

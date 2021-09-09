@@ -149,6 +149,13 @@ function handleConfigUserPower() {
 
         checkStatus = table.checkStatus('idTest')
 
+        console.log()
+
+        if(checkStatus.data[0].role == '1') {
+            layer.msg('超级管理员默认拥有所有学校权限，不需配置');
+            return;
+        }
+
         if (checkStatus.data.length < 1) {
             layer.msg('请至少选择一个用户');
             return;

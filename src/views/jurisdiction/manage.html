@@ -221,20 +221,24 @@
             let tabData = [];
             res.rows.list.forEach(item => {
               let str = '',
-                arr = item.opt_auth.split(",");
+                  arr = item.opt_auth.length > 0?  item.opt_auth.split(","):[];
 
               let strs = [];
 
-              arr.forEach(id => {
-                if (scMap[id]) {
-                  strs.push(scMap[id]);
+              if (item.type_id == '1') {
+                str = '全部学校'
+              } else {
+                arr.forEach(id => {
+                  if (scMap[id]) {
+                    strs.push(scMap[id]);
+                  }
+                })
+
+                str = strs.join(",");
+
+                if (arr.length > strs.length) {
+                  str += '（部分该用户管理院校已失效）';
                 }
-              })
-
-              str = strs.join(",");
-
-              if (arr.length != strs.length) {
-                str += '（部分该用户管理院校已失效）';
               }
 
               let one = {

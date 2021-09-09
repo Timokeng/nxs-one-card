@@ -41,9 +41,7 @@ var navTreeData2 = [];
 var navsId = [];
 var navs = '';
 
-layui.extend({
-    dtree: 'style/dtree/dtree'
-}).use(['dtree', 'layer', 'jquery'], function () {
+layui.use(['dtree', 'layer', 'jquery'], function () {
     var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
 
     var Tree1 = dtree.render({

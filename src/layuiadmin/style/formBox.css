@@ -31,6 +31,10 @@
     max-height:140px;
 }
 
+.form-box .layui-anim.layui-anim-upbit {
+    z-index: 999;
+}
+
 .btn-box {
     display: flex;
     justify-content: flex-end;
