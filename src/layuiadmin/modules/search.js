@@ -3,7 +3,11 @@ let cdb = document.getElementById("condition");
 var classData = [];
 
 sbt.addEventListener("click", function () {
-    cdb.style.display = 'block'
+    cdb.style.display = 'block';
+
+    if(sbt.innerHTML.indexOf("缴费记录") >= 0) {
+        ecb.style.display = 'none';
+    }
 });
 
 function searchSt() {
@@ -93,20 +97,19 @@ function searchLi() {
 
         let data = form.val("conditionForm");
 
-        // 处理性别数据（暂时不需要了）
-        // if(data.woman && data.man) {
-        //     conditionData.sex = "all"
-        // } else if (data.woman) {
-        //     conditionData.sex = "woman"
-        // } else if (data.man) {
-        //     conditionData.sex = "man"
-        // } else {
-        //     conditionData.sex = "all"
-        // }
+        let t1 = data.start, t2 = data.end;
 
-        // 处理学校、年级、班级数据
+        t1 = Math.floor((new Date(t1).getTime()) / 100);
+        t2 = Math.floor((new Date(t2).getTime()) / 100);
+
+        if(t1 >= t2) {
+            layer.msg("开始时间必须在结束时间之前");
+            return;
+        }
+
+        let school_id = classData.length > 0? classData[0].nodeId:'';
         
-        reloadTable(data.order_id, data.name, classData[0].nodeId, data.pid);
+        reloadTable(data.order_id, data.name, school_id, data.pid, t1, t2);
 
     });
 

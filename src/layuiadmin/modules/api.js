@@ -98,6 +98,7 @@ const api = {
     list: {
         getList: (data, suc) => req.post(baseUrl + '/pay_orderApi/orderList', suc, data),
         getDetail: (data, suc) => req.post(baseUrl + '/pay_orderApi/getoderDetailsByOrderid', suc, data),
+        export: (data, suc) => req.post(baseUrl + '/pay_orderApi/export_order', suc, data),
     },
     student: {
         add: (data, suc) => req.post(baseUrl + '/studentsApi/studentsAdd', suc, data),

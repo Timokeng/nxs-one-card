@@ -35,7 +35,7 @@
                     <button id="searchBt" class="layui-btn"><i class="layui-icon layui-icon-search"></i>查找缴费记录</button>
                     <button class="layui-btn" onclick="handlePaymentDetail()"><i
                             class="layui-icon layui-icon-list"></i>查看缴费明细</button>
-                    <button onclick="exportLi()" class="layui-btn"><i
+                    <button onclick="handleExportLi()" class="layui-btn"><i
                             class="layui-icon layui-icon-export"></i>导出缴费记录</button>
                     <button onclick="sub.style.display = 'block'" class="layui-btn"><i
                             class="layui-icon layui-icon-cols"></i>打开下载列表</button>
@@ -59,40 +59,75 @@
                             <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
                         </div>
                     </div>
-                    <!-- <div class="layui-form-item input-box">
-                        <label class="layui-form-label">性别</label>
-                        <div class="layui-input-block">
-                            <input type="checkbox" name="man" title="男">
-                            <input type="checkbox" name="woman" title="女">
-                        </div>
-                    </div> -->
                     <div class="layui-form-item input-box">
                         <label class="layui-form-label">身份证号</label>
                         <div class="layui-input-block">
                             <input type="text" name="pid" placeholder="请输入" autocomplete="off" class="layui-input">
                         </div>
                     </div>
-                    <!-- <div class="layui-form-item input-box">
-                        <label class="layui-form-label">费用名称</label>
+                    <div class="layui-form-item input-box">
+                        <label class="layui-form-label">开始时间</label>
                         <div class="layui-input-block">
-                            <input type="text" name="project" placeholder="请输入" autocomplete="off" class="layui-input">
-                        </div>
-                    </div> -->
-                    <!-- <div class="layui-form-item input-box">
-                        <label class="layui-form-label">金额</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="sum" placeholder="请输入" autocomplete="off" class="layui-input">
+                            <input id="starttime" type="text" name="start" placeholder="数据格式:xx-xx-xx" autocomplete="off"
+                                class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item input-box">
-                        <label class="layui-form-label">日期</label>
+                        <label class="layui-form-label">结束时间</label>
                         <div class="layui-input-block">
-                            <input id="date" type="text" name="date" placeholder="数据格式:xx-xx-xx" autocomplete="off"
+                            <input id="endtime" type="text" name="end" placeholder="数据格式:xx-xx-xx" autocomplete="off"
                                 class="layui-input">
                         </div>
-                    </div> -->
+                    </div>
+                    <div class="layui-form-item input-box hint">
+                        请在左侧机构树选择查询范围
+                    </div>
                 </div>
                 <div class="btn-box"><button class="layui-btn" onclick="searchLi()">确定</button></div>
+            </div>
+            <div class="condition-box layui-anim layui-anim-scale" id="exportConditin">
+                <div class="header">
+                    <div>导出列表筛选条件</div>
+                    <div onclick="cdb.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
+                </div>
+                <div class="form-box layui-form" lay-filter="exportForm">
+                    <div class="layui-form-item input-box">
+                        <label class="layui-form-label">订单ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="order_id" placeholder="请输入" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item input-box">
+                        <label class="layui-form-label">姓名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item input-box">
+                        <label class="layui-form-label">身份证号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="pid" placeholder="请输入" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item input-box">
+                        <label class="layui-form-label">开始时间</label>
+                        <div class="layui-input-block">
+                            <input id="starttime2" type="text" name="start" placeholder="数据格式:xx-xx-xx" autocomplete="off"
+                                class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item input-box">
+                        <label class="layui-form-label">结束时间</label>
+                        <div class="layui-input-block">
+                            <input id="endtime2" type="text" name="end" placeholder="数据格式:xx-xx-xx" autocomplete="off"
+                                class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item input-box hint">
+                        请在左侧机构树选择查询范围
+                    </div>
+                </div>
+                <div class="btn-box"><button class="layui-btn" onclick="exportLi()">确定</button></div>
             </div>
             <div class="table-box">
                 <div class="header">缴费记录</div>
@@ -173,9 +208,23 @@
             var laydate = layui.laydate;
 
             laydate.render({
-                elem: '#date', //指定元素
-                type: 'date',
-                min: 0,
+                elem: '#starttime', //指定元素
+                type: 'datetime',
+            });
+
+            laydate.render({
+                elem: '#endtime', //指定元素
+                type: 'datetime',
+            });
+
+            laydate.render({
+                elem: '#starttime2', //指定元素
+                type: 'datetime',
+            });
+
+            laydate.render({
+                elem: '#endtime2', //指定元素
+                type: 'datetime',
             });
         });
         // --------------------日期与时间选择器（结束）------------------------
@@ -183,13 +232,15 @@
 
         // --------------------部分独立方法-----------------------
         //  刷新table
-        function reloadTable(order_id = '', name = '', school_id = '', idnumber = '', page = '1') {
+        function reloadTable(order_id = '', name = '', school_id = '', idnumber = '', t1, t2, page = '1') {
 
             let reqData = {
                 order_id,
                 name,
                 school_id,
                 idnumber,
+                stime: t1,
+                etime: t2,
                 page,
                 epage: '10'
             }
@@ -248,7 +299,7 @@
 
                                 //首次不执行
                                 if (!first) {
-                                    reloadTable(order_id, name, school_id, idnumber, String(obj.curr));
+                                    reloadTable(order_id, name, school_id, idnumber, t1, t2, String(obj.curr));
                                 }
                             }
                         });
@@ -268,7 +319,7 @@
                 epage: '100'
             }
 
-            api.school.getList(reqData , (res) => {
+            api.school.getList(reqData, (res) => {
 
                 let treeData = [];
 

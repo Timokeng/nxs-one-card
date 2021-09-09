@@ -120,8 +120,8 @@ function handlePaymentDetail() {
                         , cols: [[ //表头
                             // { checkbox: true, width: "5%" }
                             { field: 'id', title: 'ID', width: "10%", minWidth: 60 }
-                            , { field: 'item_name', title: '姓名', width: "30%", minWidth: 60 }
-                            , { field: 'item_id', title: '身份证号', width: "30%", minWidth: 200 }
+                            , { field: 'item_name', title: '缴费模板', width: "30%", minWidth: 60 }
+                            , { field: 'item_id', title: '缴费模板ID', width: "30%", minWidth: 200 }
                             , { field: 'amt', title: '金额', width: "30%", minWidth: 200 }
                         ]]
                     });
