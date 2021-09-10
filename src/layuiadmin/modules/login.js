@@ -1,18 +1,25 @@
+let timeout = undefined;
+
 function getCode() {
     let phone = document.getElementById('phone').value;
+    let dom = document.getElementById("getCode");
+
+    if(timeout) {
+        msg('每次发送验证码虚间隔60S');
+        return;
+    }
 
     if (Number(phone) == NaN || phone.length != 11) {
         msg("请输入有效手机号");
         return;
     }
 
-    // layui.use("jquery",function(){
-    //     var $ = layui.$;
-    //     $.post('http://192.168.1.18/rcc_pay/commonApi/sendSms', {
-    //         phone:phone
-    //     }, function (data) {
-    //             }, "json");
-    // })
+    dom.className = 'layui-btn getCode disabled';
+    
+    timeout = setTimeout(()=>{
+        dom.className = 'layui-btn getCode';
+        timeout = null;
+    }, 60000)
 
     api.getCode({phone}, function(res) {
         if(res.code == "000") {

@@ -58,6 +58,10 @@
 			<div class="layadmin-user-login-main">
 
 				<div class=" layui-tab">
+					<ul class="flex_center layui-tab-title">
+						<li class="layui-this">账号密码登录</li>
+						<li>扫码登录</li>
+					</ul>
 					<div class="layui-tab-content">
 						<div class="layui-tab-item layui-show">
 							<div class="layadmin-user-login-box layadmin-user-login-body layui-form">
@@ -80,7 +84,8 @@
 									<!--<label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>-->
 									<input type="password" name="password" id="LAY-user-login-password"
 										lay-verify="required" placeholder="短信验证码" class="layui-input" maxlength="20">
-									<button class="layui-btn layui-btn- getCode" id="getCode" onclick="getCode()">获取验证码</button>
+									<button class="layui-btn getCode" id="getCode"
+										onclick="getCode()">获取验证码</button>
 								</div>
 
 
@@ -95,28 +100,29 @@
 
 							</div>
 						</div>
-						<!-- <div class="layui-tab-item">
-								<div class="layadmin-user-login-box layadmin-user-login-body layui-form">
-									<div class="tips">
-										请使用微信小程序/公众号扫下方二维码，扫码后在手机上点击“确认授权”即可
-									</div>
-									<div class="layui-form-item">
-										<div class="qrcode center">
-											<div class="mask">
-												<i class="layui-icon layui-icon-ok-circle "></i> </div>
-											<img src="../../layuiadmin/img/qrcode.jpg" class="qrcodeImg" />
+						<div class="layui-tab-item">
+							<div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+								<div class="tips">
+									请使用微信小程序/公众号扫下方二维码，扫码后在手机上点击“确认授权”即可
+								</div>
+								<div class="layui-form-item">
+									<div class="qrcode center">
+										<div class="mask">
+											<i class="layui-icon layui-icon-ok-circle "></i>
 										</div>
+										<img src="../../layuiadmin/img/qrcode.jpg" class="qrcodeImg" />
 									</div>
 								</div>
-								<div class="layui-form-item center btnCon">
-									<button type="button" class="layui-btn layui-btn-radius refreshCode">
-								<span class="refreshBtn">点击刷新二维码</span>
-								<span class="loadingBtn"> <i
-										class="layui-icon layui-icon-loading  layui-anim layui-anim-rotate layui-anim-loop"></i>
-									刷新中</span>
-							</button>
-								</div>
-							</div> -->
+							</div>
+							<div class="layui-form-item center btnCon">
+								<button type="button" class="layui-btn layui-btn-radius refreshCode">
+									<span class="refreshBtn">点击刷新二维码</span>
+									<span class="loadingBtn"> <i
+											class="layui-icon layui-icon-loading  layui-anim layui-anim-rotate layui-anim-loop"></i>
+										刷新中</span>
+								</button>
+							</div>
+						</div>
 					</div>
 				</div>
 
@@ -179,14 +185,14 @@
 
 			// });
 
-			// $(".refreshBtn").on("click", function() {
-			// 	$(".loadingBtn").css("display", "block")
-			// 	$(".refreshBtn").css("display", "none");
-			// 	setTimeout(function() {
-			// 		$(".refreshBtn").css("display", "block");
-			// 		$(".loadingBtn").css("display", "none")
-			// 	}, 1000)
-			// })
+			$(".refreshBtn").on("click", function () {
+				$(".loadingBtn").css("display", "block")
+				$(".refreshBtn").css("display", "none");
+				setTimeout(function () {
+					$(".refreshBtn").css("display", "block");
+					$(".loadingBtn").css("display", "none")
+				}, 1000)
+			})
 
 			let div = $(".back-wrap")
 			let video = $("#login_bgVideo")[0];

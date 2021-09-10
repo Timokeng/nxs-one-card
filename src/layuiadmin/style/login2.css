@@ -155,8 +155,8 @@ body,
 
 .layui-tab-content {
 	background-color: #fff;
-	border-radius: 10px;
-	height: 300px;
+	border-radius: 0 0 10px 10px;
+	height: 320px;
 	padding: 20px 0;
 	width: 400px;
 }
@@ -258,6 +258,10 @@ body,
 	background: linear-gradient(to right, #2482D3, #2EAAFB);
 	bottom: 10px;
 	right: 10px;
+}
+
+.layui-form-item button.getCode.disabled {
+	background: rgb(170, 168, 168);
 }
 
 .layadmin-user-login-codeimg {
