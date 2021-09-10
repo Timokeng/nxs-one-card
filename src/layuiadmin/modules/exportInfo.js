@@ -1,5 +1,4 @@
 let sub = document.getElementById("sideUpload");
-let ecb = document.getElementById("exportConditin");
 
 let timeout = null;
 
@@ -181,7 +180,7 @@ function exportLi() {
       form = layui.form;
 
 
-    let cd = form.val("exportForm");
+    let cd = form.val("conditionForm");
     let school = classData.length > 0 ? classData[0].nodeId : '';
 
     let t1 = cd.start ? Math.floor((new Date(cd.start).getTime()) / 1000):'',

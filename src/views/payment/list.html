@@ -29,19 +29,7 @@
             </div>
         </div>
         <div class="right">
-            <div class="func-box">
-                <div class="header">操作</div>
-                <div class="article">
-                    <button id="searchBt" class="layui-btn"><i class="layui-icon layui-icon-search"></i>查找缴费记录</button>
-                    <button class="layui-btn" onclick="handlePaymentDetail()"><i
-                            class="layui-icon layui-icon-list"></i>查看缴费明细</button>
-                    <button onclick="handleExportLi()" class="layui-btn"><i
-                            class="layui-icon layui-icon-export"></i>导出缴费记录</button>
-                    <button onclick="sub.style.display = 'block'" class="layui-btn"><i
-                            class="layui-icon layui-icon-cols"></i>打开下载列表</button>
-                </div>
-            </div>
-            <div class="condition-box layui-anim layui-anim-scale" id="condition">
+            <div class="condition-box layui-anim layui-anim-scale show" id="condition">
                 <div class="header">
                     <div>筛选条件</div>
                     <div onclick="cdb.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
@@ -83,54 +71,21 @@
                         请在左侧机构树选择查询范围
                     </div>
                 </div>
-                <div class="btn-box"><button class="layui-btn" onclick="searchLi()">确定</button></div>
-            </div>
-            <div class="condition-box layui-anim layui-anim-scale" id="exportConditin">
-                <div class="header">
-                    <div>导出列表筛选条件</div>
-                    <div onclick="ecb.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
+                <div class="btn-box">
+                    <button class="layui-btn" onclick="exportLi()"><i class="layui-icon layui-icon-export"></i>导出</button>
+                    <button class="layui-btn" onclick="searchLi()"><i class="layui-icon layui-icon-search"></i>搜索</button>
                 </div>
-                <div class="form-box layui-form" lay-filter="exportForm">
-                    <div class="layui-form-item input-box">
-                        <label class="layui-form-label">订单ID</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="order_id" placeholder="请输入" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item input-box">
-                        <label class="layui-form-label">姓名</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item input-box">
-                        <label class="layui-form-label">身份证号</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="pid" placeholder="请输入" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item input-box">
-                        <label class="layui-form-label">开始时间</label>
-                        <div class="layui-input-block">
-                            <input id="starttime2" type="text" name="start" placeholder="数据格式:xx-xx-xx"
-                                autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item input-box">
-                        <label class="layui-form-label">结束时间</label>
-                        <div class="layui-input-block">
-                            <input id="endtime2" type="text" name="end" placeholder="数据格式:xx-xx-xx" autocomplete="off"
-                                class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item input-box hint">
-                        请在左侧机构树选择查询范围
-                    </div>
-                </div>
-                <div class="btn-box"><button class="layui-btn" onclick="exportLi()">确定</button></div>
             </div>
             <div class="table-box">
-                <div class="header">缴费记录</div>
+                <div class="header">
+                    <div>缴费记录</div>
+                    <div>
+                        <button class="layui-btn" onclick="handlePaymentDetail()"><i
+                                class="layui-icon layui-icon-list"></i>查看缴费明细</button>
+                        <button onclick="sub.style.display = 'block'" class="layui-btn"><i
+                                class="layui-icon layui-icon-cols"></i>打开下载列表</button>
+                    </div>
+                </div>
                 <div class="article">
                     <table id="payment-list" lay-filter="test"></table>
                     <div id="page-box"></div>
@@ -193,10 +148,9 @@
                     , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
                     , { field: 'name', title: '姓名', width: "10%" }
                     , { field: 'pid', title: '身份证号', width: "20%" }
-                    , { field: 'schoolname', title: '学校', width: "10%" }
-                    , { field: 'order_id', title: '订单ID', width: "10%" }
-                    , { field: 'student_id', title: '学生ID', width: "10%" }
-                    , { field: 'openid', title: '缴费人公开ID', width: "15%" }
+                    , { field: 'schoolname', title: '学校', width: "15%" }
+                    , { field: 'order_id', title: '订单ID', width: "15%" }
+                    , { field: 'phone', title: '缴费人手机号', width: "15%" }
                     , { field: 'date', title: '日期', width: "15%" }
                 ]]
             });
@@ -214,16 +168,6 @@
 
             laydate.render({
                 elem: '#endtime', //指定元素
-                type: 'datetime',
-            });
-
-            laydate.render({
-                elem: '#starttime2', //指定元素
-                type: 'datetime',
-            });
-
-            laydate.render({
-                elem: '#endtime2', //指定元素
                 type: 'datetime',
             });
         });
@@ -262,8 +206,7 @@
                                 school: item.school_id,
                                 schoolname: item.schoolname,
                                 order_id: item.order_id,
-                                student_id: item.student_id,
-                                openid: item.openid,
+                                phone: item.phone,
                                 date: time
                             }
 
@@ -280,10 +223,9 @@
                                 , { field: 'id', title: 'ID', width: "5%", minWidth: 60 }
                                 , { field: 'name', title: '姓名', width: "10%" }
                                 , { field: 'pid', title: '身份证号', width: "20%" }
-                                , { field: 'schoolname', title: '学校', width: "10%" }
-                                , { field: 'order_id', title: '订单ID', width: "10%" }
-                                , { field: 'student_id', title: '学生ID', width: "10%" }
-                                , { field: 'openid', title: '缴费人公开ID', width: "15%" }
+                                , { field: 'schoolname', title: '学校', width: "15%" }
+                                , { field: 'order_id', title: '订单ID', width: "15%" }
+                                , { field: 'phone', title: '缴费人手机号', width: "15%" }
                                 , { field: 'date', title: '日期', width: "15%" }
                             ]]
                         });

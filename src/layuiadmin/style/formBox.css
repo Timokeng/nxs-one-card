@@ -44,6 +44,7 @@
 .header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 /* 删除确认框样式 */
@@ -60,6 +61,10 @@
     width: 100%;
     margin-bottom: 15px;
     display: none;
+}
+
+.show {
+    display: block;
 }
 
 .add-box {

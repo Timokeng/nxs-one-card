@@ -2,13 +2,11 @@ const sbt = document.getElementById("searchBt");
 let cdb = document.getElementById("condition");
 var classData = [];
 
-sbt.addEventListener("click", function () {
-    cdb.style.display = 'block';
-
-    if(sbt.innerHTML.indexOf("缴费记录") >= 0) {
-        ecb.style.display = 'none';
-    }
-});
+if(sbt) {
+    sbt.addEventListener("click", function () {
+        cdb.style.display = 'block';
+    });
+}
 
 function searchSt() {
     let conditionData = {};
