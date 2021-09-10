@@ -301,7 +301,7 @@ html{background-color: #f2f2f2; color: #666;}
 /* 待办事项 */
 .layadmin-backlog .layadmin-backlog-body{display: block; padding: 10px 15px; background-color: #f8f8f8; color: #999; border-radius: 2px; transition: all .3s; -webkit-transition: all .3s;}
 .layadmin-backlog-body h3{padding-bottom: 10px; font-size: 12px;}
-.layadmin-backlog-body p cite{font-style: normal; font-size: 30px; font-weight: 300; color: #AA3130;}
+.layadmin-backlog-body p cite{font-style: normal; font-size: 30px; font-weight: 300; color: #3195EA;}
 .layadmin-backlog-body:hover{background-color: #f2f2f2; color: #888;}
 
 /* 数据概览 */
@@ -326,7 +326,7 @@ html{background-color: #f2f2f2; color: #666;}
 .layadmin-list li{margin-bottom: 6px; padding-bottom: 6px; border-bottom-color: #f6f6f6; list-style-position: inside; list-style-type: disc;}
 .layadmin-list li{text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}
 .layadmin-list li a{color: #666;}
-.layadmin-list li a:hover{color: #AA3130;}
+.layadmin-list li a:hover{color: #3195EA;}
 .layadmin-list li:last-child{border: none; padding: 0; margin: 0;}
 
 /* 文本区域 */
@@ -348,7 +348,7 @@ html{background-color: #f2f2f2; color: #666;}
 .layui-card-header .layui-a-tips{position: absolute; right: 15px; color: #01AAED;}
 .layuiadmin-card-text{background-color: #f8f8f8; color: #777; padding: 24px;}
 .layuiadmin-card-text .layui-text-top{padding-bottom: 10px;}
-.layuiadmin-card-text .layui-text-top i{margin-right: 10px; font-size: 24px; color: #AA3130;}
+.layuiadmin-card-text .layui-text-top i{margin-right: 10px; font-size: 24px; color: #3195EA;}
 .layuiadmin-card-text .layui-text-top a{line-height: 24px; font-size: 16px; vertical-align: top;}
 .layuiadmin-card-text .layui-text-center{height: 44px; line-height: 22px; margin-bottom: 10px; overflow: hidden;}
 .layuiadmin-card-text .layui-text-bottom{position: relative;}
@@ -363,7 +363,7 @@ html{background-color: #f2f2f2; color: #666;}
 .layuiadmin-card-status dd{padding: 15px 0; border-bottom: 1px solid #EEE; display: -webkit-flex; display: flex;}
 .layuiadmin-card-status dd:last-child{border: none;}
 .layuiadmin-card-status dd div.layui-status-img,
-.layuiadmin-card-team .layui-team-img{width: 32px; height: 32px; border-radius: 50%; background-color: #AA3130; margin-right: 15px;}
+.layuiadmin-card-team .layui-team-img{width: 32px; height: 32px; border-radius: 50%; background-color: #3195EA; margin-right: 15px;}
 .layuiadmin-card-status dd div.layui-status-img a{width: 100%; height: 100%; display: inline-block; text-align: center; line-height: 32px;}
 .layuiadmin-card-status dd div.layui-status-img img,
 .layuiadmin-card-team .layui-team-img img{width: 50%; height: 50%;}
@@ -374,7 +374,7 @@ html{background-color: #f2f2f2; color: #666;}
 .layuiadmin-card-link{padding-left: 10px; font-size: 0}
 .layuiadmin-card-link a{display: inline-block; width: 25%; color: #666; font-size: 14px; margin-bottom: 12px;}
 .layuiadmin-card-link button{vertical-align: top;}
-.layuiadmin-card-link button:hover{color: #AA3130;}
+.layuiadmin-card-link button:hover{color: #3195EA;}
 
 /* 团队 */
 .layuiadmin-card-team li{padding: 10px 0 10px 10px;}
@@ -497,8 +497,8 @@ html{background-color: #f2f2f2; color: #666;}
 /* 提示页 */
 .layadmin-tips{margin-top: 30px; text-align: center;}
 .layadmin-tips .layui-icon[face]{display: inline-block; font-size: 300px; color: #393D49;}
-.layadmin-tips .layui-text{width: 500px; margin: 30px auto; padding-top: 20px; border-top: 5px solid #AA3130; font-size: 16px;}
-.layadmin-tips h1{font-size: 100px; line-height: 100px; color: #AA3130;}
+.layadmin-tips .layui-text{width: 500px; margin: 30px auto; padding-top: 20px; border-top: 5px solid #3195EA; font-size: 16px;}
+.layadmin-tips h1{font-size: 100px; line-height: 100px; color: #3195EA;}
 .layadmin-tips .layui-text .layui-anim{display: inline-block;}
 
 
