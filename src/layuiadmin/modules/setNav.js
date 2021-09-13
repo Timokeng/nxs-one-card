@@ -35,6 +35,11 @@ var navTreeData = [
         title: '学校管理',
         checkArr: "0",
     },
+    {
+        id: '8',
+        title: '报表管理',
+        checkArr: "0",
+    },
 ];
 
 var navTreeData2 = [];
