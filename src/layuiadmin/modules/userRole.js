@@ -23,13 +23,8 @@ if (!sessionStorage.getItem("sid")) {
 function goLogin() {
     sessionStorage.clear();
 
-    let str = window.location.href;
+    window.location = 'http://test.rcc.ynwrkj.com/rcc/views/user/login2.html';
     
-    if(str.indexOf('/views/index.html' >= 0)) {
-        window.location = './user/login2.html';
-    } else {
-        window.location = '../user/login2.html';
-    }
 }
 
 function goOut() {
