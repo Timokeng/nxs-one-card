@@ -55,3 +55,19 @@ function msg(str) {
         layer.msg(str);
     })
 }
+
+function getWxCode() {
+    if(window.location.search.length > 0) {
+        let arr = window.location.search.substring(1).split("&");
+        
+        for(let i = 0; i < arr.length ; i++) {
+            let data = arr[i].split("=");
+
+            if(data[0] == 'code') {
+                return data[1];
+            }
+        }
+    } else {
+        return '';
+    }
+}

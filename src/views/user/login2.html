@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="../../layuiadmin/style/common.css" media="all">
 	<link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
 	<link rel="stylesheet" href="../../layuiadmin/style/login2.css" media="all">
+	<link rel="stylesheet" href="../../layuiadmin/style/wxcode.css" media="all">
 </head>
 
 <body>
@@ -84,8 +85,7 @@
 									<!--<label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>-->
 									<input type="password" name="password" id="LAY-user-login-password"
 										lay-verify="required" placeholder="短信验证码" class="layui-input" maxlength="20">
-									<button class="layui-btn getCode" id="getCode"
-										onclick="getCode()">获取验证码</button>
+									<button class="layui-btn getCode" id="getCode" onclick="getCode()">获取验证码</button>
 								</div>
 
 
@@ -102,26 +102,26 @@
 						</div>
 						<div class="layui-tab-item">
 							<div class="layadmin-user-login-box layadmin-user-login-body layui-form">
-								<div class="tips">
+								<!-- <div class="tips">
 									请使用微信小程序/公众号扫下方二维码，扫码后在手机上点击“确认授权”即可
-								</div>
-								<div class="layui-form-item">
-									<div class="qrcode center">
+								</div> -->
+								<div class="layui-form-item" id="wxcode">
+									<!-- <div class="qrcode center">
 										<div class="mask">
 											<i class="layui-icon layui-icon-ok-circle "></i>
 										</div>
 										<img src="../../layuiadmin/img/qrcode.jpg" class="qrcodeImg" />
-									</div>
+									</div> -->
 								</div>
 							</div>
-							<div class="layui-form-item center btnCon">
+							<!-- <div class="layui-form-item center btnCon">
 								<button type="button" class="layui-btn layui-btn-radius refreshCode">
 									<span class="refreshBtn">点击刷新二维码</span>
 									<span class="loadingBtn"> <i
 											class="layui-icon layui-icon-loading  layui-anim layui-anim-rotate layui-anim-loop"></i>
 										刷新中</span>
 								</button>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>
@@ -140,6 +140,9 @@
 	</div>
 
 	<script src="../../layuiadmin/layui/layui.js"></script>
+	<script src="http://rescdn.qqmail.com/node/ww/wwopenmng/js/sso/wwLogin-1.0.0.js"></script>
+	<script src="../../layuiadmin/modules/api.js"></script>
+	<script src="../../layuiadmin/modules/login.js"></script>
 
 	<script>
 		layui.config({
@@ -216,9 +219,28 @@
 				$('.mask').css('display', 'block')
 			})
 		});
+
+		window.WwLogin({
+			"id": "wxcode",
+			"appid": "wx3a22bc74728e6596",
+			"agentid":  "1000007",
+			"redirect_uri": "http://test.rcc.ynwrkj.com/rcc/views/user/login2.html",
+			"state": "",
+			"href": "",
+		});
+
+		let code = getWxCode();
+		if(code) {
+			console.log(code);
+			api.wxLogin({code}, (res)=>{
+				if(code === '000') {
+					
+				} else {
+					msg(res.msg);
+				}
+			})
+		}
 	</script>
-	<script src="../../layuiadmin/modules/api.js"></script>
-	<script src="../../layuiadmin/modules/login.js"></script>
 </body>
 
 </html>
