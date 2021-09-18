@@ -10,15 +10,6 @@ body,
 	overflow: auto;
 }
 
-.layui-col-md10 {
-	/*width: 83.33333333%;*/
-}
-
-
-/* #LAY-user-login, .layadmin-user-display-show {
-  display: block !important;
-} */
-
 .layadmin-user-login {
 	position: relative;
 	left: 0;
@@ -427,16 +418,4 @@ body,
 
 .ladmin-user-login-theme ul li:hover {
 	opacity: 0.9
-}
-
-@media screen and (max-width: 768px) {
-	.layadmin-user-login {
-		/*padding-top: 60px;*/
-	}
-	.layadmin-user-login-main {
-		/*width: 320px;*/
-	}
-	.layadmin-user-login-box {
-		/*padding: 10px;*/
-	}
 }
