@@ -342,7 +342,7 @@ body,
 	padding: 20px;
 	text-align: center;
 	box-sizing: border-box;
-	color: rgba(0, 0, 0, .5)
+	color: rgba(255, 255, 255, 0.8)
 }
 
 .layadmin-user-login-footer span {
@@ -351,11 +351,11 @@ body,
 
 .layadmin-user-login-footer a {
 	padding: 0 5px;
-	color: rgba(0, 0, 0, .5);
+	color: rgba(255, 255, 255, 0.8)
 }
 
 .layadmin-user-login-footer a:hover {
-	color: rgba(0, 0, 0, 1);
+	color: rgba(255, 255, 255, 0.8)
 }
 
 .loginBtn {
