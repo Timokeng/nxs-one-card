@@ -153,7 +153,7 @@ function addTe() {
 
         let reqData = {
             school_id: addInfo.school,
-            grade_no: addInfo.grade,
+            grade_no: '',
             item_name: addInfo.name,
             item_no: addInfo.templateNo,
             amt: addInfo.sum,

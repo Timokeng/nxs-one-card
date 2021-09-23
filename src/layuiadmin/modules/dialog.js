@@ -171,6 +171,8 @@ function handleConfigUserPower() {
 
         if (user.power) {
             setTree2(user.power.split(','));
+        } else {
+            setTree2([]);
         }
 
 
@@ -209,6 +211,8 @@ function handleConfigTemGr() {
 
         if (temp.grade) {
             setGr2(temp.grade.split(','));
+        } else {
+            setTree2([]);
         }
 
         dlb.style.display = 'flex';

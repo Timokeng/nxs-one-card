@@ -273,7 +273,7 @@ function changeTe() {
         let reqData = {
             id: newInfo.id,
             school_id: newInfo.school,
-            grade_no: newInfo.grade,
+            // grade_no: newInfo.grade,
             item_name: newInfo.name,
             item_no: newInfo.templateNo,
             amt: newInfo.sum,

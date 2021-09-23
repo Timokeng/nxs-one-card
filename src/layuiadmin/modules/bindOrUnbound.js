@@ -22,6 +22,8 @@ let treeGr1 = [],
     grMap = {};
 
 
+
+
 // 用户管理页面配置学校相关函数
 function getScTree() {
     layui.use(['dtree', 'layer', 'jquery'], function () {
@@ -148,6 +150,12 @@ function deleteUserPower() {
             return item != -1;
         })
 
+        powerMap = [];
+
+        treeData2.forEach((item, index) => {
+            powerMap[item.id] = index;
+        })
+
         // 发送请求
         let res = await changePower();
 
@@ -231,6 +239,9 @@ function changePower() {
         })
     })
 }
+
+
+
 
 
 
@@ -323,7 +334,7 @@ function congfigTemGr() {
                 checkbarType: "no-all",
                 checkbarFun: {
                     chooseDone: function (checkbarNodesParam) {
-                        scChoose2 = checkbarNodesParam;
+                        grChoose2 = checkbarNodesParam;
 
                         return;
                     }
@@ -354,6 +365,12 @@ function deleteTemGr() {
             return item != -1;
         })
 
+        grMap = [];
+
+        treeGr2.forEach((item, index) => {
+            grMap[item.id] = index;
+        })
+
 
         // 发送请求
         let res = await changeGr();
@@ -380,6 +397,7 @@ function deleteTemGr() {
 
 function setGr2(arr) {
     let map = {};
+
     treeGr2 = [];
     grMap = {};
     grades = [];
