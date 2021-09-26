@@ -1,11 +1,12 @@
 let timeout = undefined;
+let waittime = 0;
 
 function getCode() {
     let phone = document.getElementById('phone').value;
     let dom = document.getElementById("getCode");
 
     if(timeout) {
-        msg('每次发送验证码虚间隔60S');
+        // msg('每次发送验证码虚间隔60S');
         return;
     }
 
@@ -14,7 +15,11 @@ function getCode() {
         return;
     }
 
+    waittime = 60;
     dom.className = 'layui-btn getCode disabled';
+    dom.innerHTML = `${waittime}S后可重新获取`;
+
+    setTimeout("countDown()", 1000);
     
     timeout = setTimeout(()=>{
         dom.className = 'layui-btn getCode';
@@ -69,5 +74,18 @@ function getWxCode() {
         }
     } else {
         return '';
+    }
+}
+
+
+function countDown() {
+    if(waittime > 0) {
+        waittime = waittime - 1;
+
+        document.getElementById("getCode").innerHTML = `${waittime}S后可重新获取`;
+
+        setTimeout("countDown()", 1000);
+    } else {
+        document.getElementById("getCode").innerHTML = '获取验证码';
     }
 }
