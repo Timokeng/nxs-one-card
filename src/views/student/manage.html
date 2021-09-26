@@ -246,11 +246,11 @@
 
     let cbox = document.getElementById("changeBox");
     let clMap = {},
-        gradeMap = {
-          G1: '高一年级',
-          G2: '高二年级',
-          G3: '高三年级',
-        };
+      gradeMap = {
+        G1: '高一年级',
+        G2: '高二年级',
+        G3: '高三年级',
+      };
 
 
     // ----------初始化页面------------------
@@ -266,7 +266,6 @@
         , id: 'idTest'
         , height: 470
         , data: []
-        , page: true //开启分页
         , cols: [[ //表头
           { checkbox: true, width: "5%" }
           , { field: 'id', title: 'ID', width: "7%" }
@@ -466,7 +465,7 @@
           class: clMap[changeInfo.class].name,
           name: changeInfo.name,
           idnumber: changeInfo.pid,
-          sex: changeInfo.sex == '男' ? '1':'0'
+          sex: changeInfo.sex == '男' ? '1' : '0'
         }
 
         api.student.change(reqData, (res) => {
