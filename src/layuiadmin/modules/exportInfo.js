@@ -183,10 +183,10 @@ function exportLi() {
     let cd = form.val("conditionForm");
     let school = classData.length > 0 ? classData[0].nodeId : '';
 
-    let t1 = cd.start ? Math.floor((new Date(cd.start).getTime()) / 1000):'',
-        t2 = cd.end ? Math.floor((new Date(cd.end).getTime()) / 1000):'';
+    let t1 = cd.start ? Math.floor((new Date(cd.start).getTime()) / 1000) : '',
+      t2 = cd.end ? Math.floor((new Date(cd.end).getTime()) / 1000) : '';
 
-    if(t1 >= t2 && t2) {
+    if (t1 >= t2 && t2) {
       layer.msg("开始时间必须在结束时间之前");
       return;
     }
@@ -233,17 +233,17 @@ function exportLi() {
 
     api.list.export(reqData, (res) => {
       let dom = document.getElementById(id);
-      
-      if(res.code === '000') {
+
+      if (res.code === '000') {
         layer.msg('文件准备就绪，点击即可下载');
         dom.children[1].className = 'item-status ok';
         dom.children[1].innerHTML = '可下载';
 
         let url = 'http://test.rcc.ynwrkj.com' + res.result,
-            arr = res.result.split('/'),
-            filename = arr[arr.length - 1];
+          arr = res.result.split('/'),
+          filename = arr[arr.length - 1];
 
-        dom.addEventListener('click', ()=>{
+        dom.addEventListener('click', () => {
           downloadFile(url, filename);
         })
       } else {
@@ -253,6 +253,85 @@ function exportLi() {
     })
   })
 }
+
+
+
+
+function exportRepoet() {
+
+  layui.use(['form', 'layer'], function () {
+    var layer = layui.layer,
+        form = layui.form;
+
+
+    let cd = form.val("conditionForm");
+
+    if (!cd.item) {
+      layer.msg('缴费项目不能为空');
+      return;
+    }
+
+    // 节流
+    if (timeout) {
+      msg("请勿频繁进行重复操作，容易导致系统卡顿");
+      return
+    }
+    timeout = setTimeout(() => {
+      timeout = null;
+    }, 5000);
+
+    sub.style.display = 'block';
+
+    var list = document.getElementById("uploadList")
+
+    var item = document.createElement("div");
+
+    let id = `uploadItem${list.children.length}`;
+    let date = new Date();
+
+    item.id = id;
+    item.className = "upload-item";
+
+    item.innerHTML = `
+    <div class="item-title">缴费订单报表 ${date.toLocaleDateString()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</div>
+    <div class="item-status doing">准备中</div>
+  `;
+
+    list.appendChild(item);
+
+
+    // 发起请求
+    let reqData = {
+      school_id: cd.school,
+      class_id: cd.class,
+      item_id: cd.item,
+      order_type: cd.type
+    }
+
+    api.list.export(reqData, (res) => {
+      let dom = document.getElementById(id);
+
+      if (res.code === '000') {
+        layer.msg('文件准备就绪，点击即可下载');
+        dom.children[1].className = 'item-status ok';
+        dom.children[1].innerHTML = '可下载';
+
+        let url = 'http://test.rcc.ynwrkj.com' + res.result,
+          arr = res.result.split('/'),
+          filename = arr[arr.length - 1];
+
+        dom.addEventListener('click', () => {
+          downloadFile(url, filename);
+        })
+      } else {
+        layer.msg(res.msg);
+        dom.children[1].innerHTML = '下载失败';
+      }
+    })
+  })
+}
+
+
 
 
 function downloadFile(url, filename) {

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>报表管理</title>
+    <title>学校管理</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
@@ -12,97 +12,84 @@
     <link rel="stylesheet" href="../../layuiadmin/style/dtree/dtree.css">
     <link rel="stylesheet" href="../../layuiadmin/style/dtree/font/dtreefont.css">
     <link rel="stylesheet" href="../../layuiadmin/style/admin.css">
-    <link rel="stylesheet" href="../../layuiadmin/style/student.css">
-    <link rel="stylesheet" href="../../layuiadmin/style/formBox.css">
+    <link rel="stylesheet" href="../../layuiadmin/style/wx.css">
     <link rel="stylesheet" href="../../layuiadmin/style/sideUpaload.css">
-    <link rel="stylesheet" href="../../layuiadmin/style/dialog.css">
+    <link rel="stylesheet" href="../../layuiadmin/style/formBox.css">
     <link rel="stylesheet" href="../../layuiadmin/style/table.css">
 </head>
 
 <body>
-
     <div class="main-article">
-        <div class="left">
-            <div class="header">机构选择</div>
-            <div class="tree-box">
-                <ul id="demoTree" class="dtree" data-id="0"></ul>
+        <div class="condition-box layui-anim layui-anim-scale show" id="condition">
+            <div class="header">
+                <div>筛选条件</div>
+            </div>
+            <div class="form-box layui-form" lay-filter="conditionForm">
+                <div class="layui-form-item input-box">
+                    <label class="layui-form-label">学校</label>
+                    <div class="layui-input-block">
+                        <select class="scSelect" name="school" lay-verify="required" lay-filter="condition-sc">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item input-box">
+                    <label class="layui-form-label">年级</label>
+                    <div class="layui-input-block">
+                        <select class="grSelect" name="grade" lay-verify="required" lay-filter="condition-gr">
+                            <option value=""></option>
+                            <option value="G1">高一</option>
+                            <option value="G2">高二</option>
+                            <option value="G3">高三</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item input-box">
+                    <label class="layui-form-label">班级</label>
+                    <div class="layui-input-block">
+                        <select class="clSelect" name="class" lay-verify="required" lay-filter="condition-cl">
+                            <option value="">请先选择学校和年级</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item input-box">
+                    <label class="layui-form-label">缴费项目</label>
+                    <div class="layui-input-block">
+                        <select class="itSelect" name="item" lay-verify="required" lay-filter="condition-item">
+                            <option value="">请先选择学校</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item input-box">
+                    <label class="layui-form-label">订单状态</label>
+                    <div class="layui-input-block">
+                        <select class="typeSelect" name="type" lay-verify="required" lay-filter="condition-type">
+                            <option value=""></option>
+                            <option value="0">未缴费</option>
+                            <option value="1">已缴费</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-box">
+                <button class="layui-btn" onclick="exportRepoet()">导出</button>
+                <button class="layui-btn" onclick="getReport()">查找</button>
             </div>
         </div>
-        <div class="right">
-            <div class="condition-box layui-anim show" id="condition">
-                <div class="header">
-                    <div>筛选条件</div>
-                    <!-- <div onclick="cdb.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div> -->
-                </div>
-                <div class="form-box layui-form" lay-filter="conditionForm">
-                    <div class="layui-form-item input-box">
-                        <label class="layui-form-label">订单ID</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="order_id" placeholder="请输入" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item input-box">
-                        <label class="layui-form-label">姓名</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item input-box">
-                        <label class="layui-form-label">身份证号</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="pid" placeholder="请输入" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item input-box">
-                        <label class="layui-form-label">开始时间</label>
-                        <div class="layui-input-block">
-                            <input id="starttime" type="text" name="start" placeholder="数据格式:xx-xx-xx"
-                                autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item input-box">
-                        <label class="layui-form-label">结束时间</label>
-                        <div class="layui-input-block">
-                            <input id="endtime" type="text" name="end" placeholder="数据格式:xx-xx-xx" autocomplete="off"
-                                class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item input-box hint">
-                        请在左侧机构树选择查询范围
-                    </div>
-                </div>
-                <div class="btn-box">
-                    <button class="layui-btn" onclick="exportLi()"><i class="layui-icon layui-icon-export"></i>导出</button>
-                    <button class="layui-btn" onclick="searchLi()"><i class="layui-icon layui-icon-search"></i>搜索</button>
+        <div class="table-box">
+            <div class="header">
+                <div>报表信息</div>
+                <div>
+                    <!-- <button class="layui-btn" onclick="handlePaymentDetail()"><i
+                            class="layui-icon layui-icon-list"></i>查看缴费明细</button> -->
+                    <button onclick="sub.style.display = 'block'" class="layui-btn"><i
+                            class="layui-icon layui-icon-cols"></i>打开下载列表</button>
                 </div>
             </div>
-            <div class="table-box">
-                <div class="header">
-                    <div>缴费记录</div>
-                    <div>
-                        <button class="layui-btn" onclick="handlePaymentDetail()"><i
-                                class="layui-icon layui-icon-list"></i>查看缴费明细</button>
-                        <button onclick="sub.style.display = 'block'" class="layui-btn"><i
-                                class="layui-icon layui-icon-cols"></i>打开下载列表</button>
-                    </div>
-                </div>
-                <div class="article">
-                    <table id="payment-list" lay-filter="test"></table>
-                    <div id="page-box"></div>
-                </div>
-            </div>
-        </div>
-        <div id="dialog-box" class="dialog-box">
-            <div id="dialog-article" class="dialog-article">
-                <div id="dialog-detai-table">
-                    <div class="header">
-                        <div class="title">缴费明细</div>
-                        <div onclick="closeDialog()"><i class="layui-icon layui-icon-close"></i></div>
-                    </div>
-                    <div class="article">
-                        <table id="detail-list" lay-filter="test"></table>
-                    </div>
-                </div>
+            <div id="collect-sum" class="collect-sum">已缴费 0 人， 未缴费 0 人</div>
+            <div class="article">
+                <table id="sc" lay-filter="test"></table>
+                <div id="page-box"></div>
             </div>
         </div>
         <div class="side-upload" id="sideUpload">
@@ -114,121 +101,154 @@
         </div>
     </div>
 
-    <script src="../../layuiadmin/layui/layui.js"></script>
     <script src="../../layuiadmin/modules/api.js"></script>
+    <script src="../../layuiadmin/layui/layui.js"></script>
     <script>
         layui.config({
             base: '../../layuiadmin/' //静态资源所在路径
         }).extend({
-            index: 'lib/index', //主入口模块
-            dtree: '{/}../../layuiadmin/style/dtree/dtree'
+            index: 'lib/index' //主入口模块
         }).use(['index', 'console']);
 
-
-        getTree();
-        reloadTable();
+        let scMap = {};
 
 
-        // ----------table组件相关------------------
-        //  初始化table
+        getScList();
+
+
         layui.use(['table', 'layer', 'form'], function () {
             var table = layui.table;
             var layer = layui.layer;
             var form = layui.form;
 
-            //第一个实例
             table.render({
-                elem: '#payment-list'
+                elem: '#sc'
                 , id: 'idTest'
                 , height: 470
                 , data: []
-                , page: true //开启分页
                 , cols: [[ //表头
-                    { checkbox: true, width: "5%" }
-                    , { field: 'id', title: 'ID', width: "5%" }
+                    // { checkbox: true, width: "5%" }
+                    { field: 'id', title: 'ID', width: "5%" }
                     , { field: 'name', title: '姓名', width: "10%" }
                     , { field: 'pid', title: '身份证号', width: "20%" }
                     , { field: 'schoolname', title: '学校', width: "15%" }
-                    , { field: 'order_id', title: '订单ID', width: "15%" }
-                    , { field: 'phone', title: '缴费人手机号', width: "15%" }
-                    , { field: 'date', title: '日期', width: "15%" }
+                    , { field: 'grade', title: '年级', width: "10%" }
+                    , { field: 'class', title: '班级', width: "10%" }
+                    , { field: 'item', title: '缴费项目', width: "20%" }
+                    , { field: 'type', title: '缴费状态', width: "10%" }
                 ]]
             });
-        });
-        // ----------table组件相关（结束）------------------
 
-        // --------------------日期与时间选择器------------------------
-        layui.use('laydate', function () {
-            var laydate = layui.laydate;
 
-            laydate.render({
-                elem: '#starttime', //指定元素
-                type: 'datetime',
+            form.on('select(condition-sc)', function () {
+                let data = form.val("conditionForm");
+
+                if (data.school) {
+                    getItemList(data.school);
+                } else {
+                    let selects = document.getElementsByClassName("itSelect");
+
+                    selects[0].innerHTML = '<option value="">请先选择学校</option>';
+                    form.render();
+                }
+
+                if (data.school && data.grade) {
+                    getClList(data.school, data.grade, 0)
+                } else {
+                    let selects = document.getElementsByClassName("clSelect");
+
+                    selects[0].innerHTML = '<option value="">请先选择学校和年级</option>';
+                    form.render();
+                }
             });
 
-            laydate.render({
-                elem: '#endtime', //指定元素
-                type: 'datetime',
+
+            form.on('select(condition-gr)', function () {
+                let data = form.val("conditionForm");
+
+                if (data.school && data.grade) {
+                    getClList(data.school, data.grade, 0)
+                } else {
+                    let selects = document.getElementsByClassName("clSelect");
+
+                    selects[0].innerHTML = '<option value="">请先选择学校和年级</option>';
+                    form.render();
+                }
             });
-        });
-        // --------------------日期与时间选择器（结束）------------------------
+        })
 
 
-        // --------------------部分独立方法-----------------------
-        //  刷新table
-        function reloadTable(order_id = '', name = '', school_id = '', idnumber = '', t1, t2, page = '1') {
 
+        // ----------------------部分独立方法---------------------------
+        function reloadTable(school_id = '', item_id = '', class_id = '', order_type = '', page = '1') {
             let reqData = {
-                order_id,
-                name,
                 school_id,
-                idnumber,
-                stime: t1,
-                etime: t2,
+                item_id,
+                class_id,
+                order_type,
                 page,
                 epage: '10'
             }
 
-            api.list.getList(reqData, (res) => {
-                layui.use(['table', 'layer', 'laypage'], function () {
-                    var table = layui.table, layer = layui.layer, laypage = layui.laypage
+            api.report.getList(reqData, function (res) {
+                layui.use(['table', 'layer', 'form', 'laypage'], function () {
+                    var table = layui.table;
+                    var layer = layui.layer;
+                    var form = layui.form;
+                    var laypage = layui.laypage;
 
-                    if (res.code === '000') {
+                    if (res.code == '000') {
+                        let collect = document.getElementById("collect-sum");
+                        collect.innerHTML = `已缴费 ${res.rows.count.yj} 人， 未缴费 ${res.rows.count.wj} 人`;
+
+
                         let tabData = [];
 
+                        if(!Array.isArray(res.rows.list)) {
+                            let arr = [];
+                            for(key in res.rows.list) {
+                                arr.push(res.rows.list[key]);
+                            }
+
+                            res.rows.list = arr;
+                        }
+
                         res.rows.list.forEach(item => {
-                            let time = new Date(parseInt(item.addtime) * 1000).toLocaleString().replace(/:\d{1,2}$/, ' ');
+                            // let time = new Date(parseInt(item.addtime) * 1000).toLocaleString().replace(/:\d{1,2}$/, ' ');
 
                             let one = {
                                 id: item.id,
                                 name: item.name,
                                 pid: item.idnumber,
                                 school: item.school_id,
-                                schoolname: item.schoolname,
-                                order_id: item.order_id,
-                                phone: item.phone,
-                                date: time
+                                schoolname: scMap[item.school_id],
+                                class: item.class,
+                                item: item.item_name,
+                                grade: item.grade,
+                                type: item.pay_info
                             }
 
-                            tabData.push(one)
+                            tabData.push(one);
                         })
 
                         table.render({
-                            elem: '#payment-list'
+                            elem: '#sc'
                             , id: 'idTest'
                             , height: 470
                             , data: tabData
                             , cols: [[ //表头
-                                { checkbox: true, width: "5%" }
-                                , { field: 'id', title: 'ID', width: "5%" }
+                                // { checkbox: true, width: "5%" }
+                                { field: 'id', title: 'ID', width: "5%" }
                                 , { field: 'name', title: '姓名', width: "10%" }
                                 , { field: 'pid', title: '身份证号', width: "20%" }
                                 , { field: 'schoolname', title: '学校', width: "15%" }
-                                , { field: 'order_id', title: '订单ID', width: "15%" }
-                                , { field: 'phone', title: '缴费人手机号', width: "15%" }
-                                , { field: 'date', title: '日期', width: "15%" }
+                                , { field: 'grade', title: '年级', width: "10%" }
+                                , { field: 'class', title: '班级', width: "10%" }
+                                , { field: 'item', title: '缴费项目', width: "20%" }
+                                , { field: 'type', title: '缴费状态', width: "10%" }
                             ]]
                         });
+
 
                         laypage.render({
                             elem: 'page-box'
@@ -241,19 +261,20 @@
 
                                 //首次不执行
                                 if (!first) {
-                                    reloadTable(order_id, name, school_id, idnumber, t1, t2, String(obj.curr));
+                                    reloadTable(school_id, item_id, class_id, order_type, String(obj.curr));
                                 }
                             }
                         });
                     } else {
-                        layer.msg(res.msg)
+                        layer.msg(res.msg);
                     }
                 })
             })
         }
 
 
-        function getTree() {
+
+        function getScList() {
             let reqData = {
                 schoolname: '',
                 areaid: '',
@@ -261,53 +282,161 @@
                 epage: '100'
             }
 
-            api.school.getList(reqData, (res) => {
+            api.school.getList(reqData, function (res) {
+                layui.use(['form', 'layer'], function () {
+                    let form = layui.form, layer = layui.layer;
 
-                let treeData = [];
+                    if (res.code == '000') {
+                        scMap = {};
 
-                res.rows.list.forEach(item => {
-                    let one = {
-                        id: item.id,
-                        title: item.schoolname,
-                        parentId: '0',
-                        checkArr: '0'
-                    }
+                        let selects = document.getElementsByClassName("scSelect");
 
-                    treeData.push(one);
-                })
+                        res.rows.list.forEach(item => {
+                            let option = document.createElement("option");
 
-                layui.use(['dtree', 'layer', 'jquery'], function () {
-                    var dtree = layui.dtree,
-                        layer = layui.layer,
-                        $ = layui.jquery;
+                            option.value = item.id;
+                            option.innerHTML = item.schoolname;
 
-                    if (res.code === "000") {
+                            scMap[item.id] = item.schoolname;
 
-                        var DemoTree = dtree.render({
-                            elem: "#demoTree",
-                            data: treeData, // 使用data加载
-                            checkbar: true,
-                            checkbarType: "no-all",
-                            checkbarData: "halfChoose",
-                            checkbarFun: {
-                                chooseDone: function (checkbarNodesParam) {
-                                    classData = checkbarNodesParam;
-                                    return;
-                                }
-                            },
-                        });
+                            selects[0].appendChild(option);
+                        })
 
+                        for (let i = 1; i < selects.length; i++) {
+                            selects[i].innerHTML = selects[0].innerHTML;
+                        }
+
+                        layui.use('form', function () {
+                            let form = layui.form;
+
+                            form.render("select");
+                        })
                     } else {
                         layer.msg(res.msg);
                     }
                 })
             })
         }
-    // --------------------部分独立方法（结束）-----------------------
+
+
+
+        function getItemList(school_id) {
+            let reqData = {
+                item_no: '',
+                item_name: '',
+                school_id,
+                page: '1',
+                epage: '100'
+            }
+
+            api.template.getList(reqData, function (res) {
+                layui.use(['form', 'layer'], function () {
+                    let form = layui.form, layer = layui.layer;
+
+                    if (res.code == '000') {
+                        let selects = document.getElementsByClassName("itSelect");
+
+                        selects[0].innerHTML = '<option value=""></option';
+
+                        res.rows.list.forEach(item => {
+                            let option = document.createElement("option");
+
+                            option.value = item.id;
+                            option.innerHTML = item.item_name;
+
+                            selects[0].appendChild(option);
+                        });
+
+                        layui.use('form', function () {
+                            let form = layui.form;
+
+                            form.render("select");
+                        })
+                    } else {
+                        layer.msg(res.msg);
+                    }
+                })
+            })
+        }
+
+
+
+        function getReport() {
+            layui.use(['form', 'layer'], function () {
+                let form = layui.form, layer = layui.layer;
+
+                let data = form.val("conditionForm");
+
+                if (!data.item) {
+                    layer.msg('缴费项目不能为空');
+                    return;
+                }
+
+                // let reqData = {
+                //     school_id: data.school,
+                //     item_id: data.item
+                // }
+
+                // api.report.getCollect(reqData, (res) => {
+                //     if (res.code == '000') {
+
+                //     } else {
+                //         layer.msg(res.msg)
+                //     }
+                // })
+
+                reloadTable(data.school, data.item, data.class, data.type);
+            })
+        }
+
+
+
+        function getClList(school_id, grade_no, num) {
+
+            let reqData = {
+                class_name: '',
+                class_no: '',
+                grade_no,
+                school_id,
+                page: '1',
+                epage: '100'
+            }
+
+            api.class.getList(reqData, function (res) {
+                layui.use(['form', 'layer'], function () {
+                    let form = layui.form, layer = layui.layer;
+
+                    if (res.code == '000') {
+                        let selects = document.getElementsByClassName("clSelect");
+
+                        selects[num].innerHTML = '<option value=""></option';
+
+                        res.rows.list.forEach(item => {
+                            let option = document.createElement("option");
+
+                            option.value = item.id;
+                            option.innerHTML = item.class_name;
+
+                            selects[num].appendChild(option);
+                        });
+
+                        layui.use('form', function () {
+                            let form = layui.form;
+
+                            form.render("select");
+                        })
+                    } else {
+                        layer.msg(res.msg);
+                    }
+                })
+            })
+        }
+
+    // ----------------------部分独立方法（结束）---------------------------
     </script>
-    <script src="../../layuiadmin/modules/search.js"></script>
     <script src="../../layuiadmin/modules/exportInfo.js"></script>
-    <script src="../../layuiadmin/modules/dialog.js"></script>
 </body>
+
+
 
 </html>

@@ -48,3 +48,10 @@ html, body {
     flex: auto;
     padding: 0 10px 10px 10px;
 }
+
+.main-article .table-box .collect-sum {
+    padding: 15px;
+    padding-left: 30px;
+    font-size: 14px;
+    border-bottom: 1px solid #f2f2f2;
+}
