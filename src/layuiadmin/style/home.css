@@ -11,5 +11,17 @@ html, body {
     height: 100%;
     box-sizing: border-box;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-article .title {
+    background-color: #fff;
+    height: 100px;
+    width: 300px;
+    text-align: center;
+    line-height: 100px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 2px 2px rgb(197, 195, 195);
+    font-size: 18px;
 }

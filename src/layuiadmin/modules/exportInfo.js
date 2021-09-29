@@ -93,6 +93,41 @@ function exportSt() {
   `;
 
   list.appendChild(item);
+
+  // 发起请求
+  let cl = [];
+
+  classData.forEach((item)=>{
+    if(item.level == 3) {
+      cl.push(item.nodeId.slice(1));
+    }
+  })
+
+  let reqData = {
+    school_id: '',
+    class_id: cl
+  }
+
+  api.student.export(reqData, (res) => {
+    let dom = document.getElementById(id);
+
+    if (res.code === '000') {
+      layer.msg('文件准备就绪，点击即可下载');
+      dom.children[1].className = 'item-status ok';
+      dom.children[1].innerHTML = '可下载';
+
+      let url = 'http://test.rcc.ynwrkj.com' + res.result,
+        arr = res.result.split('/'),
+        filename = arr[arr.length - 1];
+
+      dom.addEventListener('click', () => {
+        downloadFile(url, filename);
+      })
+    } else {
+      layer.msg(res.msg);
+      dom.children[1].innerHTML = '下载失败';
+    }
+  })
 }
 
 
