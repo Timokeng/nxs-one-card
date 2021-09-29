@@ -25,7 +25,7 @@ function searchSt() {
             }
         })
 
-        reloadTable(data.name, classId);
+        reloadTable(data.name, data.pid, classId);
     });
 }
 

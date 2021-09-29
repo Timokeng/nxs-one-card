@@ -54,6 +54,12 @@
               <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
           </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">身份证号</label>
+            <div class="layui-input-block">
+              <input type="text" name="pid" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+          </div>
           <div class="layui-form-item input-box hint">
             请在左侧机构树选择查询范围
           </div>
@@ -488,13 +494,14 @@
 
 
     //  刷新table
-    function reloadTable(name = '', class_id = '', page = '1') {
+    function reloadTable(name = '', idnumber = '',  class_id = '', page = '1') {
       let reqData = {
         name,
         school_id: '',
         grade_no: '',
         class_no: '',
         class_id,
+        idnumber,
         page,
         epage: '10'
       }
