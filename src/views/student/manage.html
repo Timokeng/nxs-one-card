@@ -471,7 +471,7 @@
           class: clMap[changeInfo.class].name,
           name: changeInfo.name,
           idnumber: changeInfo.pid,
-          sex: changeInfo.sex == '男' ? '1' : '0'
+          sex: changeInfo.sex
         }
 
         api.student.change(reqData, (res) => {
