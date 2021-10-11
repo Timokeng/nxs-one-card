@@ -7,32 +7,32 @@ var navTreeData = [
     },
     {
         id: '2',
-        title: '班级管理',
+        title: '学校管理',
         checkArr: "0",
     },
     {
         id: '3',
-        title: '学生管理',
+        title: '班级管理',
         checkArr: "0",
     },
     {
         id: '4',
-        title: '缴费管理',
+        title: '学生管理',
         checkArr: "0",
     },
     {
         id: '5',
-        title: '权限管理',
+        title: '缴费管理',
         checkArr: "0",
     },
     {
         id: '6',
-        title: '微信管理',
+        title: '权限管理',
         checkArr: "0",
     },
     {
         id: '7',
-        title: '学校管理',
+        title: '微信管理',
         checkArr: "0",
     },
     {

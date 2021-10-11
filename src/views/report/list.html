@@ -199,6 +199,10 @@
 
                     if (res.code == '000') {
                         let collect = document.getElementById("collect-sum");
+
+                        res.rows.count.wj = res.rows.count.wj? res.rows.count.wj:0;
+                        res.rows.count.yj = res.rows.count.yj? res.rows.count.yj:0;
+
                         collect.innerHTML = `已缴费 ${res.rows.count.yj} 人， 未缴费 ${res.rows.count.wj} 人`;
 
 
