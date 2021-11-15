@@ -37,6 +37,10 @@ addBt.addEventListener("click", function () {
         clearForm("addClForm");
     }
 
+    if (addBt.innerText.indexOf("年级") != -1) {
+        clearForm("addGrForm");
+    }
+
     abox.style.display = "block";
     cbox.style.display = "none";
 })
@@ -85,6 +89,44 @@ function addSt() {
                 }, 500);
             } else {
                 layer.msg(res.msg);
+            }
+        })
+    });
+}
+
+// 新增年级
+function addGr() {
+    let validate = false;
+    let addInfo = {};
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        var layer = layui.layer;
+
+        addInfo = form.val("addGrForm");
+        for (let key in addInfo) {
+            if (!addInfo[key]) {
+                layer.msg("有必填数据为空");
+                validate = false;
+                return
+            }
+        }
+        validate = true;
+
+        let reqData = {
+            school_id: addInfo.school,
+            grade_name: addInfo.grade,
+            grade_no: addInfo.gradeNo
+        }
+
+        api.grade.add(reqData, function (res) {
+            if (res.code == "000") {
+                layer.msg("成功添加 " + addInfo.gradeNo + addInfo.grade);
+                setTimeout(() => {
+                    reloadTree();
+                    abox.style.display = 'none';
+                }, 500);
+            } else {
+                layer.msg(res.msg)
             }
         })
     });
