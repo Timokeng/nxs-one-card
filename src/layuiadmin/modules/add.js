@@ -31,10 +31,22 @@ addBt.addEventListener("click", function () {
 
     if (addBt.innerText.indexOf("学生") != -1) {
         clearForm("addStForm");
+
+        let selects = document.getElementsByClassName("clSelect");
+        let selects2 = document.getElementsByClassName("gradeSelect");
+
+        selects[0].innerHTML = '<option value="">请先选择学校和年级</option>';
+        selects2[0].innerHTML = '<option value="">请先选择学校</option>';
+        form.render();
     }
 
     if (addBt.innerText.indexOf("班级") != -1) {
         clearForm("addClForm");
+        
+        let selects = document.getElementsByClassName("gradeSelect");
+
+        selects[0].innerHTML = '<option value="">请先选择学校</option>';
+        form.render();
     }
 
     if (addBt.innerText.indexOf("年级") != -1) {
@@ -70,8 +82,9 @@ function addSt() {
 
         let reqData = {
             school_id: addInfo.school,
-            grade: gradeMap[addInfo.grade],
-            grade_no: addInfo.grade,
+            grade_id: addInfo.grade,
+            grade: gradeMap[addInfo.grade].name,
+            grade_no: gradeMap[addInfo.grade].no,
             class_id: addInfo.class,
             class_no: clMap[addInfo.class].no,
             class: clMap[addInfo.class].name,

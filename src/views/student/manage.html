@@ -134,10 +134,7 @@
             <label class="layui-form-label">年级</label>
             <div class="layui-input-block">
               <select class="gradeSelect" name="grade" lay-verify="required" lay-filter="addclass-gr">
-                <option value=""></option>
-                <option value="G1">高一</option>
-                <option value="G2">高二</option>
-                <option value="G3">高三</option>
+                <option value="">请先选择学校</option>
               </select>
             </div>
           </div>
@@ -252,11 +249,7 @@
 
     let cbox = document.getElementById("changeBox");
     let clMap = {},
-      gradeMap = {
-        G1: '高一年级',
-        G2: '高二年级',
-        G3: '高三年级',
-      };
+      gradeMap = {};
 
 
     // ----------初始化页面------------------
@@ -344,27 +337,27 @@
           if (res.code === "000") {
 
             let a = await new Promise((resolve, reject) => {
-              getClList(res.result.school_id, res.result.grade_no, 1);
+              getGrList(res.result.school_id, 1);
+              getClList(res.result.school_id, res.result.grade_id, 1);
 
               setTimeout(() => {
                 resolve('ok');
-              }, 300);
+              }, 600);
             })
 
             let changeInfo = {
               id: res.result.id,
               school: res.result.school_id,
-              grade: res.result.grade_no,
+              grade: res.result.grade_id,
               class: res.result.class_id,
               name: res.result.name,
               sex: res.result.sex,
               pid: res.result.idnumber
             };
 
+            form.val("changeStForm", changeInfo);
             cbox.style.display = 'block';
             abox.style.display = 'none';
-            form.val("changeStForm", changeInfo);
-
           } else {
             layer.msg(res.msg);
           }
@@ -381,12 +374,16 @@
         let data = form.val("addStForm");
 
 
-        if (data.school && data.grade) {
-          getClList(data.school, data.grade, 0)
+        if (data.school) {
+          getGrList(data.school, 0)
         } else {
+          data.grade = '';
+          data.class = '';
           let selects = document.getElementsByClassName("clSelect");
+          let selects2 = document.getElementsByClassName("gradeSelect");
 
           selects[0].innerHTML = '<option value="">请先选择学校和年级</option>';
+          selects2[0].innerHTML = '<option value="">请先选择学校</option>';
           form.render();
         }
       });
@@ -397,6 +394,7 @@
         if (data.school && data.grade) {
           getClList(data.school, data.grade, 0)
         } else {
+          data.class = '';
           let selects = document.getElementsByClassName("clSelect");
 
           selects[0].innerHTML = '<option value="">请先选择学校和年级</option>';
@@ -408,12 +406,16 @@
         let data = form.val("changeStForm");
 
 
-        if (data.school && data.grade) {
-          getClList(data.school, data.grade, 1)
+        if (data.school) {
+          getGrList(data.school, 1)
         } else {
+          data.grade = '';
+          data.class = '';
           let selects = document.getElementsByClassName("clSelect");
+          let selects2 = document.getElementsByClassName("gradeSelect");
 
           selects[1].innerHTML = '<option value="">请先选择学校和年级</option>';
+          selects2[0].innerHTML = '<option value="">请先选择学校</option>';
           form.render();
         }
       });
@@ -425,6 +427,7 @@
         if (data.school && data.grade) {
           getClList(data.school, data.grade, 1)
         } else {
+          data.class = '';
           let selects = document.getElementsByClassName("clSelect");
 
           selects[1].innerHTML = '<option value="">请先选择学校和年级</option>';
@@ -464,8 +467,9 @@
         let reqData = {
           id: changeInfo.id,
           school_id: changeInfo.school,
-          grade_no: changeInfo.grade,
-          grade: gradeMap[changeInfo.grade],
+          grade_id: changeInfo.grade,
+          grade_no: gradeMap[changeInfo.grade].no,
+          grade: gradeMap[changeInfo.grade].name,
           class_id: changeInfo.class,
           class_no: clMap[changeInfo.class].no,
           class: clMap[changeInfo.class].name,
@@ -494,7 +498,7 @@
 
 
     //  刷新table
-    function reloadTable(name = '', idnumber = '',  class_id = '', page = '1') {
+    function reloadTable(name = '', idnumber = '', class_id = '', page = '1') {
       let reqData = {
         name,
         school_id: '',
@@ -556,7 +560,7 @@
 
                 //首次不执行
                 if (!first) {
-                  reloadTable(name, idnumber ,class_id, String(obj.curr));
+                  reloadTable(name, idnumber, class_id, String(obj.curr));
                 }
               }
             });
@@ -653,13 +657,13 @@
 
 
 
-    function getClList(school_id, grade_no, num) {
+    function getClList(school_id, grade_id, num) {
       clMap = {};
 
       let reqData = {
         class_name: '',
         class_no: '',
-        grade_no,
+        grade_id,
         school_id,
         page: '1',
         epage: '100'
@@ -693,6 +697,48 @@
 
               form.render("select");
             })
+          } else {
+            layer.msg(res.msg);
+          }
+        })
+      })
+    }
+
+    function getGrList(school_id, num) {
+      grMap = {};
+
+      let reqData = {
+        grade_name: '',
+        grade_no: '',
+        school_id,
+        page: '1',
+        epage: '100'
+      }
+
+      api.grade.getList(reqData, function (res) {
+        layui.use(['form', 'layer'], function () {
+          let form = layui.form, layer = layui.layer;
+
+          if (res.code == '000') {
+            let selects = document.getElementsByClassName("gradeSelect");
+
+            selects[num].innerHTML = '<option value=""></option';
+
+            res.rows.list.forEach(item => {
+              let option = document.createElement("option");
+
+              option.value = item.id;
+              option.innerHTML = item.grade_name;
+
+              gradeMap[item.id] = {
+                name: item.grade_name,
+                no: item.grade_no
+              };
+
+              selects[num].appendChild(option);
+            });
+
+            form.render("select");
           } else {
             layer.msg(res.msg);
           }

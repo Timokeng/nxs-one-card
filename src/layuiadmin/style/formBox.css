@@ -18,6 +18,8 @@
     line-height: 38px;
     text-align: center;
     color: rgb(202, 199, 199);
+    width: auto;
+    margin-left: 20px;
 }
 
 .form-box .input-box .layui-input, .layui-textarea {
