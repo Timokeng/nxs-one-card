@@ -229,6 +229,7 @@
               if (data.school) {
                 getGrList(data.school, 0)
               } else {
+                data.grade = '';
                 let selects = document.getElementsByClassName("gradeSelect");
 
                 selects[0].innerHTML = '<option value="">请先选择学校</option>';
@@ -243,6 +244,7 @@
               if (data.school) {
                 getGrList(data.school, 1)
               } else {
+                data.grade = '';
                 let selects = document.getElementsByClassName("gradeSelect");
 
                 selects[1].innerHTML = '<option value="">请先选择学校</option>';
