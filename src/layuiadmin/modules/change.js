@@ -4,7 +4,7 @@ let cbox = document.getElementById("changeBox");
 let changeClassInfo = {};
 let changeTemplateInfo = {};
 let changeWxInfo = {};
-let changeUserInfo
+let changeUserInfo = {};
 
 changeBt.addEventListener("click", function () {
     if (changeBt.innerText.indexOf('班级') >= 0) {
@@ -56,6 +56,54 @@ changeBt.addEventListener("click", function () {
                 }
             })
 
+        })
+    } else if (changeBt.innerText.indexOf('年级') >= 0) {
+        // 数据预处理
+        let onlyGrade = gradeData.filter(function (item) {
+            return item.level === '2';
+        })
+
+        layui.use(['dtree', 'layer', 'form'], async function () {
+            var dtree = layui.dtree;
+            var layer = layui.layer;
+            var form = layui.form;
+
+            // 有效性判断
+            if (onlyGrade.length < 1) {
+                layer.msg("请至少选择一个有效年级");
+                return;
+            }
+            if (onlyGrade.length > 1) {
+                layer.msg("每次只能修改一个有效年级");
+                return;
+            }
+
+            // let grade = '', school = '';
+
+            // classData.forEach(item => {
+            //     if(item.nodeId === onlyClass.parentId) {
+            //         grade = 'G' + item.nodeId.charAt(item.nodeId.length - 1);
+            //         school = item.parentId;
+            //     }
+            // });
+            let gradeId = onlyGrade[0].nodeId.slice(1);
+
+            api.grade.getDetail({ id: gradeId }, (res) => {
+                if (res.code === '000') {
+                    let data = {
+                        id: res.result.id,
+                        school: res.result.school_id,
+                        grade: res.result.grade_name,
+                        gradeNo: res.result.grade_no
+                    }
+
+                    form.val("changeGrForm", data);
+                    cbox.style.display = 'block';
+                    abox.style.display = "none";
+                } else {
+                    layer.msg(res.msg);
+                }
+            })
         })
     } else if (changeBt.innerText.indexOf('模板') >= 0) {
         layui.use(['layer', 'table', 'form'], function () {
@@ -249,6 +297,44 @@ function changeCl() {
     })
 }
 
+function changeGr() {
+    let newInfo = {};
+    let validate = false;
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        var layer = layui.layer;
+
+        newInfo = form.val("changeGrForm");
+        for (let key in newInfo) {
+            if (!newInfo[key]) {
+                layer.msg("有必填数据为空");
+                validate = false;
+                return
+            }
+        }
+        validate = true;
+
+        let reqData = {
+            id: newInfo.id,
+            school_id: newInfo.school,
+            grade_no: newInfo.gradeNo,
+            grade_name: newInfo.grade,
+        }
+
+        api.grade.change(reqData, (res)=>{
+            if(res.code === '000') {
+                layer.msg("成功修改原 " + newInfo.id + " 的年级信息");
+                setTimeout(() => {
+                    cbox.style.display = "none";
+                    reloadTree();
+                }, 500);
+            } else {
+                layer.msg(res.msg);
+            }
+        })
+    })
+}
+
 function changeTe() {
     let newInfo = {};
     let validate = false;
@@ -293,6 +379,7 @@ function changeTe() {
         })
     })
 }
+
 
 function changeWx() {
     let newInfo = {};

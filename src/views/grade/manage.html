@@ -72,8 +72,7 @@
       <div class="change-box layui-anim layui-anim-scale" id="changeBox">
         <div class="header">
           <div>修改年级信息</div>
-          <div onclick="cbox.style.display = 'none'"><i
-              class="layui-icon layui-icon-close"></i></div>
+          <div onclick="cbox.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
         </div>
         <div class="form-box layui-form" lay-filter="changeGrForm">
           <div class="layui-form-item input-box">
@@ -135,7 +134,7 @@
     }).use(['index', 'console']);
 
 
-    var classData = [];//重要数据，tree选中的年级信息
+    var gradeData = [];//重要数据，tree选中的年级信息
 
 
     getScList();
@@ -152,7 +151,6 @@
             $ = layui.jquery;
 
           if (res.code === "000") {
-
             var DemoTree = dtree.render({
               elem: "#demoTree",
               data: res.result, // 使用data加载
@@ -162,12 +160,11 @@
               checkbarData: "halfChoose",
               checkbarFun: {
                 chooseDone: function (checkbarNodesParam) {
-                  classData = checkbarNodesParam;
+                  gradeData = checkbarNodesParam;
                   return;
                 }
               },
             });
-
           } else {
             layer.msg(res.msg);
           }
@@ -203,11 +200,8 @@
               selects[i].innerHTML = selects[0].innerHTML;
             }
 
-            layui.use('form', function () {
-              let form = layui.form;
+            form.render("select");
 
-              form.render("select");
-            })
           } else {
             layer.msg(res.msg);
           }
