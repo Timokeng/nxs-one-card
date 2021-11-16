@@ -152,7 +152,7 @@ function addCl() {
 
         let reqData = {
             school_id: addInfo.school,
-            grade_no: addInfo.grade,
+            grade_id: addInfo.grade,
             class_name: addInfo.class,
             class_no: addInfo.classNo
         }

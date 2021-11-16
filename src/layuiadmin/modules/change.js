@@ -43,14 +43,19 @@ changeBt.addEventListener("click", function () {
                     let data = {
                         id: res.result.id,
                         school: res.result.school_id,
-                        grade: res.result.grade_no,
+                        grade: res.result.grade_id,
                         class: res.result.class_name,
                         classNo: res.result.class_no
                     }
 
-                    form.val("changeClForm", data);
-                    cbox.style.display = 'block';
-                    abox.style.display = "none";
+                    getGrList(res.result.school_id, 1);
+
+                    setTimeout(() => {
+                        form.val("changeClForm", data);
+
+                        cbox.style.display = 'block';
+                        abox.style.display = "none";
+                    }, 500);
                 } else {
                     layer.msg(res.msg);
                 }
@@ -278,13 +283,13 @@ function changeCl() {
         let reqData = {
             id: newInfo.id,
             school_id: newInfo.school,
-            grade_no: newInfo.grade,
+            grade_id: newInfo.grade,
             class_name: newInfo.class,
             class_no: newInfo.classNo
         }
 
-        api.class.change(reqData, (res)=>{
-            if(res.code === '000') {
+        api.class.change(reqData, (res) => {
+            if (res.code === '000') {
                 layer.msg("成功修改原 " + newInfo.id + " 的班级信息");
                 setTimeout(() => {
                     cbox.style.display = "none";
@@ -321,8 +326,8 @@ function changeGr() {
             grade_name: newInfo.grade,
         }
 
-        api.grade.change(reqData, (res)=>{
-            if(res.code === '000') {
+        api.grade.change(reqData, (res) => {
+            if (res.code === '000') {
                 layer.msg("成功修改原 " + newInfo.id + " 的年级信息");
                 setTimeout(() => {
                     cbox.style.display = "none";
@@ -355,7 +360,7 @@ function changeTe() {
         let detail = detailData.map(item => {
             return item.name;
         })
-        
+
         let reqData = {
             id: newInfo.id,
             school_id: newInfo.school,

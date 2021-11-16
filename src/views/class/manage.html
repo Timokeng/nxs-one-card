@@ -49,7 +49,7 @@
           <div class="layui-form-item input-box">
             <label class="layui-form-label">学校</label>
             <div class="layui-input-block">
-              <select class="scSelect" name="school" lay-verify="required">
+              <select class="scSelect" name="school" lay-verify="required" lay-filter="addclass-sc">
                 <option value=""></option>
               </select>
             </div>
@@ -58,10 +58,7 @@
             <label class="layui-form-label">年级</label>
             <div class="layui-input-block">
               <select class="gradeSelect" name="grade" lay-verify="required">
-                <option value=""></option>
-                <option value="G1">高一</option>
-                <option value="G2">高二</option>
-                <option value="G3">高三</option>
+                <option value="">请先选择学校</option>
               </select>
             </div>
           </div>
@@ -83,8 +80,7 @@
       <div class="change-box layui-anim layui-anim-scale" id="changeBox">
         <div class="header">
           <div>修改班级信息</div>
-          <div onclick="cbox.style.display = 'none'"><i
-              class="layui-icon layui-icon-close"></i></div>
+          <div onclick="cbox.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
         </div>
         <div class="form-box layui-form" lay-filter="changeClForm">
           <div class="layui-form-item input-box">
@@ -96,7 +92,7 @@
           <div class="layui-form-item input-box">
             <label class="layui-form-label">学校</label>
             <div class="layui-input-block">
-              <select class="scSelect" name="school" lay-verify="required">
+              <select class="scSelect" name="school" lay-verify="required" lay-filter="changeclass-sc">
                 <option value=""></option>
               </select>
             </div>
@@ -105,10 +101,7 @@
             <label class="layui-form-label">年级</label>
             <div class="layui-input-block">
               <select class="gradeSelect" name="grade" lay-verify="required">
-                <option value=""></option>
-                <option value="G1">高一</option>
-                <option value="G2">高二</option>
-                <option value="G3">高三</option>
+                <option value="">请先选择学校</option>
               </select>
             </div>
           </div>
@@ -158,6 +151,8 @@
 
 
     var classData = [];//重要数据，tree选中的班级信息
+
+    let grMap = {};
 
 
     getScList();
@@ -225,11 +220,78 @@
               selects[i].innerHTML = selects[0].innerHTML;
             }
 
-            layui.use('form', function () {
-              let form = layui.form;
+            form.render("select");
 
-              form.render("select");
-            })
+            // 当所需学校和年级发生变化时为，修改班级选择框信息
+            form.on('select(addclass-sc)', function () {
+              let data = form.val("addClForm");
+
+              if (data.school) {
+                getGrList(data.school, 0)
+              } else {
+                let selects = document.getElementsByClassName("gradeSelect");
+
+                selects[0].innerHTML = '<option value="">请先选择学校</option>';
+                form.render();
+              }
+            });
+
+            form.on('select(changeclass-sc)', function () {
+              let data = form.val("changeClForm");
+
+
+              if (data.school) {
+                getGrList(data.school, 1)
+              } else {
+                let selects = document.getElementsByClassName("gradeSelect");
+
+                selects[1].innerHTML = '<option value="">请先选择学校</option>';
+                form.render();
+              }
+            });
+          } else {
+            layer.msg(res.msg);
+          }
+        })
+      })
+    }
+
+
+    function getGrList(school_id, num) {
+      grMap = {};
+
+      let reqData = {
+        grade_name: '',
+        grade_no: '',
+        school_id,
+        page: '1',
+        epage: '100'
+      }
+
+      api.grade.getList(reqData, function (res) {
+        layui.use(['form', 'layer'], function () {
+          let form = layui.form, layer = layui.layer;
+
+          if (res.code == '000') {
+            let selects = document.getElementsByClassName("gradeSelect");
+
+            selects[num].innerHTML = '<option value=""></option';
+
+            res.rows.list.forEach(item => {
+              let option = document.createElement("option");
+
+              option.value = item.id;
+              option.innerHTML = item.grade_name;
+
+              grMap[item.id] = {
+                name: item.grade_name,
+                no: item.grade_no
+              };
+
+              selects[num].appendChild(option);
+            });
+
+            form.render("select");
           } else {
             layer.msg(res.msg);
           }
