@@ -46,6 +46,51 @@ deleteBt.addEventListener("click", function () {
                 },
             });
         })
+    } else if (deleteBt.innerText.indexOf('年级') >= 0) {
+        layui.use('layer', function () {
+            var layer = layui.layer;
+
+            if (gradeData.length < 1) {
+                layer.msg("请至少选择一个有效年级");
+                return;
+            }
+
+            let arr = [];
+
+            // 对年级信息数据做预处理，只留下年级
+            gradeData.forEach(function (item) {
+                if(item.level === '2') {
+                    arr.push(item.nodeId.slice(1));
+                }
+            })
+
+
+            layer.open({
+                type: 1,
+                content: '确定删除选中的 ' + arr.length + '个年级吗？',
+                skin: 'delete-confirm',
+                area: ['300px', '200px'],
+                btn: ['确定', '取消'],
+                yes: function (index, layero) {
+                    console.log('确定删除');
+
+                    api.grade.delete({id: arr}, (res)=>{
+                        if(res.code === '000'){
+                            layer.msg(res.msg)
+                            reloadTree();
+                        } else {
+                            layer.msg(res.msg)
+                        }
+                    })
+
+                    layer.close(index);
+                },
+                btn2: function (index, layero) {
+                    console.log('取消删除');
+                    layer.close(index);
+                },
+            });
+        })
     } else if (deleteBt.innerText.indexOf('模板') >= 0) {
         let checkStatus = {},
             validate = false;
