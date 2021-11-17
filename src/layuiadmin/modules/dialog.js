@@ -212,7 +212,7 @@ function handleConfigTemGr() {
         if (temp.grade) {
             setGr2(temp.grade.split(','));
         } else {
-            setTree2([]);
+            setGr2([]);
         }
 
         dlb.style.display = 'flex';

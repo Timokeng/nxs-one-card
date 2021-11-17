@@ -37,7 +37,10 @@ addBt.addEventListener("click", function () {
 
         selects[0].innerHTML = '<option value="">请先选择学校和年级</option>';
         selects2[0].innerHTML = '<option value="">请先选择学校</option>';
-        form.render();
+        layui.use(['form', 'layer'], function () {
+            let form = layui.form
+            form.render();
+        })
     }
 
     if (addBt.innerText.indexOf("班级") != -1) {
@@ -46,7 +49,10 @@ addBt.addEventListener("click", function () {
         let selects = document.getElementsByClassName("gradeSelect");
 
         selects[0].innerHTML = '<option value="">请先选择学校</option>';
-        form.render();
+        layui.use(['form', 'layer'], function () {
+            let form = layui.form
+            form.render();
+        })
     }
 
     if (addBt.innerText.indexOf("年级") != -1) {
