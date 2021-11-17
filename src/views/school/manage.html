@@ -41,10 +41,18 @@
                     </div>
                 </div>
                 <div class="layui-form-item input-box">
+                    <label class="layui-form-label">所属市</label>
+                    <div class="layui-input-block">
+                        <select class="pAreaSelect" name="pArea" lay-verify="required" lay-filter="add-pa">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item input-box">
                     <label class="layui-form-label">所属区县</label>
                     <div class="layui-input-block">
                         <select class="areaSelect" name="area" lay-verify="required">
-                            <option value=""></option>
+                            <option value="">请先选择所诉市</option>
                         </select>
                     </div>
                 </div>
@@ -76,10 +84,18 @@
                     </div>
                 </div>
                 <div class="layui-form-item input-box">
+                    <label class="layui-form-label">所属市</label>
+                    <div class="layui-input-block">
+                        <select class="pAreaSelect" name="pArea" lay-verify="required" lay-filter="change-pa">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item input-box">
                     <label class="layui-form-label">所属区县</label>
                     <div class="layui-input-block">
                         <select class="areaSelect" name="area" lay-verify="required">
-                            <option value=""></option>
+                            <option value="">请先选择所属市</option>
                         </select>
                     </div>
                 </div>
@@ -155,14 +171,9 @@
             });
         })
 
-        var areaMap = {};
 
-        getAreaList('530601');
-
-        // 手动延迟
-        setTimeout(() => {
-            reloadTable();
-        }, 500)
+        getAreaList('0');
+        reloadTable();
 
 
 
@@ -189,8 +200,9 @@
                             let one = {
                                 id: item.id,
                                 name: item.schoolname,
-                                area: areaMap[item.areaid],
+                                area: item.name,
                                 areaid: item.areaid,
+                                areapid: item.areapid,
                                 address: item.address
                             }
 
@@ -217,13 +229,13 @@
                             , limit: 10
                             , curr: page
                             , count: res.rows.total
-                            , layout: ['prev', 'page', 'next', 'count', 'skip'] 
+                            , layout: ['prev', 'page', 'next', 'count', 'skip']
                             , jump: function (obj, first) {
                                 //obj包含了当前分页的所有参数，比如：
 
                                 //首次不执行
                                 if (!first) {
-                                    reloadTable(schoolname, areaid,String(obj.curr));
+                                    reloadTable(schoolname, areaid, String(obj.curr));
                                 }
                             }
                         });
@@ -235,30 +247,76 @@
         }
 
 
-        function getAreaList(id) {
+        function getAreaList(id, num = 0) {
             api.getAreaList({ pid: id }, function (res) {
                 layui.use(['form', 'layer'], function () {
                     let form = layui.form, layer = layui.layer;
 
                     if (res.code == '000') {
-                        let selects = document.getElementsByClassName("areaSelect");
+                        if (id == 0) {
+                            let selects = document.getElementsByClassName("pAreaSelect");
 
-                        res.result.forEach(item => {
-                            let option = document.createElement("option");
+                            res.result.forEach(item => {
+                                let option = document.createElement("option");
 
-                            option.value = item.areaid;
-                            option.innerHTML = item.name;
+                                option.value = item.areaid;
+                                option.innerHTML = item.name;
 
-                            areaMap[item.areaid] = item.name;
 
-                            selects[0].appendChild(option);
-                        })
+                                selects[0].appendChild(option);
+                            })
 
-                        for (let i = 1; i < selects.length; i++) {
-                            selects[i].innerHTML = selects[0].innerHTML;
+                            for (let i = 1; i < selects.length; i++) {
+                                selects[i].innerHTML = selects[0].innerHTML;
+                            }
+
+                            form.on('select(add-pa)', function () {
+                                let data = form.val("addSchoolForm");
+
+                                data.area = '';
+                                let selects = document.getElementsByClassName("areaSelect");
+
+                                selects[0].innerHTML = '<option value="">请先选择所属市</option>';
+
+                                if (data.pArea) {
+                                    getAreaList(data.pArea, 0)
+                                }
+
+                                form.render();
+                            });
+
+                            form.on('select(change-pa)', function () {
+                                let data = form.val("changeSchoolForm");
+
+                                data.area = '';
+                                let selects = document.getElementsByClassName("areaSelect");
+
+                                selects[1].innerHTML = '<option value="">请先选择所属市</option>';
+
+                                if (data.pArea) {
+                                    getAreaList(data.pArea, 1)
+                                }
+
+                                form.render();
+                            });
+
+                            form.render();
+                        } else {
+                            let selects = document.getElementsByClassName("areaSelect");
+
+                            selects[num].innerHTML = '<option></option>';
+
+                            res.result.forEach(item => {
+                                let option = document.createElement("option");
+
+                                option.value = item.areaid;
+                                option.innerHTML = item.name;
+
+                                selects[num].appendChild(option);
+                            });
+
+                            form.render();
                         }
-
-                        form.render('select');
                     } else {
                         layer.msg(res.msg);
                     }

@@ -251,13 +251,18 @@ changeBt.addEventListener("click", function () {
             changeInfo = checkStatus.data[0];
 
             changeInfo.area = changeInfo.areaid;
+            changeInfo.pArea = changeInfo.areapid;
 
-            // 打卡changeBox，关闭addBox
-            cbox.style.display = 'block';
-            abox.style.display = "none";
+            getAreaList(changeInfo.pArea, 1);
 
-            // 把需要显示的值写入表单
-            form.val("changeSchoolForm", changeInfo);
+            setTimeout(() => {
+                // 打卡changeBox，关闭addBox
+                cbox.style.display = 'block';
+                abox.style.display = "none";
+
+                // 把需要显示的值写入表单
+                form.val("changeSchoolForm", changeInfo);
+            }, 500);
         })
     }
 })
