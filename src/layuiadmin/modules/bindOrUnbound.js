@@ -180,7 +180,7 @@ function deleteUserPower() {
 }
 
 function setTree2(arr) {
-    let map = {}; 
+    let map = {};
 
     treeData2 = [];
     powerMap = {};
@@ -246,27 +246,8 @@ function changePower() {
 
 
 // 缴费模板页面配置班级相关函数
-function getGrTree() {
-    treeGr1 = [
-        {
-            id: "G1",
-            title: "高一年级",
-            parentId: '0',
-            checkArr: '0'
-        },
-        {
-            id: "G2",
-            title: "高二年级",
-            parentId: '0',
-            checkArr: '0'
-        },
-        {
-            id: "G3",
-            title: "高三年级",
-            parentId: '0',
-            checkArr: '0'
-        },
-    ];
+async function getGrTree(id) {
+    treeGr1 = await getGrTreeData(id);
 
     layui.use(['dtree', 'layer', 'jquery'], function () {
         var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
@@ -306,7 +287,7 @@ function congfigTemGr() {
     layui.use(['dtree', 'layer', 'jquery'], async function () {
         var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
 
-        
+
         grChoose1.forEach(item => {
             if (grMap[item.nodeId] === undefined) {
                 let one = {
@@ -324,7 +305,7 @@ function congfigTemGr() {
         })
 
         // 发送请求
-        let res = await changeGr();
+        let res = await changeGrTree();
 
         if (res.code === '000') {
             dtree.render({
@@ -346,7 +327,7 @@ function congfigTemGr() {
     })
 }
 
-function deleteTemGr() {
+async function deleteTemGr() {
     layui.use(['dtree', 'layer', 'jquery'], async function () {
         var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
 
@@ -371,9 +352,10 @@ function deleteTemGr() {
             grMap[item.id] = index;
         })
 
-
         // 发送请求
-        let res = await changeGr();
+        let res = await changeGrTree();
+
+        console.log(res);
 
         if (res.code === '000') {
             dtree.render({
@@ -436,18 +418,56 @@ function setGr2(arr) {
     })
 }
 
-function changeGr() {
-    let reqData = {
-        id: temp.id,
-        school_id: temp.school,
-        grade_no: grades.length > 0? grades:'',
-        item_no: temp.templateNo,
-        item_name: temp.name,
-        amt: temp.sum,
-        remark: temp.detail
-    }
-
+function getGrTreeData(id) {
     return new Promise((resolve, reject) => {
+        let reqData = {
+            grade_name: '',
+            grade_no: '',
+            school_id: id,
+            page: '1',
+            epage: '100'
+        }
+
+        api.grade.getList(reqData, (res) => {
+            layui.use(['layer'], function () {
+                let layer = layui.layer;
+
+                if (res.code == '000') {
+                    let data = [];
+
+                    res.rows.list.forEach(item => {
+                        let one = {
+                            id: item.id,
+                            title: item.grade_name,
+                            parentId: '0',
+                            checkArr: '0'
+                        }
+
+                        data.push(one);
+                    })
+
+                    resolve(data);
+                } else {
+                    layer.msg(res.msg)
+                    resolve([]);
+                }
+            })
+        })
+    })
+}
+
+function changeGrTree() {   
+    return new Promise((resolve, reject) => {
+        let reqData = {
+            id: temp.id,
+            school_id: temp.school,
+            grade_id: grades.length > 0 ? grades : '',
+            item_no: temp.templateNo,
+            item_name: temp.name,
+            amt: temp.sum,
+            remark: temp.detail
+        }
+
         api.template.change(reqData, (res) => {
             setTimeout(() => {
                 reloadTable();

@@ -135,14 +135,16 @@ changeBt.addEventListener("click", function () {
             changeTemplateInfo = checkStatus.data[0];
             // 这里要写一段数据写入，把明细部分数据写入detailData
             // 这个数据还是假的
-            changeTemplateInfo.detail.split(",").forEach((item, index, arr) => {
-                let one = {
-                    name: item,
-                    sum: Number(changeTemplateInfo.sum) / arr.length
-                }
+            if (changeTemplateInfo.detail) {
+                changeTemplateInfo.detail.split(",").forEach((item, index, arr) => {
+                    let one = {
+                        name: item,
+                        sum: Number(changeTemplateInfo.sum) / arr.length
+                    }
 
-                detailData.push(one);
-            })
+                    detailData.push(one);
+                })
+            }
 
             let changeInfo = {
                 id: changeTemplateInfo.id,

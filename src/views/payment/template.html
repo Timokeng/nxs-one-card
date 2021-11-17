@@ -258,16 +258,8 @@
       dtree: '{/}../../layuiadmin/style/dtree/dtree'
     }).use(['index', 'console']);
 
-    gradeMap = {
-      G1: '高一',
-      G2: '高二',
-      G3: '高三'
-    }
-
-    getGrTree();
     getScList();
     reloadTable();
-
 
     // ------------------- table组件 -------------------------
     layui.use('table', function () {
@@ -352,16 +344,6 @@
             res.rows.list.forEach(item => {
               let time = new Date(parseInt(item.addtime) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
 
-              let str = '';
-
-              let arr = item.grade_no.split(',');
-
-              arr = arr.map(id => {
-                return gradeMap[id];
-              })
-
-              str = arr.join(',');
-
               let one = {
                 id: item.id,
                 name: item.item_name,
@@ -369,8 +351,8 @@
                 date: time,
                 schoolname: item.schoolname,
                 school: item.school_id,
-                gradename: str,
-                grade: item.grade_no,
+                gradename: item.grade_name,
+                grade: item.grade_id,
                 sum: item.amt,
                 detail: item.remark
               };

@@ -151,7 +151,7 @@ function handleConfigUserPower() {
 
         console.log()
 
-        if(checkStatus.data[0].role == '1') {
+        if (checkStatus.data[0].role == '1') {
             layer.msg('超级管理员默认拥有所有学校权限，不需配置');
             return;
         }
@@ -209,18 +209,22 @@ function handleConfigTemGr() {
 
         console.log(temp);
 
-        if (temp.grade) {
-            setGr2(temp.grade.split(','));
-        } else {
-            setGr2([]);
-        }
+        getGrTree(temp.school);
 
-        dlb.style.display = 'flex';
-        ma.style.overflow = 'hidden';
-        for (let i = 0; i < dla.children.length; i++) {
-            dla.children[i].style.display = 'none';
-        }
-        dlt.style.display = 'flex';
+        setTimeout(() => {
+            if (temp.grade) {
+                setGr2(temp.grade.split(','));
+            } else {
+                setGr2([]);
+            }
+
+            dlb.style.display = 'flex';
+            ma.style.overflow = 'hidden';
+            for (let i = 0; i < dla.children.length; i++) {
+                dla.children[i].style.display = 'none';
+            }
+            dlt.style.display = 'flex';
+        }, 500)
     }
 }
 
