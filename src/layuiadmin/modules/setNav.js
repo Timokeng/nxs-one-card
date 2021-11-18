@@ -12,31 +12,36 @@ var navTreeData = [
     },
     {
         id: '3',
-        title: '班级管理',
+        title: '年级管理',
         checkArr: "0",
     },
     {
         id: '4',
-        title: '学生管理',
+        title: '班级管理',
         checkArr: "0",
     },
     {
         id: '5',
-        title: '缴费管理',
+        title: '学生管理',
         checkArr: "0",
     },
     {
         id: '6',
-        title: '权限管理',
+        title: '缴费管理',
         checkArr: "0",
     },
     {
         id: '7',
-        title: '微信管理',
+        title: '权限管理',
         checkArr: "0",
     },
     {
         id: '8',
+        title: '微信管理',
+        checkArr: "0",
+    },
+    {
+        id: '9',
         title: '报表管理',
         checkArr: "0",
     },
