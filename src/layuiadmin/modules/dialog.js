@@ -228,6 +228,11 @@ function handleConfigTemGr() {
     }
 }
 
+function handlePayType() {
+    clearForm('payType');
+    dlb.style.display = 'flex';
+    ma.style.overflow = 'hidden';
+}
 
 function closeDialog() {
     dlb.style.display = 'none';
