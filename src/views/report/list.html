@@ -37,10 +37,7 @@
                     <label class="layui-form-label">年级</label>
                     <div class="layui-input-block">
                         <select class="grSelect" name="grade" lay-verify="required" lay-filter="condition-gr">
-                            <option value=""></option>
-                            <option value="G1">高一</option>
-                            <option value="G2">高二</option>
-                            <option value="G3">高三</option>
+                            <option value="">请先选择学校</option>
                         </select>
                     </div>
                 </div>
@@ -110,7 +107,8 @@
             index: 'lib/index' //主入口模块
         }).use(['index', 'console']);
 
-        let scMap = {};
+        let scMap = {},
+            gradeMap = {};
 
 
         getScList();
@@ -145,19 +143,15 @@
 
                 if (data.school) {
                     getItemList(data.school);
+                    getGrList(data.school, 0);
                 } else {
-                    let selects = document.getElementsByClassName("itSelect");
+                    let selects1 = document.getElementsByClassName("itSelect");
+                    let selects2 = document.getElementsByClassName("grSelect");
+                    let selects3 = document.getElementsByClassName("clSelect");
 
-                    selects[0].innerHTML = '<option value="">请先选择学校</option>';
-                    form.render();
-                }
-
-                if (data.school && data.grade) {
-                    getClList(data.school, data.grade, 0)
-                } else {
-                    let selects = document.getElementsByClassName("clSelect");
-
-                    selects[0].innerHTML = '<option value="">请先选择学校和年级</option>';
+                    selects1[0].innerHTML = '<option value="">请先选择学校</option>';
+                    selects2[0].innerHTML = '<option value="">请先选择学校</option>';
+                    selects3[0].innerHTML = '<option value="">请先选择学校和年级</option>';
                     form.render();
                 }
             });
@@ -200,17 +194,17 @@
                     if (res.code == '000') {
                         let collect = document.getElementById("collect-sum");
 
-                        res.rows.count.wj = res.rows.count.wj? res.rows.count.wj:0;
-                        res.rows.count.yj = res.rows.count.yj? res.rows.count.yj:0;
+                        res.rows.count.wj = res.rows.count.wj ? res.rows.count.wj : 0;
+                        res.rows.count.yj = res.rows.count.yj ? res.rows.count.yj : 0;
 
                         collect.innerHTML = `已缴费 ${res.rows.count.yj} 人， 未缴费 ${res.rows.count.wj} 人`;
 
 
                         let tabData = [];
 
-                        if(!Array.isArray(res.rows.list)) {
+                        if (!Array.isArray(res.rows.list)) {
                             let arr = [];
-                            for(key in res.rows.list) {
+                            for (key in res.rows.list) {
                                 arr.push(res.rows.list[key]);
                             }
 
@@ -393,7 +387,47 @@
             })
         }
 
+        function getGrList(school_id, num) {
+            gradeMap = {};
 
+            let reqData = {
+                grade_name: '',
+                grade_no: '',
+                school_id,
+                page: '1',
+                epage: '100'
+            }
+
+            api.grade.getList(reqData, function (res) {
+                layui.use(['form', 'layer'], function () {
+                    let form = layui.form, layer = layui.layer;
+
+                    if (res.code == '000') {
+                        let selects = document.getElementsByClassName("grSelect");
+
+                        selects[num].innerHTML = '<option value=""></option';
+
+                        res.rows.list.forEach(item => {
+                            let option = document.createElement("option");
+
+                            option.value = item.id;
+                            option.innerHTML = item.grade_name;
+
+                            gradeMap[item.id] = {
+                                name: item.grade_name,
+                                no: item.grade_no
+                            };
+
+                            selects[num].appendChild(option);
+                        });
+
+                        form.render("select");
+                    } else {
+                        layer.msg(res.msg);
+                    }
+                })
+            })
+        }
 
         function getClList(school_id, grade_no, num) {
 
