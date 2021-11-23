@@ -57,7 +57,7 @@
         </div>
         <div class="layui-form-item input-box">
           <label class="layui-form-label">支付方式</label>
-          <div class="layui-input-block" onclick="handlePayType()">
+          <div class="layui-input-block" onclick="handlePayType(0)">
             <input type="text" name="payType" placeholder="请输入" autocomplete="off" class="layui-input" disabled>
           </div>
         </div>
@@ -104,7 +104,7 @@
         </div>
         <div class="layui-form-item input-box">
           <label class="layui-form-label">支付方式</label>
-          <div class="layui-input-block">
+          <div class="layui-input-block" onclick="handlePayType(1)">
             <input type="text" name="payType" placeholder="请输入" autocomplete="off" class="layui-input">
           </div>
         </div>
@@ -145,18 +145,9 @@
           <div class="title">缴费方式选择</div>
           <div onclick="closeDialog()"><i class="layui-icon layui-icon-close"></i></div>
         </div>
-        <div class="type-box layui-form" lay-filter="payType">
-          <div class="row">
-            <input type="checkbox" name="" title="微信" lay-skin="primary">
-          </div>
-          <div class="row">
-            <input type="checkbox" name="" title="支付宝" lay-skin="primary">
-          </div>
-          <div class="row">
-            <input type="checkbox" name="" title="农行" lay-skin="primary">
-          </div>
+        <div id="payType" class="type-box layui-form" lay-filter="payType">
         </div>
-        <div class="bootom-btn-box"><button class="layui-btn" onclick="">确定</button></div>
+        <div class="bootom-btn-box"><button class="layui-btn" onclick="surePayType()">确定</button></div>
       </div>
     </div>
   </div>
@@ -186,17 +177,25 @@
           , { field: 'school', title: '绑定机构', width: "20%" }
           , { field: 'wxid', title: '公开ID', width: "20%" }
           , { field: 'mchid', title: '商户号', width: "15%" }
-          , { field: 'pay_type', title: '支付方式', width: "15%" }
+          , { field: 'pay_type_str', title: '支付方式', width: "15%" }
           , { field: 'token', title: 'Token', width: "20%" }
         ]]
       });
     })
 
-    let scMap = {};
+    let scMap = {},
+        payMap = {};
+
+    let payTypeTo = 0,
+        payTypeArr = [];
 
 
     getScList();
-    reloadTable();
+    getPayType();
+
+    setTimeout(() => {
+      reloadTable();
+    }, 300);
 
 
     // ----------------------部分独立方法---------------------------
@@ -218,11 +217,22 @@
             let tabData = [];
 
             res.rows.list.forEach(item => {
+              let arr = item.pay_type ? item.pay_type.split(',') : [],
+                  strArr = [];
+
+              arr.forEach(item => {
+                strArr.push(payMap[item]);
+              })
+
+
               let one = {
                 id: item.id,
                 school: scMap[item.school_id],
                 schoolid: item.school_id,
                 wxid: item.wxid,
+                mchid: item.mchid,
+                pay_type: item.pay_type,
+                pay_type_str: strArr.join(","),
                 token: item.token
               }
 
@@ -240,7 +250,7 @@
                 , { field: 'school', title: '绑定机构', width: "20%" }
                 , { field: 'wxid', title: '公开ID', width: "20%" }
                 , { field: 'mchid', title: '商户号', width: "15%" }
-                , { field: 'pay_type', title: '支付方式', width: "15%" }
+                , { field: 'pay_type_str', title: '支付方式', width: "15%" }
                 , { field: 'token', title: 'Token', width: "20%" }
               ]]
             });
@@ -308,6 +318,56 @@
             layer.msg(res.msg);
           }
         })
+      })
+    }
+
+
+    function getPayType() {
+      layui.use(['form', 'layer'], function () {
+          let form = layui.form, layer = layui.layer;
+
+          api.payType({nid: 'pay_type'}, (res) => {
+            if(res.code == '000') {
+              let dom = document.getElementById('payType');
+
+              for(let i = 0; i < res.result.length; i++) {
+                let row = document.createElement('div');
+                row.className = 'row';
+                let item = res.result[i];
+
+                payMap[item.value] = item.name;
+
+                row.innerHTML = `<input type="checkbox" name="${item.name}" value="${item.value}" title="${item.name}" lay-skin="primary">`;
+
+                dom.appendChild(row);
+              }
+
+              form.render();
+            } else {
+              layer.msg(res.msg);
+            }
+          })
+      })
+    }
+
+    function surePayType() {
+      layui.use(['form', 'layer'], function () {
+          let form = layui.form, layer = layui.layer;
+
+          const payType = form.val('payType');
+          const target = payTypeTo == 0 ? 'addWxForm' : 'changeWxForm';
+          let val = form.val(target);
+
+          let arr = [];
+          payTypeArr = [];
+          for(let key in payType) {
+            arr.push(key);
+            payTypeArr.push(payType[key]);
+          }
+          val.payType = arr.join(",");
+
+          form.val(target, val);
+          closeDialog();
       })
     }
     // ----------------------部分独立方法（结束）---------------------------

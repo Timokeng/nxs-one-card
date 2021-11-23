@@ -56,6 +56,7 @@ const api = {
     login: (data, suc) => req.post(baseUrl + '/commonApi/login', suc, data, true),
     out: (data, suc) => req.post(baseUrl + '/commonApi/logout', suc, data, true),
     wxLogin: (data, suc) => req.post(baseUrl + '/commonApi/qyWxLogin', suc, data, true),
+    payType: (data, suc) => req.post(baseUrl + '/commonApi/queryLinkage', suc, data),
     role: {
         add: (data, suc) => req.post(baseUrl + '/user_typeApi/userTypeAdd', suc, data),
         getList: (data, suc) => req.post(baseUrl + '/user_typeApi/userTypeList', suc, data),

@@ -178,6 +178,8 @@ changeBt.addEventListener("click", function () {
 
             changeWxInfo = checkStatus.data[0];
             changeWxInfo.school = changeWxInfo.schoolid;
+            payTypeArr = changeWxInfo.pay_type ? changeWxInfo.pay_type.split(",") : [];
+            changeWxInfo.payType = changeWxInfo.pay_type_str;
 
             cbox.style.display = 'block';
             form.val("changeWxForm", changeWxInfo);
@@ -415,6 +417,8 @@ function changeWx() {
             id: newInfo.id,
             school_id: newInfo.school,
             wxid: newInfo.wxid,
+            mchid: newInfo.mchid,
+            pay_type: payTypeArr,
             token: newInfo.token
         }
 

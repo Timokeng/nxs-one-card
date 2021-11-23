@@ -256,6 +256,8 @@ function addWx() {
         let reqData = {
             school_id: addInfo.school,
             wxid: addInfo.wxid,
+            mchid: addInfo.mchid,
+            pay_type: payTypeArr,
             token: addInfo.token
         }
 
