@@ -221,7 +221,11 @@
                   strArr = [];
 
               arr.forEach(item => {
-                strArr.push(payMap[item]);
+                if(payMap[item]) {
+                  strArr.push(payMap[item]);
+                } else {
+                  strArr.push('未知支付方式');
+                }
               })
 
 
