@@ -182,6 +182,7 @@ changeBt.addEventListener("click", function () {
             changeWxInfo.payType = changeWxInfo.pay_type_str;
 
             cbox.style.display = 'block';
+            abox.style.display = "none";
             form.val("changeWxForm", changeWxInfo);
         })
     } else if (changeBt.innerText.indexOf('用户') >= 0) {
