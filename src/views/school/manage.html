@@ -209,6 +209,11 @@
                             tabData.push(one);
                         })
 
+                        if(res.opt_auth != '') {
+                            let abtn = document.getElementById("addBt");
+                            abtn.style.display = "none";
+                        }
+
                         table.render({
                             elem: '#sc'
                             , id: 'idTest'
