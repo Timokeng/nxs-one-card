@@ -136,14 +136,17 @@ changeBt.addEventListener("click", function () {
             // 这里要写一段数据写入，把明细部分数据写入detailData
             // 这个数据还是假的
             if (changeTemplateInfo.detail) {
-                changeTemplateInfo.detail.split(",").forEach((item, index, arr) => {
+                let names = changeTemplateInfo.list_name.split(",");
+                let amts = changeTemplateInfo.list_amt.split(",");
+
+                for(let i = 0; i < names.length; i++) {
                     let one = {
-                        name: item,
-                        sum: Number(changeTemplateInfo.sum) / arr.length
+                        name: names[i],
+                        sum: amts[i]
                     }
 
                     detailData.push(one);
-                })
+                }
             }
 
             let changeInfo = {
@@ -367,8 +370,16 @@ function changeTe() {
         }
         validate = true;
 
-        let detail = detailData.map(item => {
-            return item.name;
+        // 拆封detialData，组成三个新数据
+        // detial,详情; names,缴费项目名称; amts,缴费项目金额
+        const detail = [];
+        const names = [];
+        const amts = [];
+
+        detailData.forEach(item => {
+            detail.push(item.name);
+            names.push(item.name);
+            amts.push(item.sum);
         })
 
         let reqData = {
@@ -378,7 +389,9 @@ function changeTe() {
             item_name: newInfo.name,
             item_no: newInfo.templateNo,
             amt: newInfo.sum,
-            remark: detail
+            remark: detail,
+            list_name: names,
+            list_amt: amts
         }
 
         api.template.change(reqData, function (res) {

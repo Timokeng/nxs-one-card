@@ -208,8 +208,17 @@ function addTe() {
         }
         validate = true;
 
-        let detail = detailData.map(item => {
-            return item.name;
+        // 拆封detialData，组成三个新数据
+        // detial,详情; names,缴费项目名称; amts,缴费项目金额
+
+        const detail = [];
+        const names = [];
+        const amts = [];
+
+        detailData.forEach(item => {
+            detail.push(item.name);
+            names.push(item.name);
+            amts.push(item.sum);
         })
 
         let reqData = {
@@ -218,7 +227,9 @@ function addTe() {
             item_name: addInfo.name,
             item_no: addInfo.templateNo,
             amt: addInfo.sum,
-            remark: detail
+            remark: detail,
+            list_name: names,
+            list_amt: amts
         }
 
         api.template.add(reqData, (res) => {
