@@ -16,6 +16,11 @@
   <link rel="stylesheet" href="../../layuiadmin/style/formBox.css">
   <link rel="stylesheet" href="../../layuiadmin/style/sideUpaload.css">
   <link rel="stylesheet" href="../../layuiadmin/style/table.css">
+  <style>
+    .layui-disabled, .layui-disabled:hover {
+      color: #000 !important;
+    }
+  </style>
 </head>
 
 <body>
@@ -38,6 +43,7 @@
           <button id="uploadStBt" class="layui-btn"><i class="layui-icon layui-icon-upload-drag"></i>导入学生信息</button>
           <button onclick="exportStTe()" class="layui-btn"><i class="layui-icon layui-icon-form"></i>下载学生信息导入模板</button>
           <button onclick="exportSt()" class="layui-btn"><i class="layui-icon layui-icon-export"></i>导出学生信息</button>
+          <button onclick="handleSelfPay()" class="layui-btn"><i class="layui-icon layui-icon-rmb"></i>自定义缴费金额</button>
           <button onclick="sub.style.display = 'block'" class="layui-btn"><i
               class="layui-icon layui-icon-cols"></i>打开下载列表</button>
         </div>
@@ -215,6 +221,55 @@
           </div>
         </div>
         <div class="btn-box"><button class="layui-btn" onclick="changeSt()">确定</button></div>
+      </div>
+      <div class="condition-box layui-anim layui-anim-scale" id="selfBox">
+        <div class="header">
+          <div>自定义缴费金额</div>
+          <div onclick="sbox.style.display = 'none'"><i class="layui-icon layui-icon-close"></i></div>
+        </div>
+        <div class="form-box layui-form" lay-filter="selfPayForm">
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">ID</label>
+            <div class="layui-input-block">
+              <input type="text" disabled name="id" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-block">
+              <input type="text" disabled name="name" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">学校</label>
+            <div class="layui-input-block">
+              <select disabled class="scSelect" name="school" lay-verify="required" lay-filter="changeclass-sc">
+                <option value=""></option>
+              </select>
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">缴费模板</label>
+            <div class="layui-input-block">
+              <select id="template" name="template" lay-verify="required" lay-filter="changeclass-sc">
+                <option value=""></option>
+              </select>
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">缴费金额</label>
+            <div class="layui-input-block">
+              <input type="text" name="amt" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item input-box">
+            <label class="layui-form-label">说明</label>
+            <div class="layui-input-block">
+              <input type="text" name="remark" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+        </div>
+        <div class="btn-box"><button class="layui-btn" onclick="setSelfPay()">确定</button></div>
       </div>
       <div class="table-box">
         <div class="header">学生信息</div>
@@ -751,6 +806,7 @@
   <script src="../../layuiadmin/modules/add.js"></script>
   <script src="../../layuiadmin/modules/upload.js"></script>
   <script src="../../layuiadmin/modules/exportInfo.js"></script>
+  <script src="../../layuiadmin/modules/selfPay.js"></script>
 </body>
 
 </html>

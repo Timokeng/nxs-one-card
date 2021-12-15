@@ -104,6 +104,7 @@ const api = {
         getList: (data, suc) => req.post(baseUrl + '/itemsApi/itemsList', suc, data),
         change: (data, suc) => req.post(baseUrl + '/itemsApi/itemsUpdate', suc, data),
         delete: (data, suc) => req.post(baseUrl + '/itemsApi/itemsDel', suc, data),
+        selfPay: (data, suc) => req.post(baseUrl + '/itemsApi/otherItemAdd', suc, data),
     },
     list: {
         getList: (data, suc) => req.post(baseUrl + '/pay_orderApi/orderList', suc, data),
