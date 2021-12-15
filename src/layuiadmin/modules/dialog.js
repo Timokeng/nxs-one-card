@@ -39,6 +39,7 @@ if (db) {
             validate = true;
         })
         if (validate) {
+            getDetailInfo(checkStatus.data[0]);
             dlb.style.display = 'flex';
             ma.style.overflow = 'hidden';
             for (let i = 0; i < dla.children.length; i++) {
@@ -233,6 +234,36 @@ function handlePayType(num) {
     payTypeTo = num;
     dlb.style.display = 'flex';
     ma.style.overflow = 'hidden';
+}
+
+function getDetailInfo(data) {
+    let dl = dld.getElementsByClassName("detail-list")[0];
+    dl.innerHTML = "";
+    
+    let names = data.list_name.split(",");
+    let amts = data.list_amt.split(",");
+
+    for(let i = 0; i < names.length; i++) {
+        let one = document.createElement("div");
+        one.className = "detail-item";
+
+        one.innerHTML = `
+            <div class="name">${names[i]}</div>
+            <div class="num">${amts[i]}</div>
+        `
+
+        dl.appendChild(one);
+    }
+
+    let lastOne = document.createElement("div");
+    lastOne.className = "detail-sum";
+
+    lastOne.innerHTML = `
+        <div class>总计：</div>
+        <div class="num">${data.sum}（元）</div>
+    `;
+
+    dl.appendChild(lastOne);
 }
 
 function closeDialog() {
