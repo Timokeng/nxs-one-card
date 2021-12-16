@@ -465,7 +465,9 @@ function changeGrTree() {
             item_no: temp.templateNo,
             item_name: temp.name,
             amt: temp.sum,
-            remark: temp.detail
+            remark: temp.detail,
+            list_name: temp.list_name,
+            list_amt: temp.list_amt
         }
 
         api.template.change(reqData, (res) => {
